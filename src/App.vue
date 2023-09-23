@@ -40,6 +40,7 @@ export default {
           el: {
             valueKey: "id",
           },
+          readonly: true,
 
           options: [
             {

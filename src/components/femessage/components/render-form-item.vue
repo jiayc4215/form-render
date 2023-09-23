@@ -9,7 +9,7 @@
     >
       <!-- label -->
       <v-node v-if="typeof data.label !== 'string'" slot="label" :content="data.label" />
-
+      <!--只读 input select -->
       <template v-if="readonly && hasReadonlyContent">
         <el-input
           v-if="data.type === 'input'"
@@ -19,14 +19,24 @@
           v-on="listeners"
         />
         <div v-else-if="data.type === 'select'">
-          <template>
-            {{ multipleValue }}
-          </template>
+          <template> {{ multipleValue }}{{ 111 }} </template>
         </div>
       </template>
+      <custom-component
+        v-else
+        ref="customComponent"
+        :component="data.component || `el-${data.type || 'input'}`"
+        v-bind="componentProps"
+        :value="itemValue"
+        :disabled="disabled || componentProps.disabled || readonly"
+        :loading="loading"
+        v-on="listeners"
+      >
+      </custom-component>
     </el-form-item>
   </div>
 </template>
+
 <script>
 import { noop } from "../util/utils";
 import getEnableWhenStatus from "../util/enable-when";
@@ -41,11 +51,6 @@ export default {
      * 🐂🍺只需要有组件选项对象，就可以立刻包装成函数式组件在 template 中使用
      * FYI: https://cn.vuejs.org/v2/guide/render-function.html#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6
      */
-
-    VNode: {
-      functional: true,
-      render: (h, ctx) => ctx.props.content,
-    },
   },
   props: {
     data: Object,
@@ -60,11 +65,14 @@ export default {
   },
   data() {
     return {
+      loading: false,
       propsInner: {},
     };
   },
   computed: {
+    //计算el
     componentProps: ({ data: { el }, propsInner }) => ({ ...el, ...propsInner }),
+    //排除input select
     hasReadonlyContent: ({ data: { type } }) => _includes(["input", "select"], type),
     // hidden回调
     hiddenStatus: ({ data: { hidden = () => false }, data, value }) =>
@@ -130,9 +138,11 @@ export default {
       };
     },
 
+    //未知
     multipleValue: ({ data, itemValue, options = [] }) => {
       const multipleSelectValue =
         _get(data, "el.multiple") && Array.isArray(itemValue) ? itemValue : [itemValue];
+      console.log(multipleSelectValue);
       return multipleSelectValue
         .map((val) => (options.find((op) => op.value === val) || {}).label)
         .join();
