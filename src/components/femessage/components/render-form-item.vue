@@ -8,7 +8,7 @@
       class="render-form-item"
     >
       <!-- label -->
-      <v-node v-if="typeof data.label !== 'string'" slot="label" :content="data.label" />
+      <!-- <v-node v-if="typeof data.label !== 'string'" slot="label" :content="data.label" /> -->
       <!--只读 input select -->
       <template v-if="readonly && hasReadonlyContent">
         <el-input
@@ -19,7 +19,7 @@
           v-on="listeners"
         />
         <div v-else-if="data.type === 'select'">
-          <template> {{ multipleValue }}{{ 111 }} </template>
+          <template> {{ multipleValue }} </template>
         </div>
       </template>
       <custom-component
@@ -44,14 +44,9 @@ import _includes from "lodash.includes";
 import _topairs from "lodash.topairs";
 import _frompairs from "lodash.frompairs";
 import _get from "lodash.get";
+import CustomComponent from "../util/CustomComponent";
 
 export default {
-  components: {
-    /**
-     * 🐂🍺只需要有组件选项对象，就可以立刻包装成函数式组件在 template 中使用
-     * FYI: https://cn.vuejs.org/v2/guide/render-function.html#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6
-     */
-  },
   props: {
     data: Object,
     prop: {
@@ -67,7 +62,15 @@ export default {
     return {
       loading: false,
       propsInner: {},
+      isBlurTrigger:
+        this.data.rules &&
+        this.data.rules.some((rule) => {
+          return rule.required && rule.trigger === "blur";
+        }),
     };
+  },
+  components: {
+    CustomComponent,
   },
   computed: {
     //计算el
@@ -146,6 +149,16 @@ export default {
       return multipleSelectValue
         .map((val) => (options.find((op) => op.value === val) || {}).label)
         .join();
+    },
+  },
+  methods: {
+    triggerValidate(id) {
+      if (!this.data.rules || !this.data.rules.length) return;
+
+      if (this.isBlurTrigger) return;
+      this.$nextTick(() => {
+        this.elForm && this.elForm.validateField(id);
+      });
     },
   },
 };
