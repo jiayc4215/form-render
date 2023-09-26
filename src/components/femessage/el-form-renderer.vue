@@ -1,10 +1,10 @@
 <template>
   <div>
-    <el-form ref="elForm" v-bind="$attrs" :model="value" class="el-form-renderer">
+    <el-form ref="myelForm" v-bind="$attrs" :model="value" class="el-form-renderer">
       <template v-for="item in innerContent" :key="item.id">
         <slot :name="`id:${item.id}`" />
         <slot :name="`$id:${item.id}`" />
-
+        {{ value[item.id] }}{{ item.id }} {{ JSON.stringify(item) }}
         <component
           :is="item.type === GROUP ? RenderFormGroup : RenderFormItem"
           :prop="item.id"
@@ -29,13 +29,41 @@
 <script setup>
 import RenderFormGroup from "./components/render-form-group.vue";
 import RenderFormItem from "./components/render-form-item.vue";
-import { reactive, computed, ref, watch } from "vue";
+import { reactive, computed, ref, watch, onMounted, nextTick } from "vue";
 import transformContent from "./util/transform-content";
-const GROUP = "group";
-const value = reactive({});
-const options = ref({});
+import _set from "lodash.set";
+import _isequal from "lodash.isequal";
+import _clonedeep from "lodash.clonedeep";
+import {
+  collect,
+  mergeValue,
+  transformOutputValue,
+  transformInputValue,
+  correctValue,
+} from "./util/utils";
+let GROUP = "group";
+let value = reactive({});
+let options = reactive({});
+let initValue = reactive({});
+let myelForm = ref();
+let methods = {};
 
-const props = defineProps({
+onMounted(async () => {
+  initValue = _clonedeep(value);
+  await nextTick();
+  // 检查 myelForm 是否已经初始化
+  if (myelForm && myelForm.value) {
+    Object.keys(myelForm.value).forEach((item) => {
+      // 检查属性是否存在于 methods 对象中
+      if (myelForm.value[item] && !(item in methods)) {
+        methods[item] = myelForm.value[item];
+      }
+    });
+  }
+  methods.clearValidate();
+});
+
+let props = defineProps({
   content: {
     type: Array,
     required: true,
@@ -56,9 +84,22 @@ const props = defineProps({
     default: undefined,
   },
 });
-const formRef = ref(props.form);
-const innerContent = computed(() => transformContent(props.content));
-
+let formRef = ref(props.form);
+let innerContent = computed(() => transformContent(props.content));
+// 初始化默认值
+let setValueFromModel = () => {
+  if (innerContent.length) return;
+  /**
+   * 没使用 v-model 时才从 default 采集数据
+   * default 值没法考虑 inputFormat
+   * 参考 value-format.md 的案例。那种情况下，default 该传什么？
+   */
+  let newValue = props.form
+    ? transformInputValue(props.form, innerContent.value)
+    : collect(innerContent.value, "default");
+  correctValue(newValue, innerContent.value);
+  if (!_isequal(value, newValue)) value = newValue;
+};
 watch(
   formRef,
   (newForm) => {
@@ -70,36 +111,85 @@ watch(
 
 watch(
   innerContent,
-  async (newContent) => {
-    if (!newContent) return;
-    // 如果 content 没有变动 remote 的部分，这里需要保留之前 remote 注入的 options
-    // form.value.options = { ...form.value.options, ...collect(newContent, "options") };
-    setValueFromModel();
+  (newContent) => {
+    try {
+      if (!newContent) return;
+      console.log(options);
+      // 如果 content 没有变动 remote 的部分，这里需要保留之前 remote 注入的 options
+      options = { options, ...collect(newContent, "options") };
+      setValueFromModel();
+    } catch (error) {
+      console.log(error);
+    }
   },
   { immediate: true }
 );
 
-// watch(value, (newValue, oldValue) => {
-//   if (!newValue || newValue === oldValue) return;
-//   emit("update:value", transformOutputValue(newValue, innerContent.value));
-// });
+watch(
+  () => value,
+  (newValue, oldValue) => {
+    if (!newValue || newValue === oldValue) return;
+    emit("update:value", transformOutputValue(newValue, innerContent));
+  }
+);
 
-const setValueFromModel = () => {
-  if (!this.innerContent.length) return;
-  /**
-   * 没使用 v-model 时才从 default 采集数据
-   * default 值没法考虑 inputFormat
-   * 参考 value-format.md 的案例。那种情况下，default 该传什么？
-   */
-  const newValue = this.form
-    ? transformInputValue(this.form, this.innerContent)
-    : collect(this.innerContent, "default");
-  correctValue(newValue, this.innerContent);
-  if (!_isequal(this.value, newValue)) this.value = newValue;
+let updateValue = ({ id, value: v }) => {
+  value[id] = v;
+  console.log(value, "  console.log(value);");
 };
+let resetFields = async () => {
+  value = _clonedeep(initValue);
+  await nextTick();
+  methods.clearValidate;
+};
+let getFormValue = ({ strict = false } = {}) => {
+  return transformOutputValue(value, innerContent, { strict });
+};
+let updateForm = (newValue) => {
+  newValue = transformInputValue(newValue, innerContent);
+  mergeValue(value, newValue, innerContent);
+  value = { ...value };
+};
+let setOptions = (id, options) => {
+  _set(options, id, options);
+  options = { ...options }; // 设置之前不存在的 options 时需要重新设置响应式更新
+};
+// let getComponentById = (id) => {
+//   let content = [];
+//   this.content.forEach((item) => {
+//     if (item.type === GROUP) {
+//       const items = item.items.map((formItem) => {
+//         formItem.groupId = item.id;
+//         return formItem;
+//       });
+//       content.push(...items);
+//     } else {
+//       content.push(item);
+//     }
+//   });
+//   const itemContent = content.find((item) => item.id === id);
+//   if (!itemContent) {
+//     return undefined;
+//   }
 
-const updateValue = ({ id, value }) => {
-  console.log(value);
-  value[id] = value;
+//   if (itemContent.groupId) {
+//     const componentRef = this.$refs[itemContent.groupId][0];
+//     return componentRef.$refs[`formItem-${id}`][0].$refs.customComponent;
+//   } else {
+//     const componentRef = this.$refs[id][0];
+//     return componentRef.$refs.customComponent;
+//   }
+// };
+defineExpose({ updateValue, resetFields, getFormValue, updateForm, setOptions });
+</script>
+<script>
+export default {
+  name: "ElFormRenderer",
+  provide() {
+    console.log(this, "this");
+    return {
+      elFormRenderer: this,
+    };
+  },
 };
 </script>

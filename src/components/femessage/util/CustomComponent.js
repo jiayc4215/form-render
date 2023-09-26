@@ -1,22 +1,18 @@
-import { h, resolveComponent } from "vue";
+import { h, resolveComponent, markRaw } from "vue";
 console.log(resolveComponent);
 
 // Vue3 中函数式组件需要提供一个渲染函数
 const CustomComponent = (props, context) => {
+  let dom =
+    typeof props.component == "string"
+      ? resolveComponent(hyphenToPascal(props.component))
+      : "Input";
+
   // 返回一个渲染函数，可以使用 h 函数创建虚拟节点
-  return h(
-    resolveComponent(hyphenToPascal(props.component)),
-    props,
-    context.slots
-  );
+  return h(dom, props, context.slots);
 };
 
 function hyphenToPascal(str) {
-  console.log(str, "str");
-  if (typeof str !== "string") {
-    console.log(str);
-    return "ElInput";
-  }
   let arr = str.split("-");
 
   let resStr = arr.reduce(function (prev, cur) {
