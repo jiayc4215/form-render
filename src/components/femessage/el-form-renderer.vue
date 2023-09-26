@@ -4,7 +4,7 @@
       <template v-for="item in innerContent" :key="item.id">
         <slot :name="`id:${item.id}`" />
         <slot :name="`$id:${item.id}`" />
-        {{ value[item.id] }}{{ item.id }} {{ JSON.stringify(item) }}
+
         <component
           :is="item.type === GROUP ? RenderFormGroup : RenderFormItem"
           :prop="item.id"
@@ -98,7 +98,7 @@ let setValueFromModel = () => {
     ? transformInputValue(props.form, innerContent.value)
     : collect(innerContent.value, "default");
   correctValue(newValue, innerContent.value);
-  if (!_isequal(value, newValue)) value = newValue;
+  if (!_isequal(value, newValue)) value = Object.assign(value, newValue);
 };
 watch(
   formRef,

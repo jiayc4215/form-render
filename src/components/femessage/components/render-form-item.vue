@@ -14,7 +14,7 @@
         <el-input
           v-if="data.type === 'input'"
           v-bind="componentProps"
-          :value="itemValue"
+          :modelValue="itemValue"
           readonly
           v-on="listeners"
         />
@@ -27,7 +27,7 @@
         ref="customComponent"
         :component="data.component || `el-${data.type || 'input'}`"
         v-bind="componentProps"
-        :value="itemValue"
+        :modelValue="itemValue"
         :disabled="disabled || componentProps.disabled || readonly"
         v-on="listeners"
       >
@@ -110,7 +110,7 @@ export default {
           ),
           // 手动更新表单数据
           input: (value, ...rest) => {
-            // console.log(value);
+            console.log(value, this.itemValue);
             this.$emit("updateValue", { id, value });
             // 更新表单时调用
             try {
@@ -124,7 +124,21 @@ export default {
             }
           },
           change: (value, ...rest) => {
+            if (typeof value === "object" && value instanceof Date) {
+              console.log("日期对象不触发change");
+              return;
+            }
+            console.log(value, "change--------------------");
+
             if (typeof value === "string" && trim) value = value.trim();
+            this.$emit("updateValue", { id, value });
+            originOnChange([value, ...rest], updateForm);
+
+            // FIXME: rules 的 trigger 只写了 blur，依然会在 change 的时候触发校验！
+            this.triggerValidate(id);
+          },
+          "update:modelValue": (value, ...rest) => {
+            console.log(value, "update:modelValue");
             this.$emit("updateValue", { id, value });
             originOnChange([value, ...rest], updateForm);
 
