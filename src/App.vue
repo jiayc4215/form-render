@@ -40,7 +40,6 @@ export default {
           el: {
             valueKey: "id",
           },
-          readonly: true,
 
           options: [
             {
@@ -133,6 +132,7 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      console.log(this.$refs[formName]);
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$message("submit!");

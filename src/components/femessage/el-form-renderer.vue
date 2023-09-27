@@ -29,7 +29,7 @@
 <script setup>
 import RenderFormGroup from "./components/render-form-group.vue";
 import RenderFormItem from "./components/render-form-item.vue";
-import { reactive, computed, ref, watch, onMounted, nextTick } from "vue";
+import { reactive, computed, ref, watch, onMounted, nextTick, provide } from "vue";
 import transformContent from "./util/transform-content";
 import _set from "lodash.set";
 import _isequal from "lodash.isequal";
@@ -114,7 +114,7 @@ watch(
   (newContent) => {
     try {
       if (!newContent) return;
-      console.log(options);
+
       // 如果 content 没有变动 remote 的部分，这里需要保留之前 remote 注入的 options
       options = { options, ...collect(newContent, "options") };
       setValueFromModel();
@@ -135,7 +135,6 @@ watch(
 
 let updateValue = ({ id, value: v }) => {
   value[id] = v;
-  console.log(value, "  console.log(value);");
 };
 let resetFields = async () => {
   value = _clonedeep(initValue);
@@ -180,16 +179,20 @@ let setOptions = (id, options) => {
 //     return componentRef.$refs.customComponent;
 //   }
 // };
-defineExpose({ updateValue, resetFields, getFormValue, updateForm, setOptions });
+provide("validateField", methods.validateField);
+provide("updateForm", updateForm);
+provide("setOptions", setOptions);
+defineExpose({
+  updateValue,
+  resetFields,
+  getFormValue,
+  updateForm,
+  setOptions,
+  validate: methods.validate,
+});
 </script>
 <script>
 export default {
   name: "ElFormRenderer",
-  provide() {
-    console.log(this, "this");
-    return {
-      elFormRenderer: this,
-    };
-  },
 };
 </script>
