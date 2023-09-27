@@ -100,7 +100,8 @@ const emit = defineEmits(["updateValue"]);
 let propsInner = reactive({});
 const loading = ref(false);
 let dataRef = ref(props.data);
-let validateField = inject("validateField");
+// validateField
+let methods = inject("methods");
 let setOptions = inject("setOptions");
 const isBlurTrigger = () => {
   return (
@@ -140,7 +141,6 @@ const listeners = computed(() => {
     // 手动更新表单数据
     "update:modelValue": (value, ...rest) => {
       if (typeof value === "string" && trim) value = value.trim();
-      console.log(value, "update:modelValue");
       emit("updateValue", { id, value });
       // FIXME: rules 的 trigger 只写了 blur，依然会在 change 的时候触发校验！
       triggerValidate(id);
@@ -164,7 +164,6 @@ watch(
    */
   () => props.data.remote?.request,
   (newValue, oldValue) => {
-    console.log(newValue);
     // 不应该用 watch data.remote，因为对象引用是同一个 https://cn.vuejs.org/v2/api/#vm-watch (估计当初这样写是为了方便)
     // 现改写成：分开处理 remote.request，remote.url
     // 至于为什么判断新旧值相同则返回，是因为 form 的 content 是响应式的，防止用户直接修改 content 其他内容时，导致 remote.request 重新发请求
@@ -196,10 +195,9 @@ const multipleValue = ({ data, itemValue, options = [] }) => {
 const triggerValidate = async (id) => {
   try {
     if (!props.data.rules || !props.data.rules.length) return;
-    console.log(isBlurTrigger(), "isBlurTrigger");
     if (isBlurTrigger()) return;
     await nextTick();
-    validateField && validateField(id);
+    methods && methods.validateField(id);
   } catch (error) {
     console.log(error);
   }

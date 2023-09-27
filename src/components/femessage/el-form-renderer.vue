@@ -51,6 +51,8 @@ let methods = {};
 onMounted(async () => {
   initValue = _clonedeep(value);
   await nextTick();
+
+  console.log(myelForm.value);
   // 检查 myelForm 是否已经初始化
   if (myelForm && myelForm.value) {
     Object.keys(myelForm.value).forEach((item) => {
@@ -147,7 +149,6 @@ let getFormValue = ({ strict = false } = {}) => {
 let updateForm = (newValue) => {
   newValue = transformInputValue(newValue, innerContent);
   mergeValue(value, newValue, innerContent);
-  value = { ...value };
 };
 let setOptions = (id, options) => {
   _set(options, id, options);
@@ -179,7 +180,7 @@ let setOptions = (id, options) => {
 //     return componentRef.$refs.customComponent;
 //   }
 // };
-provide("validateField", methods.validateField);
+provide("methods", methods);
 provide("updateForm", updateForm);
 provide("setOptions", setOptions);
 defineExpose({
@@ -188,7 +189,7 @@ defineExpose({
   getFormValue,
   updateForm,
   setOptions,
-  validate: methods.validate,
+  methods,
 });
 </script>
 <script>

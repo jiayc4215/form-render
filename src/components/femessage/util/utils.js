@@ -9,6 +9,7 @@ import _frompairs from "lodash.frompairs";
 export function collect(content, key) {
   return _frompairs(
     content
+
       // 使用 map 函数对 content 数组进行映射操作。对每个数组中的元素（item）进行处理，创建一个新的对象，该对象包含三个属性：
       .map((item) => ({
         id: item.id,
@@ -68,7 +69,7 @@ export function transformOutputValue(value, content, { strict = false } = {}) {
 export function transformInputValue(value, content) {
   // 首先，创建了一个名为 newVal 的新对象，它是 value 的副本，以便在不修改原始数据的情况下进行操作。
   const newVal = { ...value };
-  content.forEach((item) => {
+  content.value.forEach((item) => {
     const { id } = item;
     if (item.inputFormat) {
       // 对于每个 item，它检查是否存在 inputFormat 属性。如果存在，它将调用 item.inputFormat(value) 来处理 value，
@@ -82,7 +83,7 @@ export function transformInputValue(value, content) {
       } else {
         // 如果 item 的类型是 "group"，则会递归调用 transformInputValue 函数来处理嵌套的对象。
         newVal[id] = tran;
-        sformInputValue(value[id], item.items);
+        transformInputValue(value[id], item.items);
       }
     }
   });
@@ -111,7 +112,7 @@ export function mergeValue(oldV, newV, content) {
   // 遍历 newV 对象的所有属性
   Object.keys(newV).forEach((k) => {
     // 对于每个属性 k，首先尝试在 content 数组中查找具有相同 id 值的项，如果找不到则使用一个空对象。
-    const item = content.find((item) => item.id === k) || {};
+    const item = content.value.find((item) => item.id === k) || {};
     // 如果不是 "group" 类型, 就直接将 newV 中的属性值覆盖到 oldV 中的对应属性上，实现合并。
     if (item.type !== "group") oldV[k] = newV[k];
     // 如果项的类型是 "group"，则递归调用这个函数 mergeValue，以进一步合并 oldV[k] 和 newV[k]，并传入该项的子项数组 item.items 作为 content 参数。

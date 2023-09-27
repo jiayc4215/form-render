@@ -21,7 +21,8 @@
     "lodash.kebabcase": "^4.1.1",
     "lodash.set": "^4.3.2",
     "lodash.topairs": "^4.3.0",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
