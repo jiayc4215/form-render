@@ -37,7 +37,7 @@ export function transformOutputValue(value, content, { strict = false } = {}) {
 
   Object.keys(value).forEach((id) => {
     // 找出表单项
-    const item = content.find((item) => item.id === id);
+    const item = content.value.find((item) => item.id === id);
     if (!item) return;
     // 除去多选
     if (item.type !== "group") {
@@ -68,8 +68,9 @@ export function transformOutputValue(value, content, { strict = false } = {}) {
  */
 export function transformInputValue(value, content) {
   // 首先，创建了一个名为 newVal 的新对象，它是 value 的副本，以便在不修改原始数据的情况下进行操作。
+  console.log(content);
   const newVal = { ...value };
-  content.value.forEach((item) => {
+  content.forEach((item) => {
     const { id } = item;
     if (item.inputFormat) {
       // 对于每个 item，它检查是否存在 inputFormat 属性。如果存在，它将调用 item.inputFormat(value) 来处理 value，
@@ -119,4 +120,4 @@ export function mergeValue(oldV, newV, content) {
     else mergeValue(oldV[k], newV[k], item.items);
   });
 }
-export function noop() {}
+export function noop() { }

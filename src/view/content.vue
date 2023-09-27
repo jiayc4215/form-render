@@ -1,64 +1,33 @@
 <template>
-  <el-form-renderer label-width="100px" :content="content" v-model="form" ref="form">
+  <el-form-renderer label-width="100px" :content="content" v-model:form="FormData" ref="form">
     <template #id:region>
       <div>requestRemoteCount: {{ requestRemoteCount }}</div>
     </template>
     <el-form-item>
       <el-button @click="resetForm">resetForm</el-button>
-      <el-button @click="disableName"
-        >{{ content[0].disabled ? "启" : "禁" }}用第一项</el-button
-      >
+      <el-button @click="disableName">{{ content[0].disabled ? "启" : "禁" }}用第一项</el-button>
       <el-button @click="setOptions">更新 region 的 options</el-button>
       <el-button @click="addFormItem">随机插入表单项</el-button>
       <el-button @click="removeFormItem">随机移除表单项</el-button>
     </el-form-item>
-    <pre>{{ form }}</pre>
+    <pre>{{ FormData }}</pre>
   </el-form-renderer>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      form: {
-        name: "",
-        // region: [], // 应该能自动生成初始值 []
-        type: [],
-        startDate: "2019-01-01",
-        endDate: "2019-01-02",
-      },
-      id: 0,
-    };
-  },
-  methods: {
-    setOptions() {
-      const region = this.content.find((item) => item.id === "region");
-      if (!region) return;
-      region.options = [{ label: "广州", value: "广州" }];
-      this.content = [...this.content];
-    },
-    addFormItem() {
-      const i = Math.floor(Math.random() * (this.content.length + 1));
-      this.id++;
-      this.content.splice(i, 0, {
-        id: `name${this.id}`,
-        label: `表单项${this.id}`,
-        type: "input",
-      });
-    },
-    removeFormItem() {
-      if (this.content.length <= 1) return;
-      const i = Math.floor(Math.random() * this.content.length);
-      this.content.splice(i, 1);
-    },
-  },
-};
-</script>
+
 <script setup>
 import { reactive, ref } from "vue";
 import elFormRenderer from "../components/femessage/el-form-renderer.vue";
 let requestRemoteCount = ref(0);
 const form = ref();
+let id = ref(0)
+const FormData = reactive({
+  name: "1111",
+  // region: [], // 应该能自动生成初始值 []
+  type: [],
+  startDate: "2019-01-01",
+  endDate: "2019-01-02",
+},)
 const content = reactive([
   {
     type: "input",
@@ -177,7 +146,27 @@ const resetForm = () => {
   form.value.methods.resetFields();
 };
 const disableName = () => {
-  this.content[0].disabled = !this.content[0].disabled;
-  this.content = [...this.content];
-};
+  content[0].disabled = !content[0].disabled;
+
+}
+const setOptions = () => {
+  const region = content.find((item) => item.id === "region");
+  if (!region) return;
+  region.options = [{ label: "广州", value: "广州" }];
+
+}
+const addFormItem = () => {
+  const i = Math.floor(Math.random() * (content.length + 1));
+  id.value++;
+  content.splice(i, 0, {
+    id: `name${id.value}`,
+    label: `表单项${id.value}`,
+    type: "input",
+  });
+}
+const removeFormItem = () => {
+  if (content.length <= 1) return;
+  const i = Math.floor(Math.random() * content.length);
+  content.splice(i, 1);
+}
 </script>
