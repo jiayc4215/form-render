@@ -7,7 +7,6 @@
 
         <component
           :is="item.type === GROUP ? RenderFormGroup : RenderFormItem"
-          :prop="item.id"
           :ref="item.id"
           :data="item"
           :value="value"
@@ -118,7 +117,7 @@ watch(
       if (!newContent) return;
 
       // 如果 content 没有变动 remote 的部分，这里需要保留之前 remote 注入的 options
-      options = { options, ...collect(newContent, "options") };
+      Object.assign(options, collect(newContent, "options"));
       setValueFromModel();
     } catch (error) {
       console.log(error);
@@ -150,9 +149,10 @@ let updateForm = (newValue) => {
   newValue = transformInputValue(newValue, innerContent);
   mergeValue(value, newValue, innerContent);
 };
-let setOptions = (id, options) => {
-  _set(options, id, options);
+let setOptions = (id, O) => {
+  _set(options, id, O);
   options = { ...options }; // 设置之前不存在的 options 时需要重新设置响应式更新
+  console.log(options, "options");
 };
 // let getComponentById = (id) => {
 //   let content = [];

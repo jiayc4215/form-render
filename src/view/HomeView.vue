@@ -57,7 +57,9 @@ const content = reactive([
     el: {
       type: "datetime",
       placeholder: "select date",
+      teleported: false,
     },
+
     rules: [{ type: "date", required: true, message: "miss date", trigger: "change" }],
   },
   {

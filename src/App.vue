@@ -1,7 +1,13 @@
 <template>
   <nav class="box">
-    <router-link to="/">Home</router-link> | <router-link to="/about">on</router-link> |
-    <router-link to="/checkboxGroup">checkboxGroup</router-link>
+    content
+    <router-link to="/">Home</router-link> |
+
+    <router-link to="/about">on</router-link> |
+
+    <router-link to="/checkboxGroup">checkboxGroup</router-link> |
+
+    <router-link to="/content">content</router-link>
   </nav>
   <router-view></router-view>
 </template>

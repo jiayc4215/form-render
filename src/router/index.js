@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../view/HomeView.vue";
 import AboutView from "../view/AboutView.vue";
 import checkboxGroup from "../view/checkboxGroup.vue";
+import content from "../view/content.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/checkboxGroup",
     name: "checkboxGroup",
     component: checkboxGroup,
+  },
+  {
+    path: "/content",
+    name: "content",
+    component: content,
   },
 ];
 
