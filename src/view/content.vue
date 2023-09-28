@@ -71,7 +71,7 @@ const content = reactive([
           },
         ];
         requestRemoteCount.value++;
-        return new Promise((r) => setTimeout(() => r(data), 5000));
+        return new Promise((r) => setTimeout(() => r(data), 2000));
       },
     },
     el: { filterable: true, multiple: true, multipleLimit: 2 },

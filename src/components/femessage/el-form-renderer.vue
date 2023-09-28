@@ -101,13 +101,11 @@ let setValueFromModel = () => {
     : collect(innerContent.value, "default");
   correctValue(newValue, innerContent.value);
   if (!_isequal(value, newValue)) value = Object.assign(value, newValue);
-  console.log(newValue, "newValue");
 };
 watch(
   () => props.FormData,
   (newForm) => {
     if (!newForm) return;
-    console.log("newFormnewFormnewFormnewForm", newForm);
     setValueFromModel();
   },
   { immediate: true, deep: true }
@@ -130,15 +128,15 @@ watch(
 );
 
 watch(value, (newValue, oldValue) => {
-  console.log(newValue, "value变化");
   try {
     if (!newValue) return;
-    let data = Object.assign(
-      props.FormData,
-      transformOutputValue(newValue, innerContent)
-    );
-    console.log(data, "data");
-    emit("update:FormData", data);
+    if (props.FormData) {
+      let data = Object.assign(
+        props.FormData,
+        transformOutputValue(newValue, innerContent)
+      );
+      emit("update:FormData", data);
+    }
   } catch (error) {
     console.log(error, "-----");
   }

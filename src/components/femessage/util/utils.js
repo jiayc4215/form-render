@@ -69,9 +69,8 @@ export function transformOutputValue(value, content, { strict = false } = {}) {
  */
 export function transformInputValue(value, content) {
   // 首先，创建了一个名为 newVal 的新对象，它是 value 的副本，以便在不修改原始数据的情况下进行操作。
-
   const newVal = { ...value };
-  content.forEach((item) => {
+  const processItem = (item) => {
     const { id } = item;
     if (item.inputFormat) {
       // 对于每个 item，它检查是否存在 inputFormat 属性。如果存在，它将调用 item.inputFormat(value) 来处理 value，
@@ -88,9 +87,13 @@ export function transformInputValue(value, content) {
         transformInputValue(value[id], item.items);
       }
     }
-  });
+  };
+  //  判断响应式数据的类型
+  const itemsToProcess = content.value || content;
+  itemsToProcess.forEach(processItem);
   return newVal;
 }
+
 // 对 group checkbox-group初始化值修正默认为空数组
 export function correctValue(value, content) {
   content.forEach(({ type, id, items }) => {
