@@ -5,10 +5,20 @@
         <slot :name="`id:${item.id}`" />
         <slot :name="`$id:${item.id}`" />
 
-        <component :is="item.type === GROUP ? RenderFormGroup : RenderFormItem" :ref="item.id" :data="item" :value="value"
-          :item-value="value[item.id]" :disabled="disabled ||
+        <component
+          :is="item.type === GROUP ? RenderFormGroup : RenderFormItem"
+          :ref="item.id"
+          :data="item"
+          :value="value"
+          :item-value="value[item.id]"
+          :disabled="
+            disabled ||
             (typeof item.disabled === 'function' ? item.disabled(value) : item.disabled)
-            " :readonly="readonly || item.readonly" :options="options[item.id]" @updateValue="updateValue" />
+          "
+          :readonly="readonly || item.readonly"
+          :options="options[item.id]"
+          @updateValue="updateValue"
+        />
       </template>
       <slot />
     </el-form>
@@ -37,7 +47,7 @@ let initValue = reactive({});
 let myelForm = ref();
 let methods = {};
 
-let emit = defineEmits(['update:form'])
+let emit = defineEmits(["update:form"]);
 onMounted(async () => {
   initValue = _clonedeep(value);
   await nextTick();
@@ -117,15 +127,12 @@ watch(
   { immediate: true }
 );
 
-watch(
-  value,
-  (newValue, oldValue) => {
-    console.log(_isequal(newValue, oldValue));
-    if (!newValue) return;
+watch(value, (newValue, oldValue) => {
+  console.log(_isequal(newValue, oldValue));
+  if (!newValue) return;
 
-    emit("update:form", transformOutputValue(newValue, innerContent));
-  }
-);
+  emit("update:form", transformOutputValue(newValue, innerContent));
+});
 
 let updateValue = ({ id, value: v }) => {
   value[id] = v;

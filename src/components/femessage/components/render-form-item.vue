@@ -23,6 +23,19 @@
           <template> {{ multipleValue }} </template>
         </div>
       </template>
+      <!-- 处理 date-picker bug-->
+      <custom-component
+        v-else-if="data.type === 'date-picker'"
+        ref="customComponent"
+        :component="data.component || `el-${data.type || 'input'}`"
+        v-bind="componentProps"
+        :modelValue="itemValue"
+        :disabled="disabled || componentProps.disabled || readonly"
+        v-on="listeners"
+        :loading="loading"
+        :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod"
+      >
+      </custom-component>
       <custom-component
         v-else
         ref="customComponent"
