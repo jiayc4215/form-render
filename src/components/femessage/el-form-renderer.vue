@@ -159,11 +159,9 @@ let updateForm = (newValue) => {
   newValue = transformInputValue(newValue, innerContent);
   mergeValue(value, newValue, innerContent);
 };
-let setOptions = async (id, O) => {
+let setOptions = (id, O) => {
   _set(options, id, O);
   options = { ...options }; // 设置之前不存在的 options 时需要重新设置响应式更新
-  await nextTick();
-  methods.clearValidate();
 };
 // let getComponentById = (id) => {
 //   let content = [];

@@ -29,7 +29,7 @@ const form = ref();
 let id = ref(0);
 let FormData = reactive({
   name: "1111",
-  // region: [],
+  region: [],
   type: [],
   startDate: "2019-01-01",
   endDate: "2019-01-02",

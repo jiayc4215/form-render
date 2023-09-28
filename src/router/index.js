@@ -4,6 +4,8 @@ import AboutView from "../view/AboutView.vue";
 import checkboxGroup from "../view/checkboxGroup.vue";
 import content from "../view/content.vue";
 
+import setoptios from "../view/setoptios.vue";
+
 const routes = [
   {
     path: "/",
@@ -24,6 +26,11 @@ const routes = [
     path: "/content",
     name: "content",
     component: content,
+  },
+  {
+    path: "/setoptios",
+    name: "setoptios",
+    component: setoptios,
   },
 ];
 
