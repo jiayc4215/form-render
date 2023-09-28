@@ -3,9 +3,13 @@ import HomeView from "../view/HomeView.vue";
 import AboutView from "../view/AboutView.vue";
 import checkboxGroup from "../view/checkboxGroup.vue";
 import content from "../view/content.vue";
-
 import setoptios from "../view/setoptios.vue";
-
+import picker from "../view/picker.vue";
+import format from "../view/format.vue";
+import update from "../view/update.vue";
+import slot from "../view/slot.vue";
+import hidden from "../view/hidden.vue";
+import disabled from "../view/disabled.vue";
 const routes = [
   {
     path: "/",
@@ -31,6 +35,36 @@ const routes = [
     path: "/setoptios",
     name: "setoptios",
     component: setoptios,
+  },
+  {
+    path: "/picker",
+    name: "picker",
+    component: picker,
+  },
+  {
+    path: "/format",
+    name: "format",
+    component: format,
+  },
+  {
+    path: "/update",
+    name: "update",
+    component: update,
+  },
+  {
+    path: "/slot",
+    name: "slot",
+    component: slot,
+  },
+  {
+    path: "/hidden",
+    name: "hidden",
+    component: hidden,
+  },
+  {
+    path: "/disabled",
+    name: "disabled",
+    component: disabled,
   },
 ];
 

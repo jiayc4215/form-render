@@ -1,25 +1,15 @@
 <template>
   <div>
-    {{ props.FormData }}
+
     <el-form ref="myelForm" v-bind="$attrs" :model="value" class="el-form-renderer">
       <template v-for="item in innerContent" :key="item.id">
         <slot :name="`id:${item.id}`" />
         <slot :name="`$id:${item.id}`" />
 
-        <component
-          :is="item.type === GROUP ? RenderFormGroup : RenderFormItem"
-          :ref="item.id"
-          :data="item"
-          :value="value"
-          :item-value="value[item.id]"
-          :disabled="
-            disabled ||
+        <component :is="item.type === GROUP ? RenderFormGroup : RenderFormItem" :ref="item.id" :data="item" :value="value"
+          :item-value="value[item.id]" :disabled="disabled ||
             (typeof item.disabled === 'function' ? item.disabled(value) : item.disabled)
-          "
-          :readonly="readonly || item.readonly"
-          :options="options[item.id]"
-          @updateValue="updateValue"
-        />
+            " :readonly="readonly || item.readonly" :options="options[item.id]" @updateValue="updateValue" />
       </template>
       <slot />
     </el-form>

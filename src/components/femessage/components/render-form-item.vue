@@ -1,88 +1,42 @@
 <template>
   <div>
-    <el-form-item
-      v-if="_show"
-      :prop="prop"
-      :label="typeof data.label === 'string' ? data.label : ''"
-      :rules="!readonly && Array.isArray(data.rules) ? data.rules : undefined"
-      v-bind="data.attrs"
-      class="render-form-item"
-    >
+    <el-form-item v-if="_show" :prop="prop" :label="typeof data.label === 'string' ? data.label : ''"
+      :rules="!readonly && Array.isArray(data.rules) ? data.rules : undefined" v-bind="data.attrs"
+      class="render-form-item">
       <!-- label -->
       <!-- <v-node v-if="typeof data.label !== 'string'" slot="label" :content="data.label" /> -->
       <!--只读 input select -->
       <template v-if="readonly && hasReadonlyContent">
-        <el-input
-          v-if="data.type === 'input'"
-          v-bind="componentProps"
-          :modelValue="itemValue"
-          readonly
-          v-on="listeners"
-        />
+        <el-input v-if="data.type === 'input'" v-bind="componentProps" :modelValue="itemValue" readonly
+          v-on="listeners" />
         <div v-else-if="data.type === 'select'">
           <template> {{ multipleValue }} </template>
         </div>
       </template>
       <!-- 处理 date-picker bug-->
-      <custom-component
-        v-else-if="data.type === 'date-picker'"
-        ref="customComponent"
-        :component="data.component || `el-${data.type || 'input'}`"
-        v-bind="componentProps"
-        :modelValue="itemValue"
-        :disabled="disabled || componentProps.disabled || readonly"
-        v-on="listeners"
-        :loading="loading"
-        :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod"
-      >
+      <custom-component v-else-if="data.type === 'date-picker'" ref="customComponent"
+        :component="data.component || `el-${data.type || 'input'}`" v-bind="componentProps" :modelValue="itemValue"
+        :disabled="disabled || componentProps.disabled || readonly" v-on="listeners" :loading="loading"
+        :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod">
       </custom-component>
-      <custom-component
-        v-else
-        ref="customComponent"
-        :component="data.component || `el-${data.type || 'input'}`"
-        v-bind="componentProps"
-        :modelValue="itemValue"
-        :disabled="disabled || componentProps.disabled || readonly"
-        v-on="listeners"
-        :loading="loading"
-        :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod"
-      >
+      <custom-component v-else ref="customComponent" :component="data.component || `el-${data.type || 'input'}`"
+        v-bind="componentProps" :modelValue="itemValue" :disabled="disabled || componentProps.disabled || readonly"
+        v-on="listeners" :loading="loading"
+        :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod">
         <template v-for="(opt, index) in options">
-          <el-option
-            v-if="data.type === 'select'"
-            :key="optionKey(opt) || index"
-            v-bind="opt"
-          />
-          <el-checkbox-button
-            v-if="data.type === 'checkbox-group' && data.style === 'button'"
-            :key="opt.value"
-            v-bind="opt"
-            :label="'value' in opt ? opt.value : opt.label"
-          >
+          <el-option v-if="data.type === 'select'" :key="optionKey(opt) || index" v-bind="opt" />
+          <el-checkbox-button v-if="data.type === 'checkbox-group' && data.style === 'button'" :key="opt.value"
+            v-bind="opt" :label="'value' in opt ? opt.value : opt.label">
             {{ opt.label }}
           </el-checkbox-button>
-          <el-checkbox
-            v-else-if="data.type === 'checkbox-group' && data.style !== 'button'"
-            :key="opt.value"
-            v-bind="opt"
-            :label="'value' in opt ? opt.value : opt.label"
-          >
+          <el-checkbox v-else-if="data.type === 'checkbox-group' && data.style !== 'button'" :key="opt.value" v-bind="opt"
+            :label="'value' in opt ? opt.value : opt.label">
             {{ opt.label }}
           </el-checkbox>
-          <el-radio-button
-            v-else-if="data.type === 'radio-group' && data.style === 'button'"
-            :key="opt.label"
-            v-bind="opt"
-            :label="'value' in opt ? opt.value : opt.label"
-            >{{ opt.label }}</el-radio-button
-          >
-          <el-radio
-            v-else-if="data.type === 'radio-group' && data.style !== 'button'"
-            :key="opt.label"
-            v-bind="opt"
-            :label="'value' in opt ? opt.value : opt.label"
-            >{{ opt.label }}</el-radio
-          >
+          <el-radio-button v-else-if="data.type === 'radio-group' && data.style === 'button'" :key="opt.label"
+            v-bind="opt" :label="'value' in opt ? opt.value : opt.label">{{ opt.label }}</el-radio-button>
+          <el-radio v-else-if="data.type === 'radio-group' && data.style !== 'button'" :key="opt.label" v-bind="opt"
+            :label="'value' in opt ? opt.value : opt.label">{{ opt.label }}</el-radio>
         </template>
       </custom-component>
     </el-form-item>
@@ -134,7 +88,7 @@ const componentProps = computed(() => ({ ...props.data.el, ...propsInner }));
 const hasReadonlyContent = computed(() => ["input", "select"].includes(props.data.type));
 const hiddenStatus = computed(() => {
   const hidden = props.data.hidden || (() => false);
-  return hidden(props.data.value, props.data);
+  return hidden(props.value, props.data);
 });
 const enableWhenStatus = computed(() =>
   getEnableWhenStatus(props.data.enableWhen, props.data.value)
