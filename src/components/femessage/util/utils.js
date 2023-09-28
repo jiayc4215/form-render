@@ -58,6 +58,7 @@ export function transformOutputValue(value, content, { strict = false } = {}) {
       newVal[id] = transformOutputValue(value[id], item.items, { strict });
     }
   });
+
   return newVal;
 }
 
@@ -68,7 +69,7 @@ export function transformOutputValue(value, content, { strict = false } = {}) {
  */
 export function transformInputValue(value, content) {
   // 首先，创建了一个名为 newVal 的新对象，它是 value 的副本，以便在不修改原始数据的情况下进行操作。
-  console.log(content);
+
   const newVal = { ...value };
   content.forEach((item) => {
     const { id } = item;
@@ -120,4 +121,4 @@ export function mergeValue(oldV, newV, content) {
     else mergeValue(oldV[k], newV[k], item.items);
   });
 }
-export function noop() { }
+export function noop() {}

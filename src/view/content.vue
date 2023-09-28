@@ -1,11 +1,18 @@
 <template>
-  <el-form-renderer label-width="100px" :content="content" v-model:form="FormData" ref="form">
+  <el-form-renderer
+    label-width="100px"
+    :content="content"
+    v-model:FormData="FormData"
+    ref="form"
+  >
     <template #id:region>
       <div>requestRemoteCount: {{ requestRemoteCount }}</div>
     </template>
     <el-form-item>
       <el-button @click="resetForm">resetForm</el-button>
-      <el-button @click="disableName">{{ content[0].disabled ? "启" : "禁" }}用第一项</el-button>
+      <el-button @click="disableName"
+        >{{ content[0].disabled ? "启" : "禁" }}用第一项</el-button
+      >
       <el-button @click="setOptions">更新 region 的 options</el-button>
       <el-button @click="addFormItem">随机插入表单项</el-button>
       <el-button @click="removeFormItem">随机移除表单项</el-button>
@@ -14,20 +21,19 @@
   </el-form-renderer>
 </template>
 
-
 <script setup>
 import { reactive, ref } from "vue";
 import elFormRenderer from "../components/femessage/el-form-renderer.vue";
 let requestRemoteCount = ref(0);
 const form = ref();
-let id = ref(0)
-const FormData = reactive({
+let id = ref(0);
+let FormData = reactive({
   name: "1111",
-  // region: [], // 应该能自动生成初始值 []
+  // region: [],
   type: [],
   startDate: "2019-01-01",
   endDate: "2019-01-02",
-},)
+});
 const content = reactive([
   {
     type: "input",
@@ -65,7 +71,7 @@ const content = reactive([
           },
         ];
         requestRemoteCount.value++;
-        return new Promise((r) => setTimeout(() => r(data), 2000));
+        return new Promise((r) => setTimeout(() => r(data), 5000));
       },
     },
     el: { filterable: true, multiple: true, multipleLimit: 2 },
@@ -147,14 +153,12 @@ const resetForm = () => {
 };
 const disableName = () => {
   content[0].disabled = !content[0].disabled;
-
-}
+};
 const setOptions = () => {
   const region = content.find((item) => item.id === "region");
   if (!region) return;
   region.options = [{ label: "广州", value: "广州" }];
-
-}
+};
 const addFormItem = () => {
   const i = Math.floor(Math.random() * (content.length + 1));
   id.value++;
@@ -163,10 +167,10 @@ const addFormItem = () => {
     label: `表单项${id.value}`,
     type: "input",
   });
-}
+};
 const removeFormItem = () => {
   if (content.length <= 1) return;
   const i = Math.floor(Math.random() * content.length);
   content.splice(i, 1);
-}
+};
 </script>

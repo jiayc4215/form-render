@@ -115,7 +115,7 @@ let props = defineProps({
   readonly: Boolean,
   options: Array,
 });
-console.log(props.prop);
+
 // setOptions
 const emit = defineEmits(["updateValue"]);
 let propsInner = reactive({});
@@ -124,14 +124,12 @@ let dataRef = ref(props.data);
 // validateField
 let methods = inject("methods");
 let setOptions = inject("setOptions");
-const isBlurTrigger = () => {
-  return (
-    props.data.rules &&
-    props.data.rules.some((rule) => {
-      return rule.required && rule.trigger === "blur";
-    })
-  );
-};
+const isBlurTrigger =
+  props.data.rules &&
+  props.data.rules.some((rule) => {
+    return rule.required && rule.trigger === "blur";
+  });
+
 const componentProps = computed(() => ({ ...props.data.el, ...propsInner }));
 const hasReadonlyContent = computed(() => ["input", "select"].includes(props.data.type));
 const hiddenStatus = computed(() => {
@@ -204,10 +202,8 @@ const makingRequest = (remoteConfig, query) => {
     .then(onResponse, onError)
     // .then((resp) => { ... })：在请求完成后，无论成功或失败，都会执行这个 .then 块。在这里，根据 isOptionsCase 的值，对响应数据 resp 进行不同的处理。
     .then((resp) => {
-      console.log(resp, "resprespresp");
       // 如果 isOptionsCase 为 true，则将响应数据中的每个元素映射为包含 "label" 和 "value" 属性的对象，并将结果传递给 setOptions 函数（如果存在）。
       if (isOptionsCase) {
-        console.log(setOptions, "setOptions");
         setOptions && setOptions(props.prop, resp);
       } else {
         // 如果 isOptionsCase 为 false，则将响应数据存储在 propsInner 中，属性名为 prop。
@@ -239,7 +235,6 @@ watch(
     // 至于为什么判断新旧值相同则返回，是因为 form 的 content 是响应式的，防止用户直接修改 content 其他内容时，导致 remote.request 重新发请求
 
     if (!newValue || typeof newValue !== "function" || newValue === oldValue) return;
-    console.log("makingReques执行");
     makingRequest(props.data.remote);
   },
   { immediate: true }
@@ -266,7 +261,7 @@ const multipleValue = ({ data, itemValue, options = [] }) => {
 const triggerValidate = async (id) => {
   try {
     if (!props.data.rules || !props.data.rules.length) return;
-    if (isBlurTrigger()) return;
+    if (isBlurTrigger) return;
     await nextTick();
 
     (await methods) && methods.validateField(id);

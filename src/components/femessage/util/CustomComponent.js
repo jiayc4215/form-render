@@ -1,9 +1,7 @@
 import { h, resolveComponent, markRaw } from "vue";
-console.log(resolveComponent);
 
 // Vue3 中函数式组件需要提供一个渲染函数
 const CustomComponent = (props, context) => {
-  console.log(context);
   let dom =
     typeof props.component == "string"
       ? resolveComponent(hyphenToPascal(props.component))

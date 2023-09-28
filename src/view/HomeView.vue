@@ -116,10 +116,7 @@ const ruleForm = ref();
 
 const submitForm = async () => {
   try {
-    console.log(ruleForm.value);
-    console.log(ruleForm.value.methods.validate);
     await ruleForm.value.methods.validate((valid) => {
-      console.log(valid);
       if (valid) {
         console.log("OK");
       } else {
@@ -132,7 +129,6 @@ const submitForm = async () => {
   }
 };
 const resetForm = () => {
-  console.log(ruleForm.value.methods.resetFields);
   ruleForm.value.methods.resetFields();
 };
 </script>
