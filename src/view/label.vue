@@ -1,43 +1,22 @@
 <template>
     <div class="box">slot-label</div>
+    <el-icon :size="10" color="red">
 
-    <el-form-renderer label-width="100px" :content="content" />
+    </el-icon>
+    <el-form-renderer label-width="100px" :content="content" inline />
 </template>
 <script setup>
-import { reactive, h } from "vue";
+import { reactive, h, resolveComponent } from "vue";
 import elFormRenderer from "../components/femessage/el-form-renderer.vue";
 const content = reactive([
     {
         type: 'input',
         id: 'name',
-        label: h(
-            'span',
-            [
-                '名称',
-                h(
-                    'i',
-                    {
-                        class: 'el-icon-edit'
-                    }
-                )
-            ]
-        ),
-    }, {
-        type: 'select',
-        id: 'region',
-        label: h('span', [
-            '地点',
-            h('i', {
-                class: 'el-icon-eleme'
-            })
-        ]),
-        options: [{
-            label: 'area1',
-            value: 'shanghai'
-        }, {
-            label: 'area2',
-            value: 'beijing'
-        }],
+        label: h('span', {}, '输入'),
+        el: {
+            size: 'small',
+        }
+
     }
 ]);
 </script>
