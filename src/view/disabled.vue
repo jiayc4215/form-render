@@ -1,5 +1,5 @@
 <template>
-    <div class="box">slot</div>
+    <div class="box">disabled</div>
     <ul>
         <li>作为 el-form-renderer 的 prop 传入，禁用整个表单项，优先级最高 </li>
         <li> 作为 el 的属性传入，作用于单个表单项组件</li>

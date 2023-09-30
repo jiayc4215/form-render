@@ -114,9 +114,9 @@ const content = reactive([
 ]);
 const ruleForm = ref();
 
-const submitForm = async () => {
+const submitForm = () => {
   try {
-    await ruleForm.value.methods.validate((valid) => {
+    ruleForm.value.methods.validate((valid) => {
       if (valid) {
         console.log("OK");
       } else {

@@ -10,6 +10,11 @@ import update from "../view/update.vue";
 import slot from "../view/slot.vue";
 import hidden from "../view/hidden.vue";
 import disabled from "../view/disabled.vue";
+import vmodel from "../view/vmodel.vue";
+import rules from "../view/rules.vue";
+import next from "../view/next.vue";
+import readonly from "../view/readonly.vue";
+import label from "../view/label.vue";
 const routes = [
   {
     path: "/",
@@ -65,6 +70,31 @@ const routes = [
     path: "/disabled",
     name: "disabled",
     component: disabled,
+  },
+  {
+    path: "/vmodel",
+    name: "vmodel",
+    component: vmodel,
+  },
+  {
+    path: "/rules",
+    name: "rules",
+    component: rules,
+  },
+  {
+    path: "/next",
+    name: "next",
+    component: next,
+  },
+  {
+    path: "/readonly",
+    name: "readonly",
+    component: readonly,
+  },
+  {
+    path: "/label",
+    name: "label",
+    component: label,
   },
 ];
 

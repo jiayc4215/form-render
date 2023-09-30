@@ -3,14 +3,14 @@
     <el-form-item v-if="_show" :prop="prop" :label="typeof data.label === 'string' ? data.label : ''"
       :rules="!readonly && Array.isArray(data.rules) ? data.rules : undefined" v-bind="data.attrs"
       class="render-form-item">
-      <!-- label -->
-      <!-- <v-node v-if="typeof data.label !== 'string'" slot="label" :content="data.label" /> -->
-      <!--只读 input select -->
+      <v-node v-if="typeof data.label !== 'string'" slot="label" :content="data.label" />
+
       <template v-if="readonly && hasReadonlyContent">
         <el-input v-if="data.type === 'input'" v-bind="componentProps" :modelValue="itemValue" readonly
           v-on="listeners" />
+
         <div v-else-if="data.type === 'select'">
-          <template> {{ multipleValue }} </template>
+          {{ multipleValue }}
         </div>
       </template>
       <!-- 处理 date-picker bug-->
@@ -52,6 +52,7 @@ import _topairs from "lodash.topairs";
 import _frompairs from "lodash.frompairs";
 import _get from "lodash.get";
 import CustomComponent from "../util/CustomComponent";
+import VNode from '../util/VNode'
 import axios from "axios";
 
 let props = defineProps({
@@ -204,13 +205,14 @@ watch(
   },
   { immediate: true }
 );
-const multipleValue = ({ data, itemValue, options = [] }) => {
+const multipleValue = computed(() => {
+  // el-select 显示对应的 label；
   const multipleSelectValue =
-    _get(data, "el.multiple") && Array.isArray(itemValue) ? itemValue : [itemValue];
+    _get(props.data, "el.multiple") && Array.isArray(props.itemValue) ? props.itemValue : [props.itemValue];
   return multipleSelectValue
-    .map((val) => (options.find((op) => op.value === val) || {}).label)
+    .map((val) => (props.options.find((op) => op.value === val) || {}).label)
     .join();
-};
+})
 // 校验表单项目
 const triggerValidate = async (id) => {
   try {

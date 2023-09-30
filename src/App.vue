@@ -21,6 +21,16 @@
     <router-link to="/hidden">hidden</router-link> |
 
     <router-link to="/disabled">disabled</router-link> |
+
+    <router-link to="/vmodel">vmodel</router-link> |
+
+    <router-link to="/rules">rules</router-link> |
+
+    <router-link to="/next">next</router-link> |
+
+    <router-link to="/readonly">readonly</router-link> |
+
+    <router-link to="/label">label</router-link> |
   </nav>
   <router-view></router-view>
 </template>
