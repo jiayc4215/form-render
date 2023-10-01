@@ -6,8 +6,8 @@
         <slot :name="`id:${item.id}`" />
         <slot :name="`$id:${item.id}`" />
 
-        <component :is="item.type === GROUP ? RenderFormGroup : RenderFormItem" ref="refs" :data="item" :value="value"
-          :item-value="value[item.id]" :disabled="disabled ||
+        <component :is="item.type === GROUP ? RenderFormGroup : RenderFormItem" ref="componentRef" :data="item"
+          :value="value" :item-value="value[item.id]" :disabled="disabled ||
             (typeof item.disabled === 'function' ? item.disabled(value) : item.disabled)
             " :readonly="readonly || item.readonly" :options="options[item.id]" @updateValue="updateValue" />
       </template>
@@ -37,7 +37,7 @@ let options = reactive({});
 let initValue = reactive({});
 let myelForm = ref();
 let methods = {};
-const refs = ref({});
+const componentRef = ref([]);
 let emit = defineEmits(["update:FormData"]);
 onMounted(async () => {
   initValue = _clonedeep(value);
@@ -153,34 +153,8 @@ let setOptions = (id, O) => {
 };
 
 const getComponentById = (id) => {
-  console.log(refs.value.value, '-------refs.value');
-  let contentArray = [];
-  content.value.forEach((item) => {
-    if (item.type === GROUP) {
-      const items = item.items.map((formItem) => {
-        formItem.groupId = item.id;
-        return formItem;
-      });
-      contentArray.push(...items);
-    } else {
-      contentArray.push(item);
-    }
-  });
-  console.log(contentArray);
-  const itemContent = contentArray.find((item) => item.id === id);
-  if (!itemContent) {
-    return undefined;
-  }
-
-  if (itemContent.groupId) {
-    const componentRef = refs.value[itemContent.groupId][0];
-    console.log(refs.value, '-------refs.value');
-    return componentRef.$refs[`formItem-${id}`][0].$refs.customComponent;
-  } else {
-    const componentRef = refs.value[id][0];
-    return componentRef.$refs.customComponent;
-  }
-};
+  console.log(componentRef.value[0].customComponentRef, '-------refs.value');
+}
 
 provide("methods", methods);
 provide("updateForm", updateForm);

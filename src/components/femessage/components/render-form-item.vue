@@ -14,12 +14,12 @@
         </div>
       </template>
       <!-- 处理 date-picker bug-->
-      <custom-component v-else-if="data.type === 'date-picker'" ref="customComponent"
+      <custom-component v-else-if="data.type === 'date-picker'" ref="customComponentRef"
         :component="data.component || `el-${data.type || 'input'}`" v-bind="componentProps" :modelValue="itemValue"
         :disabled="disabled || componentProps.disabled || readonly" v-on="listeners" :loading="loading"
         :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod">
       </custom-component>
-      <custom-component v-else ref="customComponent" :component="data.component || `el-${data.type || 'input'}`"
+      <custom-component v-else ref="customComponentRef" :component="data.component || `el-${data.type || 'input'}`"
         v-bind="componentProps" :modelValue="itemValue" :disabled="disabled || componentProps.disabled || readonly"
         v-on="listeners" :loading="loading"
         :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod">
@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { computed, reactive, inject, nextTick, ref, watch } from "vue";
+import { computed, reactive, inject, nextTick, ref, watch, } from "vue";
 import { noop } from "../util/utils";
 import getEnableWhenStatus from "../util/enable-when";
 import _includes from "lodash.includes";
@@ -54,6 +54,7 @@ import _get from "lodash.get";
 import CustomComponent from "../util/CustomComponent";
 import VNode from '../util/VNode'
 import axios from "axios";
+let customComponentRef = ref()
 
 let props = defineProps({
   data: Object,
@@ -70,6 +71,7 @@ let props = defineProps({
   readonly: Boolean,
   options: Array,
 });
+
 
 // setOptions
 const emit = defineEmits(["updateValue"]);
@@ -246,4 +248,5 @@ const optionKey = (opt) => {
     return opt.value;
   }
 };
+defineExpose({})
 </script>

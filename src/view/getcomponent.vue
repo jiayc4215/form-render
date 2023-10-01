@@ -2,14 +2,14 @@
     <div>
         <el-form-renderer inline :content="content" ref="form">
         </el-form-renderer>
-        <el-button @click="getComponent('id')">获取id input</el-button>
+        <el-button ref="but" @click="getComponent('id')">获取id input</el-button>
         <el-button @click="getComponent('first')">获取first name input</el-button>
     </div>
 </template>
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, } from "vue";
 import elFormRenderer from "../components/femessage/el-form-renderer.vue";
-const data = ref({})
+
 const form = ref()
 const content = reactive([
     {
@@ -39,7 +39,7 @@ const content = reactive([
     }
 ]);
 const getComponent = (id) => {
-    console.log(form.value.getComponentById(id))
+    form.value.getComponentById(id)
 
 }
 </script>
