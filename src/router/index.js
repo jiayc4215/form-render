@@ -15,6 +15,8 @@ import rules from "../view/rules.vue";
 import next from "../view/next.vue";
 import readonly from "../view/readonly.vue";
 import label from "../view/label.vue";
+import getform from "../view/getform.vue";
+import getcomponent from "../view/getcomponent.vue";
 const routes = [
   {
     path: "/",
@@ -95,6 +97,16 @@ const routes = [
     path: "/label",
     name: "label",
     component: label,
+  },
+  {
+    path: "/getform",
+    name: "getform",
+    component: getform,
+  },
+  {
+    path: "/getcomponent",
+    name: "getcomponent",
+    component: getcomponent,
   },
 ];
 

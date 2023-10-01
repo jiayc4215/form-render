@@ -31,6 +31,10 @@
     <router-link to="/readonly">readonly</router-link> |
 
     <router-link to="/label">label</router-link> |
+
+    <router-link to="/getform">get-form-value</router-link> |
+
+    <router-link to="/getcomponent">getcomponent</router-link> |
   </nav>
   <router-view></router-view>
 </template>

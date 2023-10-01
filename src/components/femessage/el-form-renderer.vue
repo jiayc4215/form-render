@@ -6,7 +6,7 @@
         <slot :name="`id:${item.id}`" />
         <slot :name="`$id:${item.id}`" />
 
-        <component :is="item.type === GROUP ? RenderFormGroup : RenderFormItem" :ref="item.id" :data="item" :value="value"
+        <component :is="item.type === GROUP ? RenderFormGroup : RenderFormItem" ref="refs" :data="item" :value="value"
           :item-value="value[item.id]" :disabled="disabled ||
             (typeof item.disabled === 'function' ? item.disabled(value) : item.disabled)
             " :readonly="readonly || item.readonly" :options="options[item.id]" @updateValue="updateValue" />
@@ -19,7 +19,7 @@
 <script setup>
 import RenderFormGroup from "./components/render-form-group.vue";
 import RenderFormItem from "./components/render-form-item.vue";
-import { reactive, computed, ref, watch, onMounted, nextTick, provide } from "vue";
+import { reactive, computed, ref, watch, onMounted, nextTick, provide, getCurrentInstance } from "vue";
 import transformContent from "./util/transform-content";
 import _set from "lodash.set";
 import _isequal from "lodash.isequal";
@@ -37,7 +37,7 @@ let options = reactive({});
 let initValue = reactive({});
 let myelForm = ref();
 let methods = {};
-
+const refs = ref({});
 let emit = defineEmits(["update:FormData"]);
 onMounted(async () => {
   initValue = _clonedeep(value);
@@ -151,32 +151,37 @@ let setOptions = (id, O) => {
   _set(options, id, O);
   options = { ...options }; // 设置之前不存在的 options 时需要重新设置响应式更新
 };
-// let getComponentById = (id) => {
-//   let content = [];
-//   this.content.forEach((item) => {
-//     if (item.type === GROUP) {
-//       const items = item.items.map((formItem) => {
-//         formItem.groupId = item.id;
-//         return formItem;
-//       });
-//       content.push(...items);
-//     } else {
-//       content.push(item);
-//     }
-//   });
-//   const itemContent = content.find((item) => item.id === id);
-//   if (!itemContent) {
-//     return undefined;
-//   }
 
-//   if (itemContent.groupId) {
-//     const componentRef = this.$refs[itemContent.groupId][0];
-//     return componentRef.$refs[`formItem-${id}`][0].$refs.customComponent;
-//   } else {
-//     const componentRef = this.$refs[id][0];
-//     return componentRef.$refs.customComponent;
-//   }
-// };
+const getComponentById = (id) => {
+  console.log(refs.value.value, '-------refs.value');
+  let contentArray = [];
+  content.value.forEach((item) => {
+    if (item.type === GROUP) {
+      const items = item.items.map((formItem) => {
+        formItem.groupId = item.id;
+        return formItem;
+      });
+      contentArray.push(...items);
+    } else {
+      contentArray.push(item);
+    }
+  });
+  console.log(contentArray);
+  const itemContent = contentArray.find((item) => item.id === id);
+  if (!itemContent) {
+    return undefined;
+  }
+
+  if (itemContent.groupId) {
+    const componentRef = refs.value[itemContent.groupId][0];
+    console.log(refs.value, '-------refs.value');
+    return componentRef.$refs[`formItem-${id}`][0].$refs.customComponent;
+  } else {
+    const componentRef = refs.value[id][0];
+    return componentRef.$refs.customComponent;
+  }
+};
+
 provide("methods", methods);
 provide("updateForm", updateForm);
 provide("setOptions", setOptions);
@@ -187,6 +192,7 @@ defineExpose({
   updateForm,
   setOptions,
   methods,
+  getComponentById
 });
 </script>
 <script>

@@ -1,8 +1,5 @@
 <template>
     <div class="box">slot-label</div>
-    <el-icon :size="10" color="red">
-
-    </el-icon>
     <el-form-renderer label-width="100px" :content="content" inline />
 </template>
 <script setup>
