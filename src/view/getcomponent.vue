@@ -2,8 +2,9 @@
     <div>
         <el-form-renderer inline :content="content" ref="form">
         </el-form-renderer>
-        <el-button ref="but" @click="getComponent('id')">获取id input</el-button>
+        <el-button @click="getComponent('id')">获取id input</el-button>
         <el-button @click="getComponent('first')">获取first name input</el-button>
+        <el-input ref="ipt"></el-input>
     </div>
 </template>
 <script setup>
@@ -39,7 +40,7 @@ const content = reactive([
     }
 ]);
 const getComponent = (id) => {
-    form.value.getComponentById(id)
+    console.log(form.value.getComponentById(id));
 
 }
 </script>

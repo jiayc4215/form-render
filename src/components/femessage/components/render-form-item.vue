@@ -14,12 +14,12 @@
         </div>
       </template>
       <!-- 处理 date-picker bug-->
-      <custom-component v-else-if="data.type === 'date-picker'" ref="customComponentRef"
-        :component="data.component || `el-${data.type || 'input'}`" v-bind="componentProps" :modelValue="itemValue"
+      <component v-else-if="data.type === 'date-picker'" ref="customComponent"
+        v-bind:is="data.component || `el-${data.type || 'input'}`" v-bind="componentProps" :modelValue="itemValue"
         :disabled="disabled || componentProps.disabled || readonly" v-on="listeners" :loading="loading"
         :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod">
-      </custom-component>
-      <custom-component v-else ref="customComponentRef" :component="data.component || `el-${data.type || 'input'}`"
+      </component>
+      <component v-else ref="customComponent" v-bind:is="data.component || `el-${data.type || 'input'}`"
         v-bind="componentProps" :modelValue="itemValue" :disabled="disabled || componentProps.disabled || readonly"
         v-on="listeners" :loading="loading"
         :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod">
@@ -38,7 +38,7 @@
           <el-radio v-else-if="data.type === 'radio-group' && data.style !== 'button'" :key="opt.label" v-bind="opt"
             :label="'value' in opt ? opt.value : opt.label">{{ opt.label }}</el-radio>
         </template>
-      </custom-component>
+      </component>
     </el-form-item>
   </div>
 </template>
@@ -51,10 +51,11 @@ import _includes from "lodash.includes";
 import _topairs from "lodash.topairs";
 import _frompairs from "lodash.frompairs";
 import _get from "lodash.get";
-import CustomComponent from "../util/CustomComponent";
+// 改用 动态组件 方便获取 ref
+// import CustomComponent from "../util/CustomComponent"; 
 import VNode from '../util/VNode'
 import axios from "axios";
-let customComponentRef = ref()
+let customComponent = ref()
 
 let props = defineProps({
   data: Object,
@@ -248,5 +249,5 @@ const optionKey = (opt) => {
     return opt.value;
   }
 };
-defineExpose({})
+defineExpose({ customComponent })
 </script>

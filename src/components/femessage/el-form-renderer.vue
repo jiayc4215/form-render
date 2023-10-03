@@ -6,8 +6,9 @@
         <slot :name="`id:${item.id}`" />
         <slot :name="`$id:${item.id}`" />
 
-        <component :is="item.type === GROUP ? RenderFormGroup : RenderFormItem" ref="componentRef" :data="item"
-          :value="value" :item-value="value[item.id]" :disabled="disabled ||
+        <component :is="item.type === GROUP ? RenderFormGroup : RenderFormItem"
+          :ref="el => { customComponent[item.id] = el }" :data="item" :value="value" :item-value="value[item.id]"
+          :disabled="disabled ||
             (typeof item.disabled === 'function' ? item.disabled(value) : item.disabled)
             " :readonly="readonly || item.readonly" :options="options[item.id]" @updateValue="updateValue" />
       </template>
@@ -37,12 +38,11 @@ let options = reactive({});
 let initValue = reactive({});
 let myelForm = ref();
 let methods = {};
-const componentRef = ref([]);
+const customComponent = ref([]);
 let emit = defineEmits(["update:FormData"]);
 onMounted(async () => {
   initValue = _clonedeep(value);
   await nextTick();
-
   // 检查 myelForm 是否已经初始化
   if (myelForm && myelForm.value) {
     Object.keys(myelForm.value).forEach((item) => {
@@ -153,9 +153,34 @@ let setOptions = (id, O) => {
 };
 
 const getComponentById = (id) => {
-  console.log(componentRef.value[0].customComponentRef, '-------refs.value');
-}
+  let content = [];
+  props.content.forEach((item) => {
+    if (item.type === GROUP) {
+      const items = item.items.map((formItem) => {
+        formItem.groupId = item.id;
+        return formItem;
+      });
+      content.push(...items);
+    } else {
+      content.push(item);
+    }
+  });
+  const itemContent = content.find((item) => item.id === id);
+  if (!itemContent) {
+    return undefined;
+  }
+  if (!itemContent.groupId) {
+    console.log(customComponent.value[id].customComponent);
 
+
+    return customComponent.value[id].customComponent;
+  } else {
+    console.log(itemContent.groupId);
+    const componentRef = customComponent.value[itemContent.groupId].customComponent;
+    console.log(componentRef);
+    return componentRef[`formItem-${id}`].customComponent;
+  }
+}
 provide("methods", methods);
 provide("updateForm", updateForm);
 provide("setOptions", setOptions);
