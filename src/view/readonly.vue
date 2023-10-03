@@ -9,8 +9,9 @@
     </el-form-renderer>
 </template>
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import elFormRenderer from "../components/femessage/el-form-renderer.vue";
+const ruleForm = ref()
 const content = reactive([
     {
         default: '小明',
