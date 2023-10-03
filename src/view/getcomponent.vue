@@ -4,7 +4,6 @@
         </el-form-renderer>
         <el-button @click="getComponent('id')">获取id input</el-button>
         <el-button @click="getComponent('first')">获取first name input</el-button>
-        <el-input ref="ipt"></el-input>
     </div>
 </template>
 <script setup>
