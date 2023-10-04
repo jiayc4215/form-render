@@ -15,12 +15,13 @@
           {{ multipleValue }}
         </div>
       </template>
-      <!-- 处理 date-picker bug-->
-      <component v-else-if="data.type === 'date-picker'" ref="customComponent"
+      <!-- 处理 date-picker cascader  bug-->
+      <component v-else-if="data.type === 'date-picker' || data.type === 'cascader'" ref=" customComponent"
         v-bind:is="data.component || `el-${data.type || 'input'}`" v-bind="componentProps" :modelValue="itemValue"
         :disabled="disabled || componentProps.disabled || readonly" v-on="listeners" :loading="loading"
         :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod">
       </component>
+
       <component v-else ref="customComponent" v-bind:is="data.component || `el-${data.type || 'input'}`"
         v-bind="componentProps" :modelValue="itemValue" :disabled="disabled || componentProps.disabled || readonly"
         v-on="listeners" :loading="loading"
