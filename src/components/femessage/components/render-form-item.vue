@@ -15,13 +15,12 @@
           {{ multipleValue }}
         </div>
       </template>
-      <!-- 处理 date-picker cascader  bug-->
-      <component v-else-if="data.type === 'date-picker' || data.type === 'cascader'" ref=" customComponent"
+      <!-- 处理 date-picker bug-->
+      <component v-else-if="data.type === 'date-picker' || data.type === 'cascader'" ref="customComponent"
         v-bind:is="data.component || `el-${data.type || 'input'}`" v-bind="componentProps" :modelValue="itemValue"
         :disabled="disabled || componentProps.disabled || readonly" v-on="listeners" :loading="loading"
         :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod">
       </component>
-
       <component v-else ref="customComponent" v-bind:is="data.component || `el-${data.type || 'input'}`"
         v-bind="componentProps" :modelValue="itemValue" :disabled="disabled || componentProps.disabled || readonly"
         v-on="listeners" :loading="loading"
@@ -97,10 +96,7 @@ const isBlurTrigger =
   });
 
 // 计算props
-const componentProps = computed(() => {
-  console.log('执行', '({ ...el, ...propsInner }),({ ...el, ...propsInner }),({ ...el, ...propsInner }),')
-  return ({ ...props.el, ...propsInner })
-});
+const componentProps = computed(() => ({ ...props.data.el, ...propsInner }));
 // 计算是否为只读 input select
 const hasReadonlyContent = computed(() => ["input", "select"].includes(props.data.type));
 //执行传入的hidden
@@ -187,7 +183,6 @@ const makingRequest = (remoteConfig, query) => {
     .then((resp) => {
       // 如果 isOptionsCase 为 true，则将响应数据中的每个元素映射为包含 "label" 和 "value" 属性的对象，并将结果传递给 setOptions 函数（如果存在）。
       if (isOptionsCase) {
-        console.log(resp, isOptionsCase);
         setOptions && setOptions(props.prop, resp);
       } else {
         // 如果 isOptionsCase 为 false，则将响应数据存储在 propsInner 中，属性名为 prop。
@@ -222,6 +217,7 @@ watch(
     // 至于为什么判断新旧值相同则返回，是因为 form 的 content 是响应式的，防止用户直接修改 content 其他内容时，导致 remote.request 重新发请求
 
     if (!newValue || typeof newValue !== "function" || newValue === oldValue) return;
+
     makingRequest(props.data.remote);
   },
   { immediate: true }

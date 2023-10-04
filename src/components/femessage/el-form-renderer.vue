@@ -210,7 +210,6 @@ let updateForm = (newValue) => {
  * @public
  */
 let setOptions = (id, O) => {
-  console.log(id, O);
   _set(options, id, O);
   options = Object.assign(options) // 设置之前不存在的 options 时需要重新设置响应式更新
 };
@@ -238,14 +237,9 @@ const getComponentById = (id) => {
     return undefined;
   }
   if (!itemContent.groupId) {
-    console.log(customComponent.value[id].customComponent);
-
-
     return customComponent.value[id].customComponent;
   } else {
-    console.log(itemContent.groupId);
     const componentRef = customComponent.value[itemContent.groupId].customComponent;
-    console.log(componentRef);
     return componentRef[`formItem-${id}`].customComponent;
   }
 }
