@@ -17,6 +17,10 @@ import readonly from "../view/readonly.vue";
 import label from "../view/label.vue";
 import getform from "../view/getform.vue";
 import getcomponent from "../view/getcomponent.vue";
+import deprecated from "../view/deprecated.vue";
+import el from "../view/el.vue";
+import radioGroup from "../view/radioGroup.vue";
+import remote from "../view/remote.vue";
 const routes = [
   {
     path: "/",
@@ -107,6 +111,26 @@ const routes = [
     path: "/getcomponent",
     name: "getcomponent",
     component: getcomponent,
+  },
+  {
+    path: "/deprecated",
+    name: "deprecated",
+    component: deprecated,
+  },
+  {
+    path: "/el",
+    name: "el",
+    component: el,
+  },
+  {
+    path: "/radioGroup",
+    name: "radioGroup",
+    component: radioGroup,
+  },
+  {
+    path: "/remote",
+    name: "remote",
+    component: remote,
   },
 ];
 

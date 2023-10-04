@@ -3,7 +3,9 @@
     <el-form-item v-if="_show" :prop="prop" :label="typeof data.label === 'string' ? data.label : ''"
       :rules="!readonly && Array.isArray(data.rules) ? data.rules : undefined" v-bind="data.attrs"
       class="render-form-item">
-      <v-node v-if="typeof data.label !== 'string'" slot="label" :content="data.label" />
+      <template #label>
+        <v-node v-if="typeof data.label !== 'string'" slot="label" :content="data.label" />
+      </template>
 
       <template v-if="readonly && hasReadonlyContent">
         <el-input v-if="data.type === 'input'" v-bind="componentProps" :modelValue="itemValue" readonly
@@ -74,30 +76,44 @@ let props = defineProps({
 });
 
 
-// setOptions
+// 更新表单方法
 const emit = defineEmits(["updateValue"]);
 let propsInner = reactive({});
+
 const loading = ref(false);
+
 let dataRef = ref(props.data);
-// validateField
+// 注入一个由祖先组件或整个应用 (通过 app.provide()) 提供的值。
+// 父组件提供 element ui的方法
 let methods = inject("methods");
+//  父组件提供的 更新 options的方法
 let setOptions = inject("setOptions");
+// 是否校验
 const isBlurTrigger =
   props.data.rules &&
   props.data.rules.some((rule) => {
     return rule.required && rule.trigger === "blur";
   });
 
-const componentProps = computed(() => ({ ...props.data.el, ...propsInner }));
+// 计算props
+const componentProps = computed(() => {
+  console.log('执行', '({ ...el, ...propsInner }),({ ...el, ...propsInner }),({ ...el, ...propsInner }),')
+  return ({ ...props.el, ...propsInner })
+});
+// 计算是否为只读 input select
 const hasReadonlyContent = computed(() => ["input", "select"].includes(props.data.type));
+//执行传入的hidden
 const hiddenStatus = computed(() => {
   const hidden = props.data.hidden || (() => false);
   return hidden(props.value, props.data);
 });
+// 弃用
 const enableWhenStatus = computed(() =>
   getEnableWhenStatus(props.data.enableWhen, props.data.value)
 );
+// 处理组件的显示与隐藏
 const _show = computed(() => !hiddenStatus.value && enableWhenStatus.value);
+// 处理事件监听 vue3实现 v-model  props：modelValue   event：update:modelValue
 const listeners = computed(() => {
   const data = props.data;
   const id = data.id;
@@ -124,7 +140,15 @@ const listeners = computed(() => {
     },
   };
 });
-
+// el-select 显示对应的 label；（只读）
+const multipleValue = computed(() => {
+  const multipleSelectValue =
+    _get(props.data, "el.multiple") && Array.isArray(props.itemValue) ? props.itemValue : [props.itemValue];
+  return multipleSelectValue
+    .map((val) => (props.options.find((op) => op.value === val) || {}).label)
+    .join();
+})
+// 处理服务器获取 options
 const makingRequest = (remoteConfig, query) => {
   const isOptionsCase =
     ["select", "checkbox-group", "radio-group"].indexOf(props.data.type) > -1;
@@ -136,7 +160,7 @@ const makingRequest = (remoteConfig, query) => {
       //响应成功时的回调函数，默认为一个函数，用于处理响应数据。
       if (dataPath) resp = _get(resp, dataPath);
       if (isOptionsCase) {
-        return resp.map((item) => ({
+        return resp?.map((item) => ({
           label: item[label],
           value: item[value],
         }));
@@ -162,15 +186,18 @@ const makingRequest = (remoteConfig, query) => {
     .then((resp) => {
       // 如果 isOptionsCase 为 true，则将响应数据中的每个元素映射为包含 "label" 和 "value" 属性的对象，并将结果传递给 setOptions 函数（如果存在）。
       if (isOptionsCase) {
+        console.log(resp, isOptionsCase);
         setOptions && setOptions(props.prop, resp);
       } else {
         // 如果 isOptionsCase 为 false，则将响应数据存储在 propsInner 中，属性名为 prop。
-        propsInner = { [prop]: resp };
+        propsInner = Object.assign(propsInner, { [prop]: resp });
+
       }
       // ，表示加载完成。
       loading.value = false;
     });
 };
+// 监听 是否有 data
 watch(dataRef, (data) => {
   if (!data) {
     throw new Error("data must be an Object.");
@@ -180,6 +207,7 @@ watch(dataRef, (data) => {
     throw new Error("`type` and `component` cannot both be null.");
   }
 });
+// 处理服务器获取options
 watch(
   /**
    * 这里其实用 remote 处理了两件事。有机会是可以拆分的
@@ -197,6 +225,7 @@ watch(
   },
   { immediate: true }
 );
+// 处理服务器获取options
 watch(
   () => props.data.remote?.url,
   (url, oldV) => {
@@ -208,14 +237,7 @@ watch(
   },
   { immediate: true }
 );
-const multipleValue = computed(() => {
-  // el-select 显示对应的 label；
-  const multipleSelectValue =
-    _get(props.data, "el.multiple") && Array.isArray(props.itemValue) ? props.itemValue : [props.itemValue];
-  return multipleSelectValue
-    .map((val) => (props.options.find((op) => op.value === val) || {}).label)
-    .join();
-})
+
 // 校验表单项目
 const triggerValidate = async (id) => {
   try {
@@ -228,7 +250,7 @@ const triggerValidate = async (id) => {
     console.log(error);
   }
 };
-
+// 远端搜索方法
 const remoteMethod = (query) => {
   if (
     _get(props.data, "type") === "select" &&
@@ -238,6 +260,7 @@ const remoteMethod = (query) => {
     makingRequest(props.data.remote, query);
   }
 };
+// 初始化 optios key
 const optionKey = (opt) => {
   if (opt.value instanceof Object) {
     if (!props.data.el || !props.data.el.valueKey) {
@@ -249,5 +272,6 @@ const optionKey = (opt) => {
     return opt.value;
   }
 };
+// 暴露 element ui 模版引用
 defineExpose({ customComponent })
 </script>
