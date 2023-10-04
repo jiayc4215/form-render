@@ -21,6 +21,8 @@ import deprecated from "../view/deprecated.vue";
 import el from "../view/el.vue";
 import radioGroup from "../view/radioGroup.vue";
 import remote from "../view/remote.vue";
+import rulesPlus from "../view/rulesPlus.vue";
+import MyInput from "../view/MyInput.vue";
 const routes = [
   {
     path: "/",
@@ -131,6 +133,16 @@ const routes = [
     path: "/remote",
     name: "remote",
     component: remote,
+  },
+  {
+    path: "/rulesPlus",
+    name: "rulesPlus",
+    component: rulesPlus,
+  },
+  {
+    path: "/MyInput",
+    name: "MyInput",
+    component: MyInput,
   },
 ];
 

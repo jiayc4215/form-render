@@ -30,33 +30,23 @@
 
     <router-link to="/remote">remote</router-link> |
 
-    <router-link to="/setoptios">setoptios</router-link> |
+    <router-link to="/rules">rules</router-link> |
 
+    <router-link to="/rulesPlus">rulesPlus</router-link> |
 
+    <router-link to="/setoptios">set-options </router-link> |
 
-    <router-link to="/format">format</router-link> |
-
-    <router-link to="/update">update</router-link> |
+    <router-link to="/label">slot-label</router-link> |
 
     <router-link to="/slot">slot</router-link> |
 
+    <router-link to="/update">update-form</router-link> |
 
+    <router-link to="/vmodel">v-model</router-link> |
 
+    <router-link to="/format">value-format</router-link> |
 
-
-    <router-link to="/vmodel">vmodel</router-link> |
-
-    <router-link to="/rules">rules</router-link> |
-
-
-
-
-
-    <router-link to="/label">label</router-link> |
-
-
-
-
+    <router-link to="/MyInput">MyInput</router-link> |
   </nav>
   <router-view></router-view>
 </template>

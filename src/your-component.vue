@@ -1,20 +1,21 @@
 <template>
-  <input type="text" :value="value" @input="onInput" />
+  <el-input :modelValue="value" @input='onInput' v-bind="$attrs"></el-input>
+  {{ value }}
 </template>
 
-<script>
-export default {
-  rules: [
-    {
-      required: true,
-      message: "自定义组件的提醒消息",
-    },
-  ],
-  props: ["value"],
-  methods: {
-    onInput(val) {
-      this.$emit("input", val);
-    },
-  },
-};
+<script setup>
+let emit = defineEmits(["customEvent", 'update:modelValue']);
+import { watch } from 'vue';
+let props = defineProps({
+  value: String,
+  title: String
+})
+watch(() => props.value, () => {
+  console.log('触发');
+  emit('customEvent', value,)
+})
+const onInput = (val) => {
+
+  emit('update:modelValue', val)
+}
 </script>
