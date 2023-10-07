@@ -1,8 +1,6 @@
-
 ## 遗留问题 :带解决
 
-select 为 multiple多选时 必须初始化空数组（在elementplus v-model初始化updateValue时 为空数组会触发校验）
-自定义label未实现 没有找到表单插槽
+select 为 multiple 多选时 必须初始化空数组（在 elementplus v-model 初始化 updateValue 时 为空数组会触发校验）
 
 ## Props
 

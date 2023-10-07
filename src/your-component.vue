@@ -9,6 +9,12 @@ let props = defineProps({
   modelValue: String,
   title: String,
 });
+const rules = [
+  {
+    required: true,
+    message: "自定义组件的提醒消息",
+  },
+];
 watch(
   () => props.modelValue,
   () => {
@@ -27,4 +33,5 @@ const newValue = computed({
     return emit("update:modelValue", value);
   },
 });
+defineExpose({ rules });
 </script>

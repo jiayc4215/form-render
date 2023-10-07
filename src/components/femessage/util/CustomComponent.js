@@ -1,4 +1,4 @@
-import { h, resolveComponent, markRaw } from "vue";
+import { h, resolveComponent } from "vue";
 
 // Vue3 中函数式组件需要提供一个渲染函数
 const CustomComponent = (props, context) => {
