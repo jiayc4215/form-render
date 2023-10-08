@@ -1,44 +1,98 @@
 <template>
   <div>
-    <el-form-item v-if="_show" :prop="prop" :label="typeof data.label === 'string' ? data.label : ''"
-      :rules="!readonly && Array.isArray(data.rules) ? data.rules : undefined" v-bind="data.attrs"
-      class="render-form-item">
+    <!-- 绑定显示，校验匹配规则字段，label，rules校验规则，attrs（原生属性）， -->
+    <el-form-item
+      v-if="_show"
+      :prop="prop"
+      :label="typeof data.label === 'string' ? data.label : ''"
+      :rules="!readonly && Array.isArray(data.rules) ? data.rules : undefined"
+      v-bind="data.attrs"
+      class="render-form-item"
+    >
+      <!-- label插槽 -->
       <template #label>
-        <v-node v-if="typeof data.label !== 'string'" slot="label" :content="data.label" />
+        <v-node
+          v-if="typeof data.label !== 'string'"
+          slot="label"
+          :content="data.label"
+        />
       </template>
-
+      <!-- 处理之只读input select -->
       <template v-if="readonly && hasReadonlyContent">
-        <el-input v-if="data.type === 'input'" v-bind="componentProps" :modelValue="itemValue" readonly
-          v-on="listeners" />
+        <el-input
+          v-if="data.type === 'input'"
+          v-bind="componentProps"
+          :modelValue="itemValue"
+          readonly
+          v-on="listeners"
+        />
 
         <div v-else-if="data.type === 'select'">
           {{ multipleValue }}
         </div>
       </template>
-      <!-- 处理 date-picker bug-->
-      <component v-else-if="data.type === 'date-picker' || data.type === 'cascader'" ref="customComponent"
-        v-bind:is="data.component || `el-${data.type || 'input'}`" v-bind="componentProps" :modelValue="itemValue"
-        :disabled="disabled || componentProps.disabled || readonly" v-on="listeners" :loading="loading"
-        :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod">
+      <!-- 处理 date-picker,cascader,动态渲染不显示文字 bug-->
+      <component
+        v-else-if="data.type === 'date-picker' || data.type === 'cascader'"
+        ref="customComponent"
+        v-bind:is="data.component || `el-${data.type || 'input'}`"
+        v-bind="componentProps"
+        :modelValue="itemValue"
+        :disabled="disabled || componentProps.disabled || readonly"
+        v-on="listeners"
+        :loading="loading"
+        :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod"
+      >
       </component>
-      <component v-else ref="customComponent" v-bind:is="data.component || `el-${data.type || 'input'}`"
-        v-bind="componentProps" :modelValue="itemValue" :disabled="disabled || componentProps.disabled || readonly"
-        v-on="listeners" :loading="loading"
-        :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod">
+      <!-- 绑定 模板引用 动态组件 props value值 是否禁用 事件 lodding 远端搜索方法 -->
+      <component
+        v-else
+        ref="customComponent"
+        v-bind:is="data.component || `el-${data.type || 'input'}`"
+        v-bind="componentProps"
+        :modelValue="itemValue"
+        :disabled="disabled || componentProps.disabled || readonly"
+        v-on="listeners"
+        :loading="loading"
+        :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod"
+      >
+        <!-- 插槽处理  选项-->
         <template v-for="(opt, index) in options">
-          <el-option v-if="data.type === 'select'" :key="optionKey(opt) || index" v-bind="opt" />
-          <el-checkbox-button v-if="data.type === 'checkbox-group' && data.style === 'button'" :key="opt.value"
-            v-bind="opt" :label="'value' in opt ? opt.value : opt.label">
+          <el-option
+            v-if="data.type === 'select'"
+            :key="optionKey(opt) || index"
+            v-bind="opt"
+          />
+          <el-checkbox-button
+            v-if="data.type === 'checkbox-group' && data.style === 'button'"
+            :key="opt.value"
+            v-bind="opt"
+            :label="'value' in opt ? opt.value : opt.label"
+          >
             {{ opt.label }}
           </el-checkbox-button>
-          <el-checkbox v-else-if="data.type === 'checkbox-group' && data.style !== 'button'" :key="opt.value" v-bind="opt"
-            :label="'value' in opt ? opt.value : opt.label">
+          <el-checkbox
+            v-else-if="data.type === 'checkbox-group' && data.style !== 'button'"
+            :key="opt.value"
+            v-bind="opt"
+            :label="'value' in opt ? opt.value : opt.label"
+          >
             {{ opt.label }}
           </el-checkbox>
-          <el-radio-button v-else-if="data.type === 'radio-group' && data.style === 'button'" :key="opt.label"
-            v-bind="opt" :label="'value' in opt ? opt.value : opt.label">{{ opt.label }}</el-radio-button>
-          <el-radio v-else-if="data.type === 'radio-group' && data.style !== 'button'" :key="opt.label" v-bind="opt"
-            :label="'value' in opt ? opt.value : opt.label">{{ opt.label }}</el-radio>
+          <el-radio-button
+            v-else-if="data.type === 'radio-group' && data.style === 'button'"
+            :key="opt.label"
+            v-bind="opt"
+            :label="'value' in opt ? opt.value : opt.label"
+            >{{ opt.label }}</el-radio-button
+          >
+          <el-radio
+            v-else-if="data.type === 'radio-group' && data.style !== 'button'"
+            :key="opt.label"
+            v-bind="opt"
+            :label="'value' in opt ? opt.value : opt.label"
+            >{{ opt.label }}</el-radio
+          >
         </template>
       </component>
     </el-form-item>
@@ -46,7 +100,7 @@
 </template>
 
 <script setup>
-import { computed, reactive, inject, nextTick, ref, watch, } from "vue";
+import { computed, reactive, inject, nextTick, ref, watch } from "vue";
 import { noop } from "../util/utils";
 import getEnableWhenStatus from "../util/enable-when";
 import _includes from "lodash.includes";
@@ -54,10 +108,10 @@ import _topairs from "lodash.topairs";
 import _frompairs from "lodash.frompairs";
 import _get from "lodash.get";
 // 改用 动态组件 方便获取 ref
-// import CustomComponent from "../util/CustomComponent"; 
-import VNode from '../util/VNode'
+// import CustomComponent from "../util/CustomComponent";
+import VNode from "../util/VNode";
 import axios from "axios";
-let customComponent = ref()
+let customComponent = ref();
 
 let props = defineProps({
   data: Object,
@@ -74,7 +128,6 @@ let props = defineProps({
   readonly: Boolean,
   options: Array,
 });
-
 
 // 更新表单方法
 const emit = defineEmits(["updateValue"]);
@@ -140,11 +193,13 @@ const listeners = computed(() => {
 // el-select 显示对应的 label；（只读）
 const multipleValue = computed(() => {
   const multipleSelectValue =
-    _get(props.data, "el.multiple") && Array.isArray(props.itemValue) ? props.itemValue : [props.itemValue];
+    _get(props.data, "el.multiple") && Array.isArray(props.itemValue)
+      ? props.itemValue
+      : [props.itemValue];
   return multipleSelectValue
     .map((val) => (props.options.find((op) => op.value === val) || {}).label)
     .join();
-})
+});
 // 处理服务器获取 options
 const makingRequest = (remoteConfig, query) => {
   const isOptionsCase =
@@ -187,7 +242,6 @@ const makingRequest = (remoteConfig, query) => {
       } else {
         // 如果 isOptionsCase 为 false，则将响应数据存储在 propsInner 中，属性名为 prop。
         propsInner = Object.assign(propsInner, { [prop]: resp });
-
       }
       // ，表示加载完成。
       loading.value = false;
@@ -270,5 +324,5 @@ const optionKey = (opt) => {
   }
 };
 // 暴露 element ui 模版引用
-defineExpose({ customComponent })
+defineExpose({ customComponent });
 </script>

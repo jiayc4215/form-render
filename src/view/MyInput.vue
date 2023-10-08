@@ -17,6 +17,15 @@ const content = reactive([
       type: "input", // submit button
       title: "这是一个标题", // custom defined props
     },
+    // 可以通过 overrideRules: true 来覆盖自定义组件内置的校验规则
+    overrideRules: true,
+    rules: [
+      {
+        required: true,
+        trigger: "blur",
+        message: "不能为空！",
+      },
+    ],
     // 传入组件事件
     on: {
       focus: ([event], updateForm) => {
