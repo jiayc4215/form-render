@@ -1,15 +1,17 @@
 <template>
-  <el-input v-model="newValue"></el-input>
+  <el-input v-model="newValue" v-bind="$attrs"></el-input>
 </template>
 
 <script setup>
 let emit = defineEmits(["customEvent", "update:modelValue"]);
-import { watch, computed } from "vue";
+
+import { watch, computed, useAttrs } from "vue";
 let props = defineProps({
   modelValue: String,
   title: String,
 });
-
+const attrs = useAttrs();
+console.log(attrs);
 watch(
   () => props.modelValue,
   () => {

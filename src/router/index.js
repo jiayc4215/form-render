@@ -23,6 +23,7 @@ import radioGroup from "../view/radioGroup.vue";
 import remote from "../view/remote.vue";
 import rulesPlus from "../view/rulesPlus.vue";
 import MyInput from "../view/MyInput.vue";
+import testAttrs from "../view/testAttrs.vue";
 const routes = [
   {
     path: "/",
@@ -143,6 +144,11 @@ const routes = [
     path: "/MyInput",
     name: "MyInput",
     component: MyInput,
+  },
+  {
+    path: "/testAttrs",
+    name: "testAttrs",
+    component: testAttrs,
   },
 ];
 
