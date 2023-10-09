@@ -1,6 +1,34 @@
-## 遗留问题 :带解决
+## 遗留问题 :待解决
 
 select 为 multiple 多选时 必须初始化空数组（在 elementplus v-model 初始化 updateValue 时 为空数组会触发校验）
+
+## Introduction
+
+### WHAT
+
+form-renderer 基于元素 element-plus，但不限于元素 element-plus 组件。在完全继承 element-plus 元素的 form 属性的基础上，进行了扩展。一些非表单组件或自定义组件，因此，用户可以使用一段 json 来呈现完整的表单。
+
+### WHY
+
+在我们的日常开发中，有很多有表单的页面，通常表单结构相似，逻辑重复。el 表单呈现器没有复杂的逻辑。它只转换 JSON 来呈现表单项，节省了编写业务逻辑的时间和精力，并减少了重复代码。
+
+## Features
+
+- 用 json 呈现表单
+- 支持与自定义组件集成
+- 支持 updateForm 方法批量更新表单数据
+- 支持 setOptions 方法，动态更改选择选项
+- 内容支持 inputFormat、outputFormat、trim 以处理组件的输入和输出值
+- 支持 v-model
+
+## Links
+
+- [$attrs 和 $listeners (vue2&&vue3)](https://blog.csdn.net/qq_63358859/article/details/133699476?spm=1001.2014.3001.5501)
+- [vue2 与 vue3 函数式组件](https://blog.csdn.net/qq_63358859/article/details/133635120?spm=1001.2014.3001.5501)
+- [vue 2 与 vue3 获取模版引用 （ref）的区别](https://blog.csdn.net/qq_63358859/article/details/133532229?spm=1001.2014.3001.5501)
+- [vue2 与 vue3 v-model 的区别](https://marketplace.visualstudio.com/items?itemName=FEMessage.fem-vscode-helper)
+- [vue2 版本](https://blog.csdn.net/qq_63358859/article/details/130442636?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522169684271816800180612618%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&request_id=169684271816800180612618&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_ecpm_v1~rank_v31_ecpm-7-130442636-null-null.nonecase&utm_term=render&spm=1018.2226.3001.4450)
+- [中文文档](https://gitee.com/childe-jia/form-render/wikis/%E6%96%87%E6%A1%A3/%E4%BB%8B%E7%BB%8D)
 
 ## Props
 
@@ -218,3 +246,7 @@ support all [el-form's methods](https://element.eleme.io/#/zh-CN/component/form#
 | -------- | ------------------------------------------- |
 | default  | insert at bottom                            |
 | id:hello | insert before form-item whose id is 'hello' |
+
+## Inspiration
+
+thanks to [el-form-renderer](https://github.com/femessage/el-form-renderer/)
