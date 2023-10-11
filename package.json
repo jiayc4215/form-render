@@ -1,7 +1,8 @@
 {
-  "name": "vite-project",
-  "private": true,
-  "version": "0.0.0",
+  
+  "name": "el-form-renderer-vue3", 
+
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -30,3 +31,4 @@
     "vite": "^4.4.5"
   }
 }
+
