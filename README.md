@@ -30,6 +30,162 @@ form-renderer 基于元素 element-plus，但不限于元素 element-plus 组件
 - [vue2 版本](https://blog.csdn.net/qq_63358859/article/details/130442636?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522169684271816800180612618%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&request_id=169684271816800180612618&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_ecpm_v1~rank_v31_ecpm-7-130442636-null-null.nonecase&utm_term=render&spm=1018.2226.3001.4450)
 - [中文文档](https://gitee.com/childe-jia/form-render/wikis/%E6%96%87%E6%A1%A3/%E4%BB%8B%E7%BB%8D)
 
+## Quick Start
+
+```ts
+pnpm i el-form-renderer-vue3
+```
+
+```ts
+import elFormRenderer from "el-form-renderer-vue3";
+app.use(elFormRenderer);
+```
+
+```ts
+<template>
+  <el-form-renderer
+    label-width="100px"
+    :content="content"
+    v-model:FormData="FormData"
+    ref="form"
+  >
+    <el-button @click="resetForm">reset</el-button>
+    <el-button @click="setValue">设置名字为小明</el-button>
+    <pre>{{ FormData }}</pre>
+  </el-form-renderer>
+</template>
+
+<script setup>
+import { reactive, ref } from "vue";
+
+const form = ref();
+let FormData = reactive({
+  name: "",
+  type: [],
+  startDate: "2019-01-01",
+  endDate: "2019-01-02",
+  region: [],
+  date: ["2019-01-01", "2019-01-02"],
+});
+const content = reactive([
+  {
+    type: "input",
+    id: "name",
+    label: "name",
+    attrs: { "data-name": "form1" },
+    el: {
+      size: "default",
+      placeholder: "test placeholder",
+    },
+    rules: [
+      { required: true, message: "miss name", trigger: "blur" },
+      { min: 3, max: 5, message: "length between 3 to 5", trigger: "blur" },
+    ],
+  },
+  {
+    type: "select",
+    id: "region",
+    label: "region",
+    options: [
+      {
+        label: "shanghai",
+        value: "shanghai",
+      },
+      {
+        label: "beijing",
+        value: "beijing",
+      },
+      {
+        label: "guangzhou",
+        value: "guangzhou",
+      },
+    ],
+    el: { filterable: true, multiple: true, multipleLimit: 2 },
+    rules: [{ required: true, message: "miss area", trigger: "change" }],
+  },
+  {
+    type: "date-picker",
+    id: "date",
+    label: "date",
+    el: {
+      type: "daterange",
+      valueFormat: "yyyy-MM-dd",
+    },
+    rules: [{ required: true, message: "miss date", trigger: "change" }],
+    inputFormat: (row) => {
+      if (row.startDate && row.endDate) {
+        return [row.startDate, row.endDate];
+      }
+    },
+    outputFormat: (val) => {
+      if (!val) {
+        return { startDate: "", endDate: "" };
+      }
+      return {
+        startDate: val[0],
+        endDate: val[1],
+      };
+    },
+  },
+  {
+    type: "switch",
+    id: "delivery",
+    label: "delivery",
+  },
+  {
+    type: "checkbox-group",
+    id: "type",
+    label: "type",
+    default: [],
+    options: [
+      {
+        label: "typeA",
+      },
+      {
+        label: "typeB",
+      },
+      {
+        label: "typeC",
+      },
+    ],
+    rules: [{ type: "array", required: true, message: "miss type", trigger: "change" }],
+  },
+  {
+    type: "radio-group",
+    id: "resource",
+    label: "resource",
+    options: [
+      {
+        label: "resourceA",
+        value: "A",
+      },
+      {
+        label: "resourceB",
+        value: "B",
+      },
+    ],
+    rules: [{ required: true, message: "miss resource", trigger: "change" }],
+  },
+  {
+    type: "input",
+    id: "desc",
+    label: "desc",
+    el: {
+      type: "textarea",
+    },
+    rules: [{ required: true, message: "miss desc", trigger: "blur" }],
+  },
+]);
+const resetForm = () => {
+  form.value.methods.resetFields();
+};
+const setValue = () => {
+  FormData.name = "小明";
+};
+</script>
+
+```
+
 ## Props
 
 ```ts
