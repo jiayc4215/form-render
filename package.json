@@ -1,13 +1,22 @@
 {
-  
-  "name": "el-form-renderer-vue3", 
-
-  "version": "1.0.0",
+  "name": "el-form-renderer-vue3",
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/el-form-renderer-vue3.umd.js",
+  "module": "./dist/el-form-renderer-vue3.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/el-form-renderer-vue3.es.js",
+      "require": "./dist/el-form-renderer-vue3.umd.js"
+    }
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
@@ -31,4 +40,3 @@
     "vite": "^4.4.5"
   }
 }
-
