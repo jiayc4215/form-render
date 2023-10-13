@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/index.js"),
-      name: "commonTable",
+      name: "el-form-renderer-vue3",
       fileName: (format) => `el-form-renderer-vue3.${format}.js`,
     },
     rollupOptions: {
