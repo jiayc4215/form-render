@@ -83,8 +83,7 @@ export function transformInputValue(value, content) {
         newVal[id] = value[id];
       } else {
         // 如果 item 的类型是 "group"，则会递归调用 transformInputValue 函数来处理嵌套的对象。
-        newVal[id] = tran;
-        transformInputValue(value[id], item.items);
+        newVal[id] = transformInputValue(value[id], item.items);
       }
     }
   };
