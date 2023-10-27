@@ -5,7 +5,7 @@ import "element-plus/dist/index.css";
 import App from "./App.vue";
 import router from "./router/index";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
-import "./components/femessage/util/ployfill";
+
 const app = createApp(App);
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
