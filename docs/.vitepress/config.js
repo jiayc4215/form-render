@@ -55,6 +55,11 @@ export default {
             { text: "value-format", link: "/assembly/form/value-format" },
           ],
         },
+
+        {
+          text: "表格table",
+          items: [{ text: "表格", link: "/assembly/table/table" }],
+        },
         {
           text: "进阶",
           items: [
