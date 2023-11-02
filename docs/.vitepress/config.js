@@ -1,5 +1,6 @@
 export default {
   themeConfig: {
+    base: "/jiayc4215/",
     siteTitle: false,
     logo: "/logo.png",
     nav: [

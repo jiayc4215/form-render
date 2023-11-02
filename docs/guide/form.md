@@ -1,6 +1,6 @@
 ## 技术交流群 711368818
 
-<img src="../qq.jpg"  width="200" />
+<img src="/qq.jpg"  width="200" />
 
 ## 遗留问题 :待解决
 
