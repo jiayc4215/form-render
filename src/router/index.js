@@ -24,6 +24,8 @@ import remote from "../view/remote.vue";
 import rulesPlus from "../view/rulesPlus.vue";
 import MyInput from "../view/MyInput.vue";
 import testAttrs from "../view/testAttrs.vue";
+import upload from "../view/upload.vue";
+
 const routes = [
   {
     path: "/",
@@ -149,6 +151,11 @@ const routes = [
     path: "/testAttrs",
     name: "testAttrs",
     component: testAttrs,
+  },
+  {
+    path: "/upload",
+    name: "upload",
+    component: upload,
   },
 ];
 

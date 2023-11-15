@@ -48,6 +48,8 @@
 
     <router-link to="/MyInput">MyInput</router-link> |
 
+    <router-link to="/upload">upload</router-link> |
+
     <router-link to="/testAttrs">testAttrs</router-link> |
   </nav>
   <router-view></router-view>
