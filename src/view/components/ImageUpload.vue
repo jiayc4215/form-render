@@ -35,6 +35,7 @@ on-preview	点击文件列表中已上传的文件时的钩子
       :headers="headers"
       :file-list="fileList"
       :on-preview="handlePictureCardPreview"
+      :class="{ hide: fileList.length >= limit }"
     >
       <el-icon class="avatar-uploader-icon"><Plus /></el-icon>\
     </el-upload>
@@ -241,6 +242,9 @@ const handlePictureCardPreview = (file) => {
 };
 </script>
 <style scoped>
+:deep(.hide .el-upload--picture-card) {
+  display: none;
+}
 .avatar-uploader .avatar {
   width: 178px;
   height: 178px;
