@@ -1,6 +1,6 @@
 <template>
   <div class="box">slot-label</div>
-  <el-form-renderer label-width="100px" :content="content" inline />
+  <el-form-renderer label-width="100px" :content="content" />
 </template>
 <script setup>
 import { reactive, h, resolveComponent } from "vue";
@@ -14,9 +14,11 @@ const content = reactive([
     },
     label: h("div", null, [
       h("span", null, "编辑"),
-      h(resolveComponent("el-icon"), { class: "el-icon--right", size: 20 }, () => [
-        h(resolveComponent("Edit")),
-      ]),
+      h(
+        resolveComponent("el-icon"),
+        { class: "el-icon--right", size: 20 },
+        () => [h(resolveComponent("Edit"))]
+      ),
     ]),
   },
 ]);

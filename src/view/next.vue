@@ -4,7 +4,9 @@
   <el-button type="primary" @click="openDialogWithData"
     >点击打开 Dialog（带数据）</el-button
   >
-  <el-button type="primary" @click="dialogVisible = true">点击打开 Dialog</el-button>
+  <el-button type="primary" @click="dialogVisible = true"
+    >点击打开 Dialog</el-button
+  >
 
   <el-dialog
     v-model="dialogVisible"
@@ -13,7 +15,7 @@
     ref="dialog"
     @close="onClose"
   >
-    <el-form-renderer :content="content" inline ref="formRender" />
+    <el-form-renderer :content="content" ref="formRender" />
   </el-dialog>
 </template>
 <script setup>

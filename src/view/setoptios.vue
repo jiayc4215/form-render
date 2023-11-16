@@ -1,6 +1,6 @@
 <template>
   <div class="box">set-options</div>
-  <el-form-renderer ref="form" :content="content" inline>
+  <el-form-renderer ref="form" :content="content">
     <el-button @click="setOptions">set</el-button>
   </el-form-renderer>
 </template>
