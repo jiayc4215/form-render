@@ -59,7 +59,7 @@ let dialogImageUrl = ref("");
 let dialogVisible = ref(false);
 const props = defineProps({
   // 回显的值
-  value: [String, Object, Array],
+  modelValue: [String, Object, Array],
   // 	必选参数，上传的地址
   action: {
     type: String,
@@ -99,11 +99,11 @@ const props = defineProps({
   },
 });
 const defaultData = reactive({});
-const emit = defineEmits(["input"]);
+const emit = defineEmits(["update:modelValue"]);
 const upload = ref("");
 
 watch(
-  () => props.value,
+  () => props.modelValue,
   (val) => {
     if (val) {
       // 首先将值转为数组, 当只穿了一个图片时，会报map方法错误
@@ -112,9 +112,9 @@ watch(
       // 然后，将数组中的每个元素转换为对象，并将转换后的对象数组赋值给组件的"fileList"属性。
       const list = Array.isArray(val)
         ? val
-        : Array.isArray(props.value.split(","))
-        ? props.value.split(",")
-        : Array.of(props.value);
+        : Array.isArray(props.modelValue.split(","))
+        ? props.modelValue.split(",")
+        : Array.of(props.modelValue);
       // 然后将数组转为对象数组
       fileList = list.map((item) => {
         if (typeof item === "string") {
@@ -123,6 +123,7 @@ watch(
         }
         return item;
       });
+      console.log(fileList);
     } else {
       fileList = [];
       return [];
@@ -132,11 +133,14 @@ watch(
 );
 
 // 删除图片
-const handleRemove = (file, fileList) => {
-  const findex = fileList.map((f) => f.name).indexOf(file.name);
+const handleRemove = (file, List) => {
+  console.log(file, List);
+  console.log(fileList);
+  const findex = List.map((f) => f.name).indexOf(file.name);
+  console.log(findex);
   if (findex > -1) {
     fileList.splice(findex, 1);
-    emit("input", listToString(fileList));
+    emit("update:modelValue", listToString(fileList));
   }
 };
 // 提交地址
@@ -157,7 +161,7 @@ const handleUploadSuccess = (res, file) => {
       uploadList = [];
       number.value = 0;
       // 向父组件派发最终结果
-      emit("input", listToString(fileList));
+      emit("update:modelValue", listToString(fileList));
       console.log(listToString(fileList));
     }
     console.log("上传成功");
@@ -167,7 +171,6 @@ const handleUploadSuccess = (res, file) => {
     console.log("上传失败");
     // 删除上传
     number.value--;
-
     upload.value.handleRemove(file);
   }
 };
@@ -211,6 +214,7 @@ const handleBeforeUpload = (file) => {
 };
 // 对象转成指定字符串分隔
 const listToString = (list, separator) => {
+  console.log(1111);
   // 用来存储最终的字符串结果。
   let strs = "";
   // 如果没有传入分隔符参数separator，则将separator设置为逗号","
@@ -220,6 +224,7 @@ const listToString = (list, separator) => {
     strs += list[i].url + separator;
   }
   // 通过判断strs是否为空字符串，如果不为空，则使用substr函数去掉最后一个分隔符，否则返回空字符串。
+  console.log(strs);
   return strs !== "" ? strs.substr(0, strs.length - 1) : "";
 };
 // 上传失败
