@@ -17,6 +17,7 @@ file-list	上传的文件列表, 例如: [{name: 'food.jpg', url: 'https://xxx.c
 on-preview	点击文件列表中已上传的文件时的钩子
  -->
   <div class="component-upload-image">
+    {{ fileList.length }}----{{ limit }}
     <el-upload
       ref="upload"
       :disabled="disabled"
@@ -106,6 +107,7 @@ const upload = ref("");
 watch(
   () => props.modelValue,
   (val) => {
+    console.log("watch触发", val);
     if (val) {
       // 首先将值转为数组, 当只穿了一个图片时，会报map方法错误
       // 如果"value"是一个数组，则直接使用它；否则，将"value"按逗号分隔成一个数组；
@@ -124,25 +126,17 @@ watch(
         }
         return item;
       });
-      console.log(fileList);
+      console.log(fileList, "数据回显fileList");
     } else {
       fileList = [];
       return [];
     }
-  },
-  { deep: true, immediate: true }
+  }
 );
 
 // 删除图片
 const handleRemove = (file, List) => {
-  console.log(file, List);
-  console.log(fileList);
-  const findex = List.map((f) => f.name).indexOf(file.name);
-  console.log(findex);
-  if (findex > -1) {
-    fileList.splice(findex, 1);
-    emit("update:modelValue", listToString(fileList));
-  }
+  emit("update:modelValue", listToString(fileList));
 };
 // 提交地址
 const uploadFileUrl = computed(() => {
@@ -163,13 +157,21 @@ const handleUploadSuccess = (res, file) => {
       number.value = 0;
       // 向父组件派发最终结果
       emit("update:modelValue", listToString(fileList));
-      console.log(listToString(fileList));
     }
-    console.log("上传成功");
+    ElMessage({
+      message: "上传成功",
+      type: "success",
+    });
   } else if (res.code === 401) {
-    console.log("权限不足");
+    ElMessage({
+      message: "登录状态过期，请重新登录",
+      type: "error",
+    });
   } else {
-    console.log("上传失败");
+    ElMessage({
+      message: "上传失败",
+      type: "error",
+    });
     // 删除上传
     number.value--;
     upload.value.handleRemove(file);
@@ -199,23 +201,27 @@ const handleBeforeUpload = (file) => {
 
   //图片格式不正确
   if (!isImg) {
-    console.log("文件格式不正确");
+    ElMessage({
+      message: `文件格式不正确, 请上传${props.fileType.join("/")}图片格式文件!`,
+      type: "error",
+    });
     return false;
   }
   // 会检查文件的大小是否小于指定的大小。
   if (props.fileSize) {
     const isLt = file.size / 1024 / 1024 < props.fileSize;
     if (!isLt) {
-      console.log("超出大小");
+      ElMessage({
+        message: `上传图片大小不能超过 ${props.fileSize} MB!`,
+        type: "error",
+      });
       return false;
     }
   }
-  console.log("正在上传中");
   number.value++;
 };
 // 对象转成指定字符串分隔
 const listToString = (list, separator) => {
-  console.log(1111);
   // 用来存储最终的字符串结果。
   let strs = "";
   // 如果没有传入分隔符参数separator，则将separator设置为逗号","
@@ -225,16 +231,22 @@ const listToString = (list, separator) => {
     strs += list[i].url + separator;
   }
   // 通过判断strs是否为空字符串，如果不为空，则使用substr函数去掉最后一个分隔符，否则返回空字符串。
-  console.log(strs);
   return strs !== "" ? strs.substr(0, strs.length - 1) : "";
 };
 // 上传失败
 const handleUploadError = (error) => {
   console.log(error);
+  ElMessage({
+    message: "上传图片失败，请重试",
+    type: "error",
+  });
 };
 // 文件个数超出
 const handleExceed = () => {
-  console.log("超出个数");
+  ElMessage({
+    message: `上传文件数量不能超过 ${props.limit} 个!`,
+    type: "error",
+  });
 };
 const handlePictureCardPreview = (file) => {
   dialogImageUrl.value = file.url;
