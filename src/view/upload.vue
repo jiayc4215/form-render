@@ -14,7 +14,13 @@ const content = reactive([
   {
     label: "图片上传",
     component: markRaw(ImageUpload),
-    el: { isShowTip: false, limit: 2 },
+    el: {
+      isShowTip: false,
+      limit: 2,
+      extralData: {
+        type: "identityBack",
+      },
+    },
     id: "identityBack",
     rules: [{ required: true, message: "请选择门头照", trigger: "blur" }],
   },

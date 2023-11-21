@@ -17,7 +17,6 @@ file-list	上传的文件列表, 例如: [{name: 'food.jpg', url: 'https://xxx.c
 on-preview	点击文件列表中已上传的文件时的钩子
  -->
   <div class="component-upload-image">
-    {{ fileList.length }}----{{ limit }}
     <el-upload
       ref="upload"
       :disabled="disabled"
@@ -38,7 +37,19 @@ on-preview	点击文件列表中已上传的文件时的钩子
       :on-preview="handlePictureCardPreview"
       :class="{ hide: fileList.length >= limit }"
     >
-      <el-icon class="avatar-uploader-icon"><Plus /></el-icon>\
+      <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
+      <template #tip>
+        <div>
+          请上传
+          <template v-if="fileSize">
+            大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b>
+          </template>
+          <template v-if="fileType">
+            格式为 <b style="color: #f56c6c">{{ fileType.join("/") }}</b>
+          </template>
+          的文件
+        </div>
+      </template>
     </el-upload>
 
     <el-dialog v-model="dialogVisible" title="预览" width="800" append-to-body>
@@ -51,14 +62,16 @@ on-preview	点击文件列表中已上传的文件时的钩子
 </template>
 <script setup>
 import { ref, computed, reactive, watch } from "vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElLoading } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
+
 let uploadList = reactive([]); // 准备上传的数组
 let number = ref(0); // 准备上传的个数
 let fileList = reactive([]); // 上传的文件列表
 let headers = reactive({ Authorization: "Bearer " + 1111 }); // 设置上传的请求头部
 let dialogImageUrl = ref("");
 let dialogVisible = ref(false);
+let loading = null;
 const props = defineProps({
   // 回显的值
   modelValue: [String, Object, Array],
@@ -100,10 +113,14 @@ const props = defineProps({
     default: false,
   },
 });
-const defaultData = reactive({});
+const defaultData = reactive({
+  a: 1,
+});
 const emit = defineEmits(["update:modelValue"]);
 const upload = ref("");
-
+const showTip = computed(() => {
+  return props.isShowTip && (props.fileType || props.fileSize);
+});
 watch(
   () => props.modelValue,
   (val) => {
@@ -136,6 +153,12 @@ watch(
 
 // 删除图片
 const handleRemove = (file, List) => {
+  // const findex = fileList.map((f) => f.name).indexOf(file.name);
+  // if (findex > -1) {
+  //   fileList.splice(findex, 1);
+  //   emit("update:modelValue", listToString(fileList));
+  // }
+
   emit("update:modelValue", listToString(fileList));
 };
 // 提交地址
@@ -157,7 +180,9 @@ const handleUploadSuccess = (res, file) => {
       number.value = 0;
       // 向父组件派发最终结果
       emit("update:modelValue", listToString(fileList));
+      loading.close();
     }
+    loading.close();
     ElMessage({
       message: "上传成功",
       type: "success",
@@ -168,12 +193,13 @@ const handleUploadSuccess = (res, file) => {
       type: "error",
     });
   } else {
+    // 删除上传
+    number.value--;
+    loading.close();
     ElMessage({
       message: "上传失败",
       type: "error",
     });
-    // 删除上传
-    number.value--;
     upload.value.handleRemove(file);
   }
 };
@@ -218,6 +244,11 @@ const handleBeforeUpload = (file) => {
       return false;
     }
   }
+  loading = ElLoading.service({
+    lock: true,
+    text: "正在上传图片，请稍候...",
+    background: "rgba(0, 0, 0, 0.7)",
+  });
   number.value++;
 };
 // 对象转成指定字符串分隔
@@ -240,6 +271,7 @@ const handleUploadError = (error) => {
     message: "上传图片失败，请重试",
     type: "error",
   });
+  loading.close();
 };
 // 文件个数超出
 const handleExceed = () => {
