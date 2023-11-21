@@ -69,6 +69,10 @@ export default {
               text: "form自定义组件设置自定义校验规则",
               link: "/assembly/advanced/customFormRoules",
             },
+            {
+              text: "form自定义组件--图片上传",
+              link: "/assembly/advanced/upload",
+            },
           ],
         },
       ],
