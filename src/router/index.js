@@ -25,6 +25,7 @@ import rulesPlus from "../view/rulesPlus.vue";
 import MyInput from "../view/MyInput.vue";
 import testAttrs from "../view/testAttrs.vue";
 import upload from "../view/upload.vue";
+import uploadFile from "../view/uploadFile.vue";
 
 const routes = [
   {
@@ -156,6 +157,11 @@ const routes = [
     path: "/upload",
     name: "upload",
     component: upload,
+  },
+  {
+    path: "/uploadFile",
+    name: "uploadFile",
+    component: uploadFile,
   },
 ];
 

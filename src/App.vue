@@ -50,6 +50,8 @@
 
     <router-link to="/upload">upload</router-link> |
 
+    <router-link to="/uploadFile">uploadFile</router-link> |
+
     <router-link to="/testAttrs">testAttrs</router-link> |
   </nav>
   <router-view></router-view>
