@@ -54,6 +54,12 @@ import transformContent from "./util/transform-content";
 import _set from "lodash.set";
 import _isequal from "lodash.isequal";
 import _clonedeep from "lodash.clonedeep";
+
+import {
+  methodsSymbol,
+  updateFormsSymbol,
+  setOptionsSymbol,
+} from "./util/keys";
 import {
   collect,
   mergeValue,
@@ -273,9 +279,9 @@ const getComponentById = (id) => {
     return componentRef[`formItem-${id}`].customComponent;
   }
 };
-provide("methods", methods);
-provide("updateForm", updateForm);
-provide("setOptions", setOptions);
+provide(methodsSymbol, methods);
+provide(updateFormsSymbol, updateForm);
+provide(setOptionsSymbol, setOptions);
 defineExpose({
   updateValue,
   resetFields,

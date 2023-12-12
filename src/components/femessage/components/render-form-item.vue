@@ -109,6 +109,11 @@ import _get from "lodash.get";
 // import CustomComponent from "../util/CustomComponent";
 import VNode from "../util/VNode";
 import axios from "axios";
+import {
+  methodsSymbol,
+  updateFormsSymbol,
+  setOptionsSymbol,
+} from "../util/keys";
 let customComponent = ref();
 
 let props = defineProps({
@@ -136,9 +141,9 @@ const loading = ref(false);
 let dataRef = ref(props.data);
 // 注入一个由祖先组件或整个应用 (通过 app.provide()) 提供的值。
 // 父组件提供 element ui的方法
-let methods = inject("methods");
+let methods = inject(methodsSymbol);
 //  父组件提供的 更新 options的方法
-let setOptions = inject("setOptions");
+let setOptions = inject(setOptionsSymbol);
 // 是否校验
 const isBlurTrigger =
   props.data.rules &&
@@ -173,7 +178,7 @@ const listeners = computed(() => {
   const originOnChange = on.change || noop;
   const trim = data.trim !== undefined ? data.trim : true;
 
-  let updateForm = inject("updateForm");
+  let updateForm = inject(updateFormsSymbol);
   return {
     ..._frompairs(
       _topairs(on).map(([eName, handler]) => [
