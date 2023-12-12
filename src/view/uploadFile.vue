@@ -1,20 +1,22 @@
 <template>
   <el-form-renderer ref="formRender" :content="content" />
+  <el-button size="small" type="primary" @click="submitForm">提交</el-button>
 </template>
 <script setup>
-import { reactive, markRaw, ref } from "vue";
+import { reactive, markRaw, ref, provide } from "vue";
 import elFormRenderer from "../components/femessage/el-form-renderer.vue";
 
 import ManualUpload from "./components/ManualUpload.vue";
 
 const formRender = ref("");
+
 const content = reactive([
   {
     label: "上传文件",
-    component: ManualUpload,
+    component: markRaw(ManualUpload),
     el: {
       limit: 1,
-      action: "/admin-api/control/data/import-merchant",
+      action: "aa",
     },
     id: "files",
     rules: [
@@ -27,18 +29,32 @@ const content = reactive([
     ],
   },
 ]);
-const getValue = () => {
-  const value = formRender.value.getFormValue();
 
-  console.log(value);
+const uploaded = (res) => {
+  if (res.code !== 500) {
+    console.log(res, "上传结果");
+  }
 };
+const submitForm = () => {
+  try {
+    formRender.value.methods.validate((valid) => {
+      if (valid) {
+        console.log("OK");
+        let params = formRender.value.getFormValue();
+        formRender.value.getComponentById("files").submitUpload(params);
 
-const setValue = () => {
-  formRender.value.updateForm({
-    identityBack:
-      "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100,https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-  });
+        //调用文件上传
+        console.log(params);
+      } else {
+        console.log("error submit!!");
+        return false;
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
+provide("uploaded", uploaded);
 </script>
 <style scoped>
 .box {
