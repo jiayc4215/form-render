@@ -157,9 +157,7 @@ const handleBeforeUpload = (file) => {
     //文件格式不正确
     if (!isTypeOk) {
       ElMessage({
-        message: `文件格式不正确, 请上传${props.fileType.join(
-          ","
-        )}图片格式文件!`,
+        message: `文件格式不正确, 请上传${props.fileType.join(",")}格式文件!`,
         type: "error",
       });
       return false;
