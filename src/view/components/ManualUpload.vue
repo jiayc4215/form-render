@@ -63,7 +63,9 @@ import { ElMessage, ElLoading } from "element-plus";
 let fileList = reactive([]); // 上传的文件列表
 let number = ref(0); // 准备上传的个数
 let extraData = reactive({}); // 上传的附加参数
-let headers = reactive({ Authorization: "Bearer " + 1111 }); // 设置上传的请求头部
+let headers = reactive({
+  Authorization: "Bearer " + "token",
+}); // 设置上传的请求头部
 let loading = null;
 const upload = ref("");
 const emit = defineEmits(["update:modelValue"]);
@@ -215,7 +217,7 @@ const handleChange = (file, fileList) => {
 // 上传成功的回调
 const handleUploadSuccess = (res, file) => {
   console.log("上传成功的回调");
-  if (res.code === 0) {
+  if (res.code === 10000) {
     loading.close();
     ElMessage({
       message: "上传成功",

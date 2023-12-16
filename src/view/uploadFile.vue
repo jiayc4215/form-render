@@ -16,9 +16,9 @@ const content = reactive([
     component: markRaw(ManualUpload),
     el: {
       limit: 1,
-      action: "aa",
+      action: "/api/sys/user/import",
     },
-    id: "files",
+    id: "file",
     rules: [
       {
         required: true,
@@ -41,7 +41,7 @@ const submitForm = () => {
       if (valid) {
         console.log("OK");
         let params = formRender.value.getFormValue();
-        formRender.value.getComponentById("files").submitUpload(params);
+        formRender.value.getComponentById("file").submitUpload(params);
 
         //调用文件上传
         console.log(params);
