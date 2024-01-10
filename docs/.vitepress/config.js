@@ -73,6 +73,10 @@ export default {
               text: "form自定义组件--图片上传",
               link: "/assembly/advanced/upload",
             },
+            {
+              text: "form自定义组件--文件上传",
+              link: "/assembly/advanced/uploadFile",
+            },
           ],
         },
       ],
