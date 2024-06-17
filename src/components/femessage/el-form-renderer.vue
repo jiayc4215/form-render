@@ -216,7 +216,20 @@ let resetFields = async () => {
    *   3. 点击 reset 按钮，此时 log 两条数据： '1' '1', '' ''
    *   4. 因为 _isequal(v, oldV)，所以没有触发 v-model 更新
    */
-  value = _clonedeep(initValue);
+
+  // value = _clonedeep(initValue); //不能直接修改，会改变引用地址
+  // 遍历value中的每个字段
+  for (let key in value) {
+    // 检查该字段是否在initValue中存在
+    if (initValue.hasOwnProperty(key)) {
+      // 如果存在，重置为初始值
+      value[key] = _.cloneDeep(initValue[key]);
+    } else {
+      // 如果不存在，删除该字段
+      delete value[key];
+    }
+  }
+
   await nextTick();
   methods.clearValidate();
 };
@@ -283,6 +296,7 @@ provide(methodsSymbol, methods);
 provide(updateFormsSymbol, updateForm);
 provide(setOptionsSymbol, setOptions);
 defineExpose({
+  ...methods,
   updateValue,
   resetFields,
   getFormValue,
