@@ -223,7 +223,7 @@ let resetFields = async () => {
     // 检查该字段是否在initValue中存在
     if (initValue.hasOwnProperty(key)) {
       // 如果存在，重置为初始值
-      value[key] = _.cloneDeep(initValue[key]);
+      value[key] = _cloneDeep(initValue[key]);
     } else {
       // 如果不存在，删除该字段
       delete value[key];
