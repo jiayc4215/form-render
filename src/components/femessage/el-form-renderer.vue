@@ -230,7 +230,7 @@ let resetFields = async () => {
     }
   }
 
-  await nextTick();
+
   methods.clearValidate();
 };
 /**
