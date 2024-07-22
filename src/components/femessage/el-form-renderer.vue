@@ -203,7 +203,7 @@ let updateValue = ({ id, value: v }) => {
  *
  * @public
  */
-let resetFields = async () => {
+let resetFields =  () => {
   /**
    * 之所以不用 el-form 的 resetFields 机制，有以下原因：
    * - el-form 的 resetFields 无视 el-form-renderer 的自定义组件
