@@ -7,8 +7,11 @@ export default defineConfig({
   plugins: [vue()],
   build: {
     lib: {
+      // 指定了库的入口文件
       entry: path.resolve(__dirname, "src/index.js"),
+      //  设置了库的名称
       name: "el-form-renderer-vue3",
+      // 定义了输出文件的命名方式，这里使用了一个函数来根据构建格式（如esm, cjs, umd等）来生成文件名，文件名后缀为.js。
       fileName: (format) => `el-form-renderer-vue3.${format}.js`,
     },
     rollupOptions: {
