@@ -48,7 +48,6 @@ import {
   onMounted,
   nextTick,
   provide,
-  getCurrentInstance,
 } from "vue";
 import transformContent from "./util/transform-content";
 import _set from "lodash.set";
@@ -135,7 +134,7 @@ let props = defineProps({
 let innerContent = computed(() => transformContent(props.content));
 // 初始化默认值
 let setValueFromModel = () => {
-  if (innerContent.length) return;
+  if (!innerContent.value.length) return;
   /**
    * 没使用 v-model 时才从 default 采集数据
    * default 值没法考虑 inputFormat
@@ -203,7 +202,7 @@ let updateValue = ({ id, value: v }) => {
  *
  * @public
  */
-let resetFields =  () => {
+let resetFields = () => {
   /**
    * 之所以不用 el-form 的 resetFields 机制，有以下原因：
    * - el-form 的 resetFields 无视 el-form-renderer 的自定义组件
@@ -223,13 +222,12 @@ let resetFields =  () => {
     // 检查该字段是否在initValue中存在
     if (initValue.hasOwnProperty(key)) {
       // 如果存在，重置为初始值
-      value[key] =_clonedeep(initValue[key]);
+      value[key] = _clonedeep(initValue[key]);
     } else {
       // 如果不存在，删除该字段
-      value[key]=undefined
+      value[key] = undefined;
     }
   }
-
 
   methods.clearValidate();
 };

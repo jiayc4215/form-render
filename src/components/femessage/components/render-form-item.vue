@@ -70,14 +70,18 @@
         >
           {{ opt.label }}
         </el-checkbox-button>
-        <el-checkbox
+        <template
           v-else-if="data.type === 'checkbox-group' && data.style !== 'button'"
-          :key="opt.value"
-          v-bind="opt"
-          :label="'value' in opt ? opt.value : opt.label"
         >
-          {{ opt.label }}
-        </el-checkbox>
+          <el-checkbox
+            :key="opt.value"
+            v-bind="opt"
+            :label="'value' in opt ? opt.value : opt.label"
+          >
+            {{ opt.label }}
+          </el-checkbox>
+        </template>
+
         <el-radio-button
           v-else-if="data.type === 'radio-group' && data.style === 'button'"
           :key="opt.label"
@@ -85,13 +89,16 @@
           :label="'value' in opt ? opt.value : opt.label"
           >{{ opt.label }}</el-radio-button
         >
-        <el-radio
+        <template
           v-else-if="data.type === 'radio-group' && data.style !== 'button'"
-          :key="opt.label"
-          v-bind="opt"
-          :label="'value' in opt ? opt.value : opt.label"
-          >{{ opt.label }}</el-radio
         >
+          <el-radio
+            :key="opt.label"
+            v-bind="opt"
+            :label="'value' in opt ? opt.value : opt.label"
+            >{{ opt.label }}</el-radio
+          >
+        </template>
       </template>
     </component>
   </el-form-item>
