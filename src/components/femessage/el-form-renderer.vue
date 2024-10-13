@@ -35,6 +35,12 @@
 </template>
 
 <script setup>
+/**
+ * 组件 开发时 使用了官方推荐声明对象方式reactive
+ * 导致 引用不能发生变化否则会丢失响应式 从而导致组件内部有些值不能被真正的清空
+ * 因重构成功太大 作者没有换用ref 而是采用 object.assign方法
+ * 发现的问题已经标注
+ */
 // passive 是用于控制浏览器是否可以在滚动时取消事件的默认行为。当 passive 设置为 true 时，表示事件处理函数不会调用 preventDefault() 来阻止默认的滚动行为。
 //在一些滚动事件处理中，如果事件处理函数中调用了 preventDefault()，浏览器会等待该函数执行完毕后再进行滚动，这可能导致滚动的延迟。通过将 passive 设置为 true，可以告诉浏览器事件处理函数不会调用 preventDefault()，从而使滚动更加流畅。
 import "./util/ployfill";
@@ -84,6 +90,7 @@ let emit = defineEmits(["update:FormData"]);
 // 注入 element ui form 方法
 /**
  * 与 element 相同，在 mounted 阶段存储 initValue
+ * 需要注意初始化的时间 往往数据在初始化之后被复制从而出现清空问题
  * @see https://github.com/ElemeFE/element/blob/6ec5f8e900ff698cf30e9479d692784af836a108/packages/form/src/form-item.vue#L304
  */
 onMounted(async () => {
@@ -144,6 +151,11 @@ let setValueFromModel = () => {
     ? transformInputValue(props.FormData, innerContent.value)
     : collect(innerContent.value, "default");
   correctValue(newValue, innerContent.value);
+  /**
+   * 因为 reactive 不能改变引用 所以使用assign
+   * bug1使用 v-model 直接绑定空对象不会引起  watch value的监听
+   * 需要穿入需要清空的字段 or 调用 resetFields 清空方法
+   */
   if (!_isequal(value, newValue)) value = Object.assign(value, newValue);
 };
 // v-model初始化默认数据
@@ -217,6 +229,7 @@ let resetFields = () => {
    */
 
   // value = _clonedeep(initValue); //不能直接修改，会改变引用地址
+  // bug 如果渲染字符串会为undefined
   // 遍历value中的每个字段
   for (let key in value) {
     // 检查该字段是否在initValue中存在
