@@ -19,8 +19,9 @@ const content = reactive([
   {
     el: {
       type: "daterange",
-      valueFormat: "yyyy-MM-dd",
+      valueFormat: "YYYY-MM-DD",
     },
+
     type: "date-picker",
     id: "date",
     label: "date",

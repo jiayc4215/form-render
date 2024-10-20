@@ -114,7 +114,7 @@ const content = reactive([
     label: "date",
     el: {
       type: "daterange",
-      valueFormat: "yyyy-MM-dd",
+      valueFormat: "YYYY-MM-DD",
     },
     rules: [{ required: true, message: "miss date", trigger: "change" }],
     inputFormat: (row) => {
