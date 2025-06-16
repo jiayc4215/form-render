@@ -9,8 +9,8 @@
     class="render-form-item"
   >
     <!-- label插槽 -->
-    <template #label>
-      <v-node v-if="data.label !== 'string'" :content="data.label" />
+    <template #label v-if="typeof data.label !== 'string'">
+      <v-node :content="data.label" />
     </template>
     <!-- 处理之只读input select -->
     <template v-if="readonly && hasReadonlyContent">

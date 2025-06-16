@@ -27,7 +27,7 @@ const content = reactive([
   {
     type: "input",
     id: "name",
-    label: "name",
+    label: "",
     attrs: { "data-name": "form1" },
     el: {
       size: "default",
