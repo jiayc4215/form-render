@@ -116,7 +116,7 @@ const ruleForm = ref();
 
 const submitForm = () => {
   try {
-    ruleForm.value.methods.validate((valid) => {
+    ruleForm.value.validate((valid) => {
       if (valid) {
         console.log("OK");
       } else {
@@ -129,6 +129,6 @@ const submitForm = () => {
   }
 };
 const resetForm = () => {
-  ruleForm.value.methods.resetFields();
+  ruleForm.value.resetFields();
 };
 </script>

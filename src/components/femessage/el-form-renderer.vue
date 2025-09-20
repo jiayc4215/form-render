@@ -156,7 +156,10 @@ let setValueFromModel = () => {
    * bug1使用 v-model 直接绑定空对象不会引起  watch value的监听
    * 需要穿入需要清空的字段 or 调用 resetFields 清空方法
    */
-  if (!_isequal(value, newValue)) value = Object.assign(value, newValue);
+  if (!_isequal(value, newValue)) {
+    Object.keys(value).forEach((key) => delete value[key]);
+    Object.assign(value, newValue);
+  }
 };
 // v-model初始化默认数据
 watch(
@@ -189,11 +192,7 @@ watch(value, (newValue, oldValue) => {
   try {
     if (!newValue) return;
     if (props.FormData) {
-      let data = Object.assign(
-        props.FormData,
-        transformOutputValue(newValue, innerContent)
-      );
-      emit("update:FormData", data);
+      emit("update:FormData", transformOutputValue(newValue, innerContent));
     }
   } catch (error) {
     console.log(error, "-----");
@@ -228,22 +227,13 @@ let resetFields = () => {
    *   4. 因为 _isequal(v, oldV)，所以没有触发 v-model 更新
    */
 
-  // value = _clonedeep(initValue); //不能直接修改，会改变引用地址
-  // bug 如果渲染字符串会为undefined
-  // 遍历value中的每个字段
-  for (let key in value) {
-    // 检查该字段是否在initValue中存在
-    if (initValue.hasOwnProperty(key)) {
-      // 如果存在，重置为初始值
-      value[key] = _clonedeep(initValue[key]);
-    } else {
-      // 如果不存在，删除该字段
-      value[key] = undefined;
-    }
-  }
+  Object.keys(value).forEach((key) => delete value[key]);
+
+  Object.assign(value, initValue);
 
   methods.clearValidate();
 };
+
 /**
  * 当 strict 为 true 时，只返回设置的表单项的值, 过滤掉冗余字段, 更多请看 update-form 示例
  * @param {{strict: Boolean}} 默认 false
@@ -306,16 +296,27 @@ const getComponentById = (id) => {
 provide(methodsSymbol, methods);
 provide(updateFormsSymbol, updateForm);
 provide(setOptionsSymbol, setOptions);
-defineExpose({
-  ...methods,
-  updateValue,
-  resetFields,
-  getFormValue,
-  updateForm,
-  setOptions,
-  methods,
-  getComponentById,
-});
+defineExpose(
+  new Proxy(
+    {
+      updateValue,
+      resetFields,
+      getFormValue,
+      updateForm,
+      setOptions,
+      methods,
+      getComponentById,
+    },
+    {
+      get(target, prop) {
+        return target[prop] || myelForm.value?.[prop];
+      },
+      has(target, prop) {
+        return prop in target || prop in myelForm.value;
+      },
+    }
+  )
+);
 </script>
 <script>
 export default {
