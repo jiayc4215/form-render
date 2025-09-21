@@ -55,6 +55,8 @@
     <router-link to="/testAttrs">testAttrs</router-link> |
 
     <router-link to="/testcom">演示如何二次封装</router-link> |
+
+    <router-link to="/watch">watch监听对象问题</router-link> |
   </nav>
   <router-view></router-view>
 </template>

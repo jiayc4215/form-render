@@ -27,6 +27,7 @@ import testAttrs from "../view/testAttrs.vue";
 import upload from "../view/upload.vue";
 import uploadFile from "../view/uploadFile.vue";
 import testcom from "../view/testcom.vue";
+import watch from "../view/watch.vue";
 
 const routes = [
   {
@@ -168,6 +169,11 @@ const routes = [
     path: "/testcom",
     name: "testcom",
     component: testcom,
+  },
+  {
+    path: "/watch",
+    name: "watch",
+    component: watch,
   },
 ];
 
