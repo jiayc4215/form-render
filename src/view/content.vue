@@ -156,7 +156,7 @@ const content = reactive([
   },
 ]);
 const resetForm = () => {
-  form.value.methods.resetFields();
+  form.value.resetFields();
 };
 const disableName = () => {
   content[0].disabled = !content[0].disabled;

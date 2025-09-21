@@ -37,7 +37,7 @@ const uploaded = (res) => {
 };
 const submitForm = () => {
   try {
-    formRender.value.methods.validate((valid) => {
+    formRender.value.validate((valid) => {
       if (valid) {
         console.log("OK");
         let params = formRender.value.getFormValue();

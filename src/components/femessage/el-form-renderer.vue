@@ -151,6 +151,7 @@ let setValueFromModel = () => {
    * bug1使用 v-model 直接绑定空对象不会引起  watch value的监听
    * 需要穿入需要清空的字段 or 调用 resetFields 清空方法
    */
+  // 移除 _isequal 判断后，即使 FormData 变化前后的值实际上相同，也会强制更新 value ，从而触发 emit 更新 FormData ，形成无限循环。这个判断是防止死循环的关键机制。
   if (!_isequal(toRaw(value), newValue)) {
     Object.keys(value).forEach((key) => delete value[key]);
     Object.assign(value, newValue);
@@ -186,7 +187,6 @@ watch(
 watch(value, (newValue, oldValue) => {
   try {
     if (!newValue) return;
-
     let data = Object.assign(
       newValue,
       transformOutputValue(newValue, innerContent)
