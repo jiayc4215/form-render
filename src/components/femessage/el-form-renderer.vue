@@ -35,12 +35,6 @@
 </template>
 
 <script setup>
-/**
- * 组件 开发时 使用了官方推荐声明对象方式reactive
- * 导致 引用不能发生变化否则会丢失响应式 从而导致组件内部有些值不能被真正的清空
- * 因重构成功太大 作者没有换用ref 而是采用 object.assign方法
- * 发现的问题已经标注
- */
 // passive 是用于控制浏览器是否可以在滚动时取消事件的默认行为。当 passive 设置为 true 时，表示事件处理函数不会调用 preventDefault() 来阻止默认的滚动行为。
 //在一些滚动事件处理中，如果事件处理函数中调用了 preventDefault()，浏览器会等待该函数执行完毕后再进行滚动，这可能导致滚动的延迟。通过将 passive 设置为 true，可以告诉浏览器事件处理函数不会调用 preventDefault()，从而使滚动更加流畅。
 import "./util/ployfill";
@@ -54,6 +48,7 @@ import {
   onMounted,
   nextTick,
   provide,
+  toRaw,
 } from "vue";
 import transformContent from "./util/transform-content";
 import _set from "lodash.set";
@@ -156,7 +151,7 @@ let setValueFromModel = () => {
    * bug1使用 v-model 直接绑定空对象不会引起  watch value的监听
    * 需要穿入需要清空的字段 or 调用 resetFields 清空方法
    */
-  if (!_isequal(value, newValue)) {
+  if (!_isequal(toRaw(value), newValue)) {
     Object.keys(value).forEach((key) => delete value[key]);
     Object.assign(value, newValue);
   }
@@ -191,9 +186,12 @@ watch(
 watch(value, (newValue, oldValue) => {
   try {
     if (!newValue) return;
-    if (props.FormData) {
-      emit("update:FormData", transformOutputValue(newValue, innerContent));
-    }
+
+    let data = Object.assign(
+      newValue,
+      transformOutputValue(newValue, innerContent)
+    );
+    emit("update:FormData", data);
   } catch (error) {
     console.log(error, "-----");
   }
@@ -213,7 +211,7 @@ let updateValue = ({ id, value: v }) => {
  *
  * @public
  */
-let resetFields = () => {
+let resetFields = async () => {
   /**
    * 之所以不用 el-form 的 resetFields 机制，有以下原因：
    * - el-form 的 resetFields 无视 el-form-renderer 的自定义组件
@@ -229,9 +227,12 @@ let resetFields = () => {
 
   Object.keys(value).forEach((key) => delete value[key]);
 
-  Object.assign(value, initValue);
+  Object.assign(value, _clonedeep(initValue));
+  await nextTick();
 
-  methods.clearValidate();
+  setTimeout(() => {
+    methods.clearValidate();
+  }, 0);
 };
 
 /**
@@ -260,7 +261,6 @@ let updateForm = (newValue) => {
  */
 let setOptions = (id, O) => {
   _set(options, id, O);
-  options = Object.assign(options); // 设置之前不存在的 options 时需要重新设置响应式更新
 };
 
 /**

@@ -15,7 +15,7 @@
 import { reactive, ref } from "vue";
 import elFormRenderer from "../components/femessage/el-form-renderer.vue";
 const form = ref();
-let FormData = reactive({
+let FormData = ref({
   name: "",
   type: [],
   startDate: "2019-01-01",
@@ -140,9 +140,16 @@ const content = reactive([
   },
 ]);
 const resetForm = () => {
-  form.value.methods.resetFields();
+  form.value.resetFields();
 };
 const setValue = () => {
-  FormData.name = "小明";
+  FormData.value = {
+    name: "小明",
+    desc: "desc",
+    type: ["typeA"],
+    resource: "A",
+    age: 18,
+    a: 1,
+  };
 };
 </script>
