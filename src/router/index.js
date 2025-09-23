@@ -28,6 +28,7 @@ import upload from "../view/upload.vue";
 import uploadFile from "../view/uploadFile.vue";
 import testcom from "../view/testcom.vue";
 import watch from "../view/watch.vue";
+import reastdata from "../view/reastdata.vue";
 
 const routes = [
   {
@@ -174,6 +175,11 @@ const routes = [
     path: "/watch",
     name: "watch",
     component: watch,
+  },
+  {
+    path: "/reastdata",
+    name: "reastdata",
+    component: reastdata,
   },
 ];
 
