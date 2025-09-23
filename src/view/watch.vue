@@ -5,12 +5,13 @@
       change delivery
     </button>
     <button @click="changeRef">改变引用地址</button>
+    <button @click="state.count++">改变state.count {{ state.count }}</button>
   </div>
 </template>
 
 <script setup>
 import _clonedeep from "lodash.clonedeep";
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed, reactive, toValue } from "vue";
 const FormData = ref({
   delivery: false,
   type: [],
@@ -53,4 +54,36 @@ const changeRef = () => {
     ...FormData.value,
   };
 };
+const cloneDeep = (obj) => {
+  return JSON.parse(JSON.stringify(obj));
+};
+const watchOldValue = (source, cb, options) => {
+  const { clone = cloneDeep } = options || {};
+  let val = toValue(source);
+  if (typeof val !== "object" || val === null) {
+    return watch(source, cb, options);
+  }
+  let oldVal = clone(val);
+  return watch(
+    source,
+    (newVal, _, onCleanup) => {
+      cb(newVal, oldVal, onCleanup);
+      oldVal = clone(newVal);
+    },
+    options
+  );
+};
+const state = reactive({
+  count: 1,
+  age: undefined,
+});
+watchOldValue(
+  () => state,
+  (newVal, oldVal) => {
+    console.log("newVal", newVal);
+    console.log("oldVal", oldVal);
+    console.log("state change", newVal === oldVal);
+  },
+  { deep: true, clone: _clonedeep }
+);
 </script>
