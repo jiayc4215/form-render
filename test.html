@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue2 Deep V-Model Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>原始对象：</h2>
+        <pre>{{ form }}</pre>
+        <pre>{{ modelObj }}</pre>
+
+        <h2>通过 computed 修改对象：</h2>
+        <button @click="modelObj.name = '李四'">修改 name 为 李四</button>
+        <button @click="modelObj.age = 20">修改 age 为 20</button>
+
+        <h2>通过方法替换整个对象：</h2>
+        <button @click="replaceObject">替换对象</button>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    form: {
+                        name: '张三',
+                        age: 18
+                    }
+                }
+            },
+            computed: {
+                modelObj: {
+                    get() {
+                        return this.form;
+                    },
+                    set(val) {
+                        console.log('computed setter 被触发:', val);
+                    }
+                }
+            },
+            watch: {
+                form: {
+                    handler(newVal) {
+                        console.log('watch form 触发:', newVal);
+                    },
+                    deep: true
+                }
+            },
+            methods: {
+                replaceObject() {
+                    this.form = { name: '李四', age: 20 }; // 会触发 computed set
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
