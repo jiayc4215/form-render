@@ -7,10 +7,14 @@
         v-bind="item.el"
       />
     </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="submit">比较</el-button>
+    </el-form-item>
   </el-form>
 </template>
 <script setup>
 import { computed } from "vue";
+import { useVModel } from "../../indexqqq";
 const props = defineProps({
   content: {
     type: Array,
@@ -21,8 +25,13 @@ const props = defineProps({
     default: () => {},
   },
 });
-const FormData = computed({
-  get: () => props.modelValue,
-  set: (newValue) => emit("update:modelValue", newValue),
+const FormData = useVModel(props, "modelValue", null, {
+  passive: true,
+  deep: true,
+  clone: true,
 });
+console.log(FormData.value, "FormData.value");
+const submit = () => {
+  console.log(FormData.value === props.modelValue, "FormData.value");
+};
 </script>

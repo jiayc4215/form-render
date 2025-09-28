@@ -1,31 +1,27 @@
-import { isDef } from "@vueuse/shared";
-import {
-  computed,
-  ref as deepRef,
-  getCurrentInstance,
-  nextTick,
-  watch,
-} from "vue";
-import { cloneFnJSON } from "../useCloned";
+import { ref, computed, watch, getCurrentInstance, nextTick } from "vue";
+
+/**
+ * 简单实现 isDef
+ */
+function isDef(val) {
+  return val !== undefined && val !== null;
+}
+
+/**
+ * 简单 JSON 深拷贝函数
+ */
+function cloneFnJSON(val) {
+  return JSON.parse(JSON.stringify(val));
+}
 
 /**
  * v-model 的简写工具
- * 作用：把 props + emit 封装成一个 ref
- *
- * @param {Object} props 组件的 props
- * @param {String} key 绑定的 key，默认是 "modelValue"
- * @param {Function} emit 组件的 emit 函数
- * @param {Object} options 选项配置
- *
- * options 参数：
- * - passive: 是否开启被动模式，true 时用 watch 同步，false 时用 v-model
- * - eventName: 自定义触发的事件名
- * - deep: 是否深度监听（只在 passive 模式下生效）
- * - defaultValue: 默认值
- * - clone: 是否克隆（true 用 JSON 深拷贝，或者自定义函数）
- * - shouldEmit: 触发 emit 前的钩子，返回 false 会阻止 emit
+ * @param {Object} props 组件 props
+ * @param {String} key 绑定 key，默认 modelValue
+ * @param {Function} emit 组件 emit 函数
+ * @param {Object} options 配置选项
  */
-export function useVModel(props, key, emit, options = {}) {
+export function useVModel(props, key = "modelValue", emit, options = {}) {
   const {
     clone = false,
     passive = false,
@@ -36,32 +32,24 @@ export function useVModel(props, key, emit, options = {}) {
   } = options;
 
   const vm = getCurrentInstance();
-  // 获取 emit 方法（兼容性写法）
   const _emit =
     emit ||
     vm?.emit ||
     vm?.$emit?.bind(vm) ||
     vm?.proxy?.$emit?.bind(vm?.proxy);
 
-  // 默认 key
-  if (!key) key = "modelValue";
+  const event = eventName || `update:${key}`;
 
-  // 事件名，默认是 update:xxx
-  let event = eventName || `update:${key}`;
-
-  // 克隆函数
-  const cloneFn = (val) => {
+  const doClone = (val) => {
     if (!clone) return val;
     if (typeof clone === "function") return clone(val);
     return cloneFnJSON(val);
   };
 
-  // 获取值，优先用 props，否则用默认值
   const getValue = () => {
-    return isDef(props[key]) ? cloneFn(props[key]) : defaultValue;
+    return isDef(props[key]) ? doClone(props[key]) : defaultValue;
   };
 
-  // 触发 emit
   const triggerEmit = (value) => {
     if (shouldEmit) {
       if (shouldEmit(value)) _emit(event, value);
@@ -70,39 +58,44 @@ export function useVModel(props, key, emit, options = {}) {
     }
   };
 
-  // 被动模式：用 watch 同步
   if (passive) {
-    const initialValue = getValue();
-    const proxy = deepRef(initialValue);
+    const proxy = ref(getValue());
     let isUpdating = false;
 
-    // 监听 props 更新，写入 proxy
+    // props -> proxy
     watch(
       () => props[key],
       (v) => {
+        console.log("watch2");
+
         if (!isUpdating) {
           isUpdating = true;
-          proxy.value = cloneFn(v);
+          proxy.value = doClone(v);
           nextTick(() => {
+            console.log("nextTick========", proxy.value);
+
             isUpdating = false;
           });
         }
-      }
+      },
+      { deep }
     );
 
-    // 监听 proxy 更新，触发 emit
+    // proxy -> emit
     watch(
       proxy,
       (v) => {
-        if (!isUpdating && (v !== props[key] || deep)) triggerEmit(v);
+        console.log("proxy");
+
+        if (!isUpdating && (v !== props[key] || deep)) {
+          triggerEmit(v);
+        }
       },
       { deep }
     );
 
     return proxy;
-  }
-  // 普通模式：computed 双向绑定
-  else {
+  } else {
     return computed({
       get() {
         return getValue();
