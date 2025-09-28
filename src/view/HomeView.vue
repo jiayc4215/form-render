@@ -1,11 +1,13 @@
 <template>
-  <el-form-renderer :content="content" v-model="FormData"> </el-form-renderer>
+  <el-form-renderer ref="formRef" :content="content" v-model="FormData">
+  </el-form-renderer>
   <el-button type="primary" @click="submit">提交</el-button>
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import elFormRenderer from "./components/el-form-renderer.vue";
+const formRef = ref(null);
 const FormData = ref({
   username: "",
   age: 0,
@@ -18,6 +20,7 @@ const content = [
     el: {
       placeholder: "请输入用户名",
     },
+    rules: [{ required: true, message: "请输入用户名", trigger: "blur" }],
   },
   {
     id: "age",
@@ -26,9 +29,17 @@ const content = [
     el: {
       placeholder: "请输入年龄",
     },
+    rules: [{ required: true, message: "请输入年龄", trigger: "blur" }],
   },
 ];
 const submit = () => {
-  console.log(FormData);
+  formRef.value
+    .validate()
+    .then(() => {
+      console.log(FormData.value);
+    })
+    .catch(() => {
+      console.log("校验失败");
+    });
 };
 </script>

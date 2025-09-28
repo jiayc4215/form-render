@@ -1,20 +1,25 @@
 <template>
-  <el-form>
-    <el-form-item v-for="item in content" :key="item.id" :label="item.label">
+  <el-form ref="formRef" :model="FormData">
+    <el-form-item
+      v-for="item in content"
+      :key="item.id"
+      :label="item.label"
+      :prop="item.id"
+      :rules="item.rules"
+    >
       <component
         :is="`el-${item.type}`"
         v-model="FormData[item.id]"
         v-bind="item.el"
       />
     </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submit">比较</el-button>
-    </el-form-item>
   </el-form>
 </template>
 <script setup>
-import { computed } from "vue";
-import { useVModel } from "../../indexqqq";
+import { useVModle } from "./utils";
+import { ref } from "vue";
+const formRef = ref(null);
+const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
   content: {
     type: Array,
@@ -25,13 +30,8 @@ const props = defineProps({
     default: () => {},
   },
 });
-const FormData = useVModel(props, "modelValue", null, {
-  passive: true,
-  deep: true,
-  clone: true,
+const FormData = useVModle(props, "modelValue", emit);
+defineExpose({
+  validate: (...args) => formRef.value.validate(...args),
 });
-console.log(FormData.value, "FormData.value");
-const submit = () => {
-  console.log(FormData.value === props.modelValue, "FormData.value");
-};
 </script>
