@@ -58,6 +58,8 @@
 
     <router-link to="/watch">watch监听对象问题</router-link> |
     <router-link to="/reastdata">reastdata</router-link> |
+
+    <router-link to="/basic">基础实现formRender</router-link> |
   </nav>
   <router-view></router-view>
 </template>

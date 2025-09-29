@@ -1,45 +1,143 @@
 <template>
-  <el-form-renderer ref="formRef" :content="content" v-model="FormData">
+  <el-form-renderer label-width="100px" :content="content" ref="ruleForm">
+    <el-form-item>
+      <el-button type="primary" @click="submitForm">submit</el-button>
+      <el-button @click="resetForm">reset</el-button>
+    </el-form-item>
   </el-form-renderer>
-  <el-button type="primary" @click="submit">提交</el-button>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import elFormRenderer from "./components/el-form-renderer.vue";
-const formRef = ref(null);
-const FormData = ref({
-  username: "",
-  age: 0,
-});
-const content = [
+import { reactive, ref } from "vue";
+import elFormRenderer from "../components/femessage/el-form-renderer.vue";
+const content = reactive([
   {
-    id: "username",
     type: "input",
-    label: "用户名",
+    id: "name",
+    label: "name",
+    attrs: { "data-name": "form1" },
     el: {
-      placeholder: "请输入用户名",
+      size: "default",
+      placeholder: "test placeholder",
     },
-    rules: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+    rules: [
+      { required: true, message: "miss name", trigger: "blur" },
+      { min: 3, max: 5, message: "length between 3 to 5", trigger: "blur" },
+    ],
   },
   {
-    id: "age",
-    type: "input-number",
-    label: "年龄",
+    type: "select",
+    id: "region",
+    label: "area",
     el: {
-      placeholder: "请输入年龄",
+      valueKey: "id",
     },
-    rules: [{ required: true, message: "请输入年龄", trigger: "blur" }],
+    options: [
+      {
+        label: "area1",
+        value: {
+          id: "shanghai",
+          name: "shanghai",
+        },
+      },
+      {
+        label: "area2",
+        value: {
+          id: "beijing",
+          name: "beijing",
+        },
+      },
+    ],
+    rules: [{ required: true, message: "miss area", trigger: "change" }],
   },
-];
-const submit = () => {
-  formRef.value
-    .validate()
-    .then(() => {
-      console.log(FormData.value);
-    })
-    .catch(() => {
-      console.log("校验失败");
+  {
+    type: "date-picker",
+    id: "date",
+    label: "date",
+    el: {
+      type: "datetime",
+      placeholder: "select date",
+      teleported: false,
+    },
+
+    rules: [
+      { type: "date", required: true, message: "miss date", trigger: "change" },
+    ],
+  },
+  {
+    type: "switch",
+    id: "delivery",
+    label: "delivery",
+  },
+  {
+    type: "checkbox-group",
+    id: "type",
+    label: "type",
+    default: [],
+    options: [
+      {
+        label: "typeA",
+        value: "A",
+      },
+      {
+        label: "typeB",
+        value: "B",
+      },
+      {
+        label: "typeC",
+        value: "C",
+      },
+    ],
+    rules: [
+      {
+        type: "array",
+        required: true,
+        message: "miss type",
+        trigger: "change",
+      },
+    ],
+  },
+  {
+    type: "radio-group",
+    id: "resource",
+    label: "resource",
+    options: [
+      {
+        label: "resourceA",
+      },
+      {
+        label: "resourceB",
+      },
+    ],
+    rules: [{ required: true, message: "miss resource", trigger: "change" }],
+  },
+  {
+    type: "input",
+    id: "desc",
+    label: "desc",
+    el: {
+      type: "textarea",
+    },
+    rules: [{ required: true, message: "miss desc", trigger: "blur" }],
+  },
+]);
+const ruleForm = ref();
+
+const submitForm = () => {
+  try {
+    ruleForm.value.validate((valid) => {
+      if (valid) {
+        console.log("OK");
+      } else {
+        console.log("error submit!!");
+        return false;
+      }
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+const resetForm = () => {
+  ruleForm.value.resetFields();
 };
 </script>
