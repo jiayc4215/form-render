@@ -60,6 +60,8 @@
     <router-link to="/reastdata">reastdata</router-link> |
 
     <router-link to="/basic">基础实现formRender</router-link> |
+
+    <router-link to="/useModel">useModel实现</router-link> |
   </nav>
   <router-view></router-view>
 </template>
