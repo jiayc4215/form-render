@@ -7,8 +7,13 @@
       :prop="item.id"
       :rules="item.rules"
     >
+      <!-- 
+      :modelValue="FormData[item.id]"
+      @update:modelValue="FormData[item.id] = $event"
+ -->
+      <!-- is 自定义的input组件 -->
       <component
-        :is="`el-${item.type}`"
+        :is="typeof item.type !== 'string' ? item.type : `el-${item.type}`"
         v-model="FormData[item.id]"
         v-bind="item.el"
         v-on="item?.on || {}"

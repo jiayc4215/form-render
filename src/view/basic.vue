@@ -4,13 +4,21 @@
   <el-button type="primary" @click="submit">提交</el-button>
 </template>
 
+<!-- 
+:modelValue="FormData"
+@update:modelValue="FormData = $event"
+ -->
+<!-- 基本组件  modelValue(FormData) => formRenderer (component:is) modelValue(FormData[item.id]) => 自定义组件(变化了)-->
+<!-- <!-- 自定义组件 emit("update:modelValue", val) => formRenderer emit("update:modelValue", val) => 页面收集到了FormData  -->
 <script setup>
 import { ref } from "vue";
 import elFormRenderer from "./test_demo/el-form-renderer.vue";
+import myInput from "./test_demo/myinput.vue";
 const formRef = ref(null);
 const FormData = ref({
   username: "",
   age: 0,
+  customInput: "999",
 });
 const content = [
   {
@@ -20,13 +28,10 @@ const content = [
     el: {
       placeholder: "请输入用户名",
     },
-    on: {
-      input: (val) => {
-        console.log(val);
-      },
-    },
+
     rules: [{ required: true, message: "请输入用户名", trigger: "blur" }],
   },
+
   {
     id: "age",
     type: "input-number",
@@ -37,82 +42,21 @@ const content = [
     rules: [{ required: true, message: "请输入年龄", trigger: "blur" }],
   },
   {
-    id: "gender",
-    type: "select",
-    label: "性别",
+    id: "customInput",
+    type: myInput,
+    label: "自定义输入框",
     el: {
-      placeholder: "请选择性别",
-      valueKey: "id",
+      placeholder: "请输入自定义内容",
     },
-    rules: [{ required: true, message: "请选择性别", trigger: "change" }],
     on: {
-      change: (val) => {
-        console.log(val);
+      focus: (e) => {
+        console.log(e, "focus");
+      },
+      input: (e) => {
+        console.log(e, "input");
       },
     },
-    options: [
-      {
-        label: "男",
-        value: {
-          id: "male",
-          name: "male",
-        },
-      },
-      {
-        label: "女",
-        value: {
-          id: "female",
-          name: "female",
-        },
-      },
-    ],
-  },
-  {
-    id: "hobby",
-    type: "checkbox-group",
-    style: "button",
-    label: "爱好",
-    el: {
-      placeholder: "请选择爱好",
-    },
-
-    options: [
-      {
-        label: "篮球",
-        value: "basketball",
-      },
-      {
-        label: "足球",
-        value: "football",
-      },
-      {
-        label: "跑步",
-        value: "running",
-      },
-    ],
-  },
-  {
-    id: "interest",
-    type: "radio-group",
-
-    label: "兴趣",
-    el: {
-      placeholder: "请选择兴趣",
-    },
-    options: [
-      {
-        label: "运动",
-        value: "sport",
-      },
-      {
-        label: "阅读",
-        value: "reading",
-      },
-      {
-        label: "旅游",
-        value: "travel",
-      },
-    ],
+    rules: [{ required: true, message: "请输入自定义内容", trigger: "blur" }],
   },
 ];
 const submit = () => {
