@@ -7,6 +7,7 @@
   >
   </el-form-renderer>
   <el-button type="primary" @click="submit">提交</el-button>
+  <button @click="checkOption">更新Options</button>
 </template>
 
 <!-- 
@@ -16,9 +17,8 @@
 <!-- 基本组件  modelValue(FormData) => formRenderer (component:is) modelValue(FormData[item.id]) => 自定义组件(变化了)-->
 <!-- <!-- 自定义组件 emit("update:modelValue", val) => formRenderer emit("update:modelValue", val) => 页面收集到了FormData  -->
 <script setup>
-import { ref, h, resolveComponent } from "vue";
+import { ref } from "vue";
 import elFormRenderer from "./test_demo/el-form-renderer.vue";
-import myInput from "./test_demo/myinput.vue";
 const formRef = ref(null);
 const FormData = ref({
   username: "",
@@ -49,28 +49,23 @@ const content = [
     rules: [{ required: true, message: "请输入年龄", trigger: "blur" }],
   },
   {
-    id: "customInput",
-    type: myInput,
-    label: h("div", null, [
-      h("span", null, "编辑"),
-      h(
-        resolveComponent("el-icon"),
-        { class: "el-icon--right", size: 20 },
-        () => [h(resolveComponent("Edit"))]
-      ),
-    ]),
+    id: "address",
+    type: "select",
+    label: "地址",
     el: {
-      placeholder: "请输入自定义内容",
+      placeholder: "请输入地址",
     },
-    on: {
-      focus: (e) => {
-        console.log(e, "focus");
+    options: [
+      {
+        label: "上海",
+        value: "上海",
       },
-      input: (e) => {
-        console.log(e, "input");
+      {
+        label: "北京",
+        value: "北京",
       },
-    },
-    rules: [{ required: true, message: "请输入自定义内容", trigger: "blur" }],
+    ],
+    rules: [{ required: true, message: "请输入地址", trigger: "blur" }],
   },
 ];
 const submit = () => {
@@ -82,5 +77,8 @@ const submit = () => {
     .catch(() => {
       console.log("校验失败");
     });
+};
+const checkOption = () => {
+  formRef.value.setOptions("address", [{ label: "广州", value: "广州" }]);
 };
 </script>

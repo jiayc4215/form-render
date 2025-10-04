@@ -30,7 +30,7 @@
               : item.disabled
           "
         >
-          <template v-for="(option, index) in item.options">
+          <template v-for="(option, index) in options[item.id]">
             <el-option
               v-if="item.type === 'select'"
               v-bind="option"
@@ -84,8 +84,9 @@
 </template>
 <script setup>
 import { useVModle } from "./utils";
-import { ref, h } from "vue";
+import { ref, watch, reactive } from "vue";
 const formRef = ref(null);
+const options = reactive({});
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
   content: {
@@ -101,7 +102,42 @@ const props = defineProps({
     default: false,
   },
 });
+// {
+//   address: [{ label: "广州", value: "广州" }],
+// }
+// const arr = [
+//   ["0", "a"],
+//   ["1", "b"],
+//   ["2", "c"],
+// ];
+// const obj = Object.fromEntries(arr);
+// console.log(obj); // { 0: "a", 1: "b", 2: "c" }
+const collect = (content, key) => {
+  let result = content.reduce((prev, cur) => {
+    if (cur[key]) {
+      prev.push([cur.id, cur[key]]);
+    }
+    return prev;
+  }, []);
+  return Object.fromEntries(result);
+};
 
+watch(
+  () => props.content,
+  (newContent) => {
+    try {
+      if (!newContent) return;
+      Object.assign(options, collect(newContent, "options"));
+      console.log(options);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  { immediate: true }
+);
+const setOptions = (id, opt) => {
+  Object.assign(options, { [id]: opt });
+};
 const getOptionKey = (item, option) => {
   if (option.value instanceof Object) {
     if (!item?.el || !item?.el?.valueKey) return;
@@ -110,9 +146,25 @@ const getOptionKey = (item, option) => {
     return option.value;
   }
 };
+
 const vnode = (props) => props.content;
 const FormData = useVModle(props, "modelValue", emit);
-defineExpose({
-  validate: (...args) => formRef.value.validate(...args),
-});
+defineExpose(
+  new Proxy(
+    {
+      setOptions,
+    },
+    {
+      get(target, prop) {
+        if (prop in target) {
+          return target[prop];
+        }
+        return formRef.value?.[prop];
+      },
+      has(target, prop) {
+        return prop in target || (formRef.value && prop in formRef.value);
+      },
+    }
+  )
+);
 </script>
