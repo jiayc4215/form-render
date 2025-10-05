@@ -31,6 +31,7 @@ import watch from "../view/watch.vue";
 import reastdata from "../view/reastdata.vue";
 import basic from "../view/basic.vue";
 import useModel from "../view/useModel.vue";
+import dialog from "../view/dialog.vue";
 
 const routes = [
   {
@@ -192,6 +193,11 @@ const routes = [
     path: "/useModel",
     name: "useModel",
     component: useModel,
+  },
+  {
+    path: "/dialog",
+    name: "dialog",
+    component: dialog,
   },
 ];
 

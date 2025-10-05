@@ -62,6 +62,7 @@
     <router-link to="/basic">基础实现formRender</router-link> |
 
     <router-link to="/useModel">useModel实现</router-link> |
+    <router-link to="/dialog">命令式dialog实现</router-link> |
   </nav>
   <router-view></router-view>
 </template>

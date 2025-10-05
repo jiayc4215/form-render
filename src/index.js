@@ -1,11 +1,18 @@
-import elFormRenderer from "./components/femessage/el-form-renderer.vue"; // 引入封装好的组件
-export { elFormRenderer }; //实现按需引入*
-const coms = [elFormRenderer]; // 将来如果有其它组件,都可以写到这个数组里
+import { createApp as _createApp } from "vue";
+import router from "./router/index";
+import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+function loadPlugins(app) {
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component);
+  }
+  app.use(ElementPlus);
+  app.use(router);
+}
 
-const components = [elFormRenderer];
-const install = function (App, options) {
-  components.forEach((component) => {
-    App.component(component.name, component);
-  });
+export const createApp = (...args) => {
+  const app = _createApp(...args);
+  loadPlugins(app);
+  return app;
 };
-export default { install }; // 批量的引入*
