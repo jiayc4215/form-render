@@ -32,6 +32,7 @@ import reastdata from "../view/reastdata.vue";
 import basic from "../view/basic.vue";
 import useModel from "../view/useModel.vue";
 import dialog from "../view/dialog.vue";
+import loadingBtn from "../view/loadingBtn.vue";
 
 const routes = [
   {
@@ -198,6 +199,11 @@ const routes = [
     path: "/dialog",
     name: "dialog",
     component: dialog,
+  },
+  {
+    path: "/loadingBtn",
+    name: "loadingBtn",
+    component: loadingBtn,
   },
 ];
 
