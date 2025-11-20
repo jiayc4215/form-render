@@ -33,6 +33,9 @@ import basic from "../view/basic.vue";
 import useModel from "../view/useModel.vue";
 import dialog from "../view/dialog.vue";
 import loadingBtn from "../view/loadingBtn.vue";
+import testpage from "../view/testpage.vue";
+
+
 
 const routes = [
   {
@@ -204,6 +207,11 @@ const routes = [
     path: "/loadingBtn",
     name: "loadingBtn",
     component: loadingBtn,
+  },
+  {
+    path: "/testpage",
+    name: "testpage",
+    component: testpage,
   },
 ];
 

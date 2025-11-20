@@ -15,7 +15,7 @@
 @update:modelValue="FormData = $event"
  -->
 <!-- 基本组件  modelValue(FormData) => formRenderer (component:is) modelValue(FormData[item.id]) => 自定义组件(变化了)-->
-<!-- <!-- 自定义组件 emit("update:modelValue", val) => formRenderer emit("update:modelValue", val) => 页面收集到了FormData  -->
+<!--  自定义组件 emit("update:modelValue", val) => formRenderer emit("update:modelValue", val) => 页面收集到了FormData  -->
 <script setup>
 import { ref } from "vue";
 import elFormRenderer from "./test_demo/el-form-renderer.vue";
