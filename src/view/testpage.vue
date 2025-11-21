@@ -3,6 +3,9 @@
     <h2>ITable 测试页</h2>
 
     <ITable :columns="columns" :tableData="tableData" :options="options">
+      <template #default-switch="{ row }">
+        <el-switch v-model="row.switch" />
+      </template>
     </ITable>
   </div>
 </template>
@@ -12,7 +15,6 @@ import { ref, h, resolveComponent } from "vue";
 import ITable from "../components/vue3table/index.vue";
 
 const statusRender = (props) => {
-  console.log(props);
   return h(
     resolveComponent("el-tag"),
     {
@@ -54,13 +56,38 @@ const columns = [
     label: "是否显示",
     prop: "show",
   },
+  {
+    label: "开关",
+    prop: "switch",
+  },
 ];
 
 // 表格数据
 const tableData = ref([
-  { name: "张三", age: 18, address: "北京", status: "success", show: true },
-  { name: "李四", age: 25, address: "上海", status: "danger", show: true },
-  { name: "王五", age: 30, address: "广州", status: "info", show: true },
+  {
+    name: 0,
+    age: 18,
+    address: "北京",
+    status: "success",
+    show: true,
+    switch: true,
+  },
+  {
+    name: "",
+    age: 25,
+    address: "上海",
+    status: "danger",
+    show: true,
+    switch: false,
+  },
+  {
+    name: "王五",
+    age: 30,
+    address: "广州",
+    status: "info",
+    show: true,
+    switch: true,
+  },
 ]);
 
 // 表格基础配置
