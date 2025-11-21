@@ -18,10 +18,14 @@
               : item.show
           "
         >
-          <template v-for="(value, key) in item.slot" #[key]="scope">
-            <slot :name="value" v-bind="scope"> </slot>
+          <template
+            v-for="(slotName, slotKey) in item.slots"
+            :key="slotKey"
+            #[slotKey]="scope"
+          >
+            <slot :name="slotName" v-bind="scope"></slot>
           </template>
-          <template #default="scope" v-if="!item.slot">
+          <template #default="scope" v-if="!item.slots">
             <div v-if="item.render">
               <div
                 v-if="typeof item.render === 'string'"
@@ -48,9 +52,9 @@
 </template>
 
 <script setup>
-import { useSlots, onMounted, ref } from "vue";
-let slots = useSlots();
-let newColumns = ref([]);
+import { ref, onMounted, useSlots } from "vue";
+const newColumns = ref([]);
+const slots = useSlots();
 let props = defineProps({
   /**
    * 表格列配置
@@ -76,20 +80,23 @@ let props = defineProps({
   },
 });
 const createColumns = () => {
+  const slotsKeys = Object.keys(slots);
+
   newColumns.value = props.columns.map((item) => {
-    const slotKeys = Object.keys(slots);
-    for (let key of slotKeys) {
+    for (const key of slotsKeys) {
       const res = key.match(/^(\S+)-(\S+)/);
-      if (res && res[2] == item.prop) {
-        if (!item.slot) {
-          item.slot = {};
+      console.log(res);
+
+      if (res && res[2] === item.prop) {
+        if (!item.slots) {
+          item.slots = {};
         }
-        item.slot[res[1]] = res[0];
+        item.slots[res[1]] = res[0];
       }
     }
-
     return item;
   });
+  console.log(newColumns.value);
 };
 onMounted(() => {
   createColumns();

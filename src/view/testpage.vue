@@ -2,9 +2,18 @@
   <div class="test-page">
     <h2>ITable 测试页</h2>
 
+    <!-- { slots: { "default": "default-switch", header:"header-switch"} } 
+    const res = key.match(/^(\S+)-(\S+)/);  
+    -->
     <ITable :columns="columns" :tableData="tableData" :options="options">
       <template #default-switch="{ row }">
         <el-switch v-model="row.switch" />
+      </template>
+      <template #header-switch="{ row }">
+        <el-icon>
+          <edit />
+        </el-icon>
+        <span>开关</span>
       </template>
     </ITable>
   </div>
