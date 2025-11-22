@@ -85,7 +85,6 @@ const createColumns = () => {
   newColumns.value = props.columns.map((item) => {
     for (const key of slotsKeys) {
       const res = key.match(/^(\S+)-(\S+)/);
-      console.log(res);
 
       if (res && res[2] === item.prop) {
         if (!item.slots) {
@@ -96,7 +95,6 @@ const createColumns = () => {
     }
     return item;
   });
-  console.log(newColumns.value);
 };
 onMounted(() => {
   createColumns();
