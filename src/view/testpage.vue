@@ -5,7 +5,12 @@
     <!-- { slots: { "default": "default-switch", header:"header-switch"} } 
     const res = key.match(/^(\S+)-(\S+)/);  
     -->
-    <ITable :columns="columns" :tableData="tableData" :options="options">
+    <ITable
+      :columns="columns"
+      :tableData="tableData"
+      :options="options"
+      :operates="tableOperates"
+    >
       <template #default-switch="{ row }">
         <el-switch v-model="row.switch" />
       </template>
@@ -98,6 +103,64 @@ const tableData = ref([
     switch: true,
   },
 ]);
+const tableOperates = {
+  width: 300,
+  fixed: "right",
+  list: [
+    {
+      icon: "Edit",
+      label: "详情",
+      props: {
+        type: "primary",
+        link: true,
+      },
+      show: (row, index) => {
+        console.log(row, index);
+
+        return row.switch;
+      },
+      method: (row, index) => {
+        console.log(row, index);
+      },
+    },
+    {
+      icon: "Edit",
+      label: "详情",
+      props: {
+        type: "primary",
+        link: true,
+      },
+      show: true,
+      method: (row, index) => {
+        console.log(row, index);
+      },
+    },
+    {
+      icon: "Edit",
+      label: "详情",
+      props: {
+        type: "primary",
+        link: true,
+      },
+      show: true,
+      method: (row, index) => {
+        console.log(row, index);
+      },
+    },
+    {
+      icon: "Edit",
+      label: "详情",
+      props: {
+        type: "primary",
+        link: true,
+      },
+      show: true,
+      method: (row, index) => {
+        console.log(row, index);
+      },
+    },
+  ],
+};
 
 // 表格基础配置
 const options = {

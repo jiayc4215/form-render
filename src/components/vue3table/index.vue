@@ -47,6 +47,70 @@
           </template>
         </el-table-column>
       </template>
+      <!-- 操作列 -->
+      <el-table-column
+        v-if="operates.list && operates.list.length"
+        label="操作"
+        align="left"
+        :width="operates.width"
+        :fixed="operates.fixed"
+      >
+        <template #default="scope">
+          <div class="operate-group">
+            <!-- ====== 外部按钮（前两个） ====== -->
+            <template
+              v-for="(item, index) in getVisibleButtons(scope.row, scope.$index)
+                .outside"
+              :key="item.label"
+            >
+              <el-button
+                v-bind="item.props"
+                @click="item.method(scope.row, scope.$index)"
+              >
+                <!-- 图标 -->
+                <el-icon v-if="item.icon">
+                  <component :is="item.icon" />
+                </el-icon>
+                <!-- 文本 -->
+                <span>{{ item.label }}</span>
+              </el-button>
+            </template>
+
+            <!-- ====== 下拉（超出部分） ====== -->
+            <el-dropdown
+              v-if="getVisibleButtons(scope.row, scope.$index).inside.length"
+              trigger="click"
+              class="custom-dropdown"
+            >
+              <!-- 下拉按钮 -->
+              <el-button size="small" link>
+                <el-icon><MoreFilled /></el-icon>
+              </el-button>
+              <!-- 下拉菜单 -->
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <!-- 下拉菜单项目 渲染超出的按钮 -->
+                  <el-dropdown-item
+                    v-for="item in getVisibleButtons(scope.row, scope.$index)
+                      .inside"
+                    :key="item.label"
+                    @click="item.method(scope.row, scope.$index)"
+                  >
+                    <div style="display: flex; align-items: center">
+                      <!-- 图标 -->
+                      <el-icon v-if="item.icon" style="margin-right: 4px">
+                        <component :is="item.icon" />
+                      </el-icon>
+                      <!-- 文本 -->
+                      <span>{{ item.label }}</span>
+                    </div>
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </div>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -78,7 +142,41 @@ let props = defineProps({
       border: false,
     }),
   },
+  /**
+   * 表格操作配置
+   */
+  operates: {
+    default: () => ({
+      width: 300, // 操作列宽度
+      fixed: false, // 是否固定在右侧
+      list: [], // 操作列配置列表
+    }),
+  },
 });
+// 计算按钮可见性 & 拆分外部 / 内部
+const getVisibleButtons = (row, index) => {
+  // 1. 过滤 show 条件
+  const visibleList = props.operates.list.filter((item) => {
+    if (item.show === undefined) return true;
+    if (typeof item.show === "function") return item.show(row, index);
+    return item.show;
+  });
+
+  // 2. 超过 3 个 → 前两个显示，其余折叠
+  if (visibleList.length > 3) {
+    return {
+      outside: visibleList.slice(0, 2),
+      inside: visibleList.slice(2),
+    };
+  }
+
+  // 3. 不超过 3 个 → 全部外部显示
+  return {
+    outside: visibleList,
+    inside: [],
+  };
+};
+
 const createColumns = () => {
   const slotsKeys = Object.keys(slots);
 
