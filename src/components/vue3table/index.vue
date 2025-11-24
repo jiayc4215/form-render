@@ -112,13 +112,25 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页组件 -->
+    <el-pagination
+      v-if="isShowPagination"
+      class="table-pagination"
+      v-bind="paginationConfig"
+      :total="total"
+      v-model:current-page="currentPage"
+      v-model:page-size="pageSize"
+      @current-change="onPageChange"
+      @size-change="onPageSizeChange"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, useSlots } from "vue";
+import { ref, onMounted, useSlots, computed } from "vue";
 const newColumns = ref([]);
 const slots = useSlots();
+const emit = defineEmits(["pagination", "update:page", "update:pageSize"]);
 let props = defineProps({
   /**
    * 表格列配置
@@ -152,7 +164,54 @@ let props = defineProps({
       list: [], // 操作列配置列表
     }),
   },
+  /**
+   * 是否显示分页组件
+   */
+  isShowPagination: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * 分页组件配置
+   */
+  paginationConfig: {
+    default: () => ({}),
+  },
+  /**
+   * 分页组件总数据量
+   */
+  total: {
+    type: Number,
+    default: 0,
+  },
+  /**
+   * 分页组件当前页码
+   */
+  page: {
+    type: Number,
+    default: 1,
+  },
+  /**
+   * 分页组件每页条数
+   */
+  pageSize: {
+    type: Number,
+    default: 10,
+  },
 });
+let currentPage = computed({
+  get: () => props.page,
+  set: (val) => {
+    emit("update:page", val);
+  },
+});
+let pageSize = computed({
+  get: () => props.pageSize,
+  set: (val) => {
+    emit("update:pageSize", val);
+  },
+});
+
 // 计算按钮可见性 & 拆分外部 / 内部
 const getVisibleButtons = (row, index) => {
   // 1. 过滤 show 条件
@@ -194,6 +253,23 @@ const createColumns = () => {
     return item;
   });
 };
+
+// 分页组件 - 页码改变
+const onPageChange = (val) => {
+  emit("pagination", {
+    page: val,
+    pageSize: pageSize.value,
+  });
+};
+
+// 分页组件 - 每页条数改变
+const onPageSizeChange = (val) => {
+  emit("pagination", {
+    page: currentPage.value,
+    pageSize: val,
+  });
+};
+
 onMounted(() => {
   createColumns();
 });
