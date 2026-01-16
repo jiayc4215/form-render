@@ -1,10 +1,5 @@
 <template>
-  <el-form
-    ref="myelForm"
-    v-bind="$attrs"
-    :model="value"
-    class="el-form-renderer"
-  >
+  <el-form ref="myelForm" v-bind="$attrs" :model="value" class="el-form-renderer">
     <template v-for="item in innerContent" :key="item.id">
       <slot :name="`id:${item.id}`" />
       <slot :name="`$id:${item.id}`" />
@@ -12,19 +7,14 @@
       <component
         :is="item.type === GROUP ? RenderFormGroup : RenderFormItem"
         :ref="
-          (el) => {
-            customComponent[item.id] = el;
+          el => {
+            customComponent[item.id] = el
           }
         "
         :data="item"
         :value="value"
         :item-value="value[item.id]"
-        :disabled="
-          disabled ||
-          (typeof item.disabled === 'function'
-            ? item.disabled(value)
-            : item.disabled)
-        "
+        :disabled="disabled || (typeof item.disabled === 'function' ? item.disabled(value) : item.disabled)"
         :readonly="readonly || item.readonly"
         :options="options[item.id]"
         @updateValue="updateValue"
@@ -37,37 +27,18 @@
 <script setup>
 // passive 是用于控制浏览器是否可以在滚动时取消事件的默认行为。当 passive 设置为 true 时，表示事件处理函数不会调用 preventDefault() 来阻止默认的滚动行为。
 //在一些滚动事件处理中，如果事件处理函数中调用了 preventDefault()，浏览器会等待该函数执行完毕后再进行滚动，这可能导致滚动的延迟。通过将 passive 设置为 true，可以告诉浏览器事件处理函数不会调用 preventDefault()，从而使滚动更加流畅。
-import "./util/ployfill";
-import RenderFormGroup from "./components/render-form-group.vue";
-import RenderFormItem from "./components/render-form-item.vue";
-import {
-  reactive,
-  computed,
-  ref,
-  watch,
-  onMounted,
-  nextTick,
-  provide,
-  toRaw,
-} from "vue";
-import transformContent from "./util/transform-content";
-import _set from "lodash.set";
-import _isequal from "lodash.isequal";
-import _clonedeep from "lodash.clonedeep";
+import "./util/ployfill"
+import RenderFormGroup from "./components/render-form-group.vue"
+import RenderFormItem from "./components/render-form-item.vue"
+import { reactive, computed, ref, watch, onMounted, nextTick, provide, toRaw } from "vue"
+import transformContent from "./util/transform-content"
+import _set from "lodash.set"
+import _isequal from "lodash.isequal"
+import _clonedeep from "lodash.clonedeep"
 
-import {
-  methodsSymbol,
-  updateFormsSymbol,
-  setOptionsSymbol,
-} from "./util/keys";
-import {
-  collect,
-  mergeValue,
-  transformOutputValue,
-  transformInputValue,
-  correctValue,
-} from "./util/utils";
-let GROUP = "group";
+import { methodsSymbol, updateFormsSymbol, setOptionsSymbol } from "./util/keys"
+import { collect, mergeValue, transformOutputValue, transformInputValue, correctValue } from "./util/utils"
+let GROUP = "group"
 /**
  * inputFormat 让整个输入机制复杂了很多。value 有以下输入路径:
  * 1. 传入的 form => inputFormat 处理
@@ -75,13 +46,13 @@ let GROUP = "group";
  * 3. 但 content 中的 default 没法经过 inputFormat 处理，因为 inputFormat 要接受整个 value 作为参数
  * 4. 组件内部更新 value，不需要走 inputFormat
  */
-let value = reactive({}); // 表单数据对象
-let options = reactive({});
-let initValue = reactive({});
-let myelForm = ref();
-let methods = {};
-const customComponent = ref([]);
-let emit = defineEmits(["update:FormData"]);
+let value = reactive({}) // 表单数据对象
+let options = reactive({})
+let initValue = reactive({})
+let myelForm = ref()
+let methods = {}
+const customComponent = ref([])
+let emit = defineEmits(["update:FormData"])
 // 注入 element ui form 方法
 /**
  * 与 element 相同，在 mounted 阶段存储 initValue
@@ -89,54 +60,54 @@ let emit = defineEmits(["update:FormData"]);
  * @see https://github.com/ElemeFE/element/blob/6ec5f8e900ff698cf30e9479d692784af836a108/packages/form/src/form-item.vue#L304
  */
 onMounted(async () => {
-  initValue = _clonedeep(value);
-  await nextTick();
+  initValue = _clonedeep(value)
+  await nextTick()
   // 检查 myelForm 是否已经初始化
   if (myelForm && myelForm.value) {
-    Object.keys(myelForm.value).forEach((item) => {
+    Object.keys(myelForm.value).forEach(item => {
       // 检查属性是否存在于 methods 对象中
       if (myelForm.value[item] && !(item in methods)) {
-        methods[item] = myelForm.value[item];
+        methods[item] = myelForm.value[item]
       }
-    });
+    })
   }
   /**
    * 有些组件会 created 阶段更新初始值为合法值，这会触发 validate。目前已知的情况有：
    * - el-select 开启 multiple 时，会更新初始值 undefined 为 []
    * @hack
    */
-  methods.clearValidate();
-});
+  methods.clearValidate()
+})
 
 let props = defineProps({
   //表单项
   content: {
     type: Array,
-    required: true,
+    required: true
   },
   // 禁用
   disabled: {
     type: [Boolean, Function],
-    default: false,
+    default: false
   },
   //只读
   readonly: {
     type: Boolean,
-    default: false,
+    default: false
   },
   /**
    * v-model 的值。传入后会优先使用
    */
   FormData: {
     type: Object,
-    default: undefined,
-  },
-});
+    default: undefined
+  }
+})
 //兼容处理
-let innerContent = computed(() => transformContent(props.content));
+let innerContent = computed(() => transformContent(props.content))
 // 初始化默认值
 let setValueFromModel = () => {
-  if (!innerContent.value.length) return;
+  if (!innerContent.value.length) return
   /**
    * 没使用 v-model 时才从 default 采集数据
    * default 值没法考虑 inputFormat
@@ -144,8 +115,8 @@ let setValueFromModel = () => {
    */
   let newValue = props.FormData
     ? transformInputValue(props.FormData, innerContent.value)
-    : collect(innerContent.value, "default");
-  correctValue(newValue, innerContent.value);
+    : collect(innerContent.value, "default")
+  correctValue(newValue, innerContent.value)
   /**
    * 因为 reactive 不能改变引用 所以使用assign
    * bug1使用 v-model 直接绑定空对象不会引起  watch value的监听
@@ -153,50 +124,47 @@ let setValueFromModel = () => {
    */
   // 移除 _isequal 判断后，即使 FormData 变化前后的值实际上相同，也会强制更新 value ，从而触发 emit 更新 FormData ，形成无限循环。这个判断是防止死循环的关键机制。
   if (!_isequal(toRaw(value), newValue)) {
-    Object.keys(value).forEach((key) => delete value[key]);
-    Object.assign(value, newValue);
+    Object.keys(value).forEach(key => delete value[key])
+    Object.assign(value, newValue)
   }
-};
+}
 // v-model初始化默认数据
 watch(
   () => props.FormData,
-  (newForm) => {
-    if (!newForm) return;
-    setValueFromModel();
+  newForm => {
+    if (!newForm) return
+    setValueFromModel()
   },
   { immediate: true, deep: true }
-);
+)
 // 初始化默认数据
 watch(
   innerContent,
-  (newContent) => {
+  newContent => {
     try {
-      if (!newContent) return;
+      if (!newContent) return
 
       // 如果 content 没有变动 remote 的部分，这里需要保留之前 remote 注入的 options
-      Object.assign(options, collect(newContent, "options"));
-      setValueFromModel();
+      Object.assign(options, collect(newContent, "options"))
+      setValueFromModel()
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   },
   { immediate: true }
-);
+)
 
 // v-model 传递值
-watch(value, (newValue, oldValue) => {
+watch(value, newValue => {
   try {
-    if (!newValue) return;
-    let data = Object.assign(
-      newValue,
-      transformOutputValue(newValue, innerContent)
-    );
-    emit("update:FormData", data);
+    if (!newValue) return
+    let data = Object.assign(newValue, transformOutputValue(newValue, innerContent))
+    emit("update:FormData", data)
   } catch (error) {
-    console.log(error, "-----");
+    console.log(error, "-----")
   }
   // deep: true, // updateValue 是全量更新，所以不用
-});
+})
 
 /**
  * 更新表单数据
@@ -204,8 +172,8 @@ watch(value, (newValue, oldValue) => {
  * @param  {All} options.value 表单数据
  */
 let updateValue = ({ id, value: v }) => {
-  value[id] = v;
-};
+  value[id] = v
+}
 /**
  * 重置表单为初始值
  *
@@ -225,15 +193,15 @@ let resetFields = async () => {
    *   4. 因为 _isequal(v, oldV)，所以没有触发 v-model 更新
    */
 
-  Object.keys(value).forEach((key) => delete value[key]);
+  Object.keys(value).forEach(key => delete value[key])
 
-  Object.assign(value, _clonedeep(initValue));
-  await nextTick();
+  Object.assign(value, _clonedeep(initValue))
+  await nextTick()
 
   setTimeout(() => {
-    methods.clearValidate();
-  }, 0);
-};
+    methods.clearValidate()
+  }, 0)
+}
 
 /**
  * 当 strict 为 true 时，只返回设置的表单项的值, 过滤掉冗余字段, 更多请看 update-form 示例
@@ -242,17 +210,17 @@ let resetFields = async () => {
  * @public
  */
 let getFormValue = ({ strict = false } = {}) => {
-  return transformOutputValue(value, innerContent, { strict });
-};
+  return transformOutputValue(value, innerContent, { strict })
+}
 /**
  * update form values
  * @param {object} newValue - key is item's id, value is the new value
  * @public
  */
-let updateForm = (newValue) => {
-  newValue = transformInputValue(newValue, innerContent);
-  mergeValue(value, newValue, innerContent);
-};
+let updateForm = newValue => {
+  newValue = transformInputValue(newValue, innerContent)
+  mergeValue(value, newValue, innerContent)
+}
 /**
  * update select options
  * @param {string} id<br>
@@ -260,42 +228,41 @@ let updateForm = (newValue) => {
  * @public
  */
 let setOptions = (id, O) => {
-  _set(options, id, O);
-};
+  _set(options, id, O)
+}
 
 /**
  * get custom component
  * @param {string} id<br>
  * @public
  */
-const getComponentById = (id) => {
-  let content = [];
-  props.content.forEach((item) => {
+const getComponentById = id => {
+  let content = []
+  props.content.forEach(item => {
     if (item.type === GROUP) {
-      const items = item.items.map((formItem) => {
-        formItem.groupId = item.id;
-        return formItem;
-      });
-      content.push(...items);
+      const items = item.items.map(formItem => {
+        formItem.groupId = item.id
+        return formItem
+      })
+      content.push(...items)
     } else {
-      content.push(item);
+      content.push(item)
     }
-  });
-  const itemContent = content.find((item) => item.id === id);
+  })
+  const itemContent = content.find(item => item.id === id)
   if (!itemContent) {
-    return undefined;
+    return undefined
   }
   if (!itemContent.groupId) {
-    return customComponent.value[id].customComponent;
+    return customComponent.value[id].customComponent
   } else {
-    const componentRef =
-      customComponent.value[itemContent.groupId].customComponent;
-    return componentRef[`formItem-${id}`].customComponent;
+    const componentRef = customComponent.value[itemContent.groupId].customComponent
+    return componentRef[`formItem-${id}`].customComponent
   }
-};
-provide(methodsSymbol, methods);
-provide(updateFormsSymbol, updateForm);
-provide(setOptionsSymbol, setOptions);
+}
+provide(methodsSymbol, methods)
+provide(updateFormsSymbol, updateForm)
+provide(setOptionsSymbol, setOptions)
 defineExpose(
   new Proxy(
     {
@@ -305,21 +272,21 @@ defineExpose(
       updateForm,
       setOptions,
       methods,
-      getComponentById,
+      getComponentById
     },
     {
       get(target, prop) {
-        return target[prop] || myelForm.value?.[prop];
+        return target[prop] || myelForm.value?.[prop]
       },
       has(target, prop) {
-        return prop in target || prop in myelForm.value;
-      },
+        return prop in target || prop in myelForm.value
+      }
     }
   )
-);
+)
 </script>
 <script>
 export default {
-  name: "ElFormRenderer",
-};
+  name: "ElFormRenderer"
+}
 </script>

@@ -5,8 +5,8 @@
 
     <render-form-item
       :ref="
-        (el) => {
-          customComponent[`formItem-${item.id}`] = el;
+        el => {
+          customComponent[`formItem-${item.id}`] = el
         }
       "
       :prop="`${data.id}.${item.id}`"
@@ -21,26 +21,26 @@
   </template>
 </template>
 <script setup>
-import RenderFormItem from "./render-form-item.vue";
-const emit = defineEmits(["updateValue"]);
-import { ref } from "vue";
+import RenderFormItem from "./render-form-item.vue"
+const emit = defineEmits(["updateValue"])
+import { ref } from "vue"
 let props = defineProps({
   data: Object,
   itemValue: {},
   value: Object,
   disabled: Boolean,
   readonly: Boolean,
-  options: Object,
-});
-let customComponent = ref([]);
+  options: Object
+})
+let customComponent = ref([])
 const updateValue = ({ id, value }) => {
   emit("updateValue", {
     id: props.data.id,
     value: {
       ...props.itemValue,
-      [id]: value,
-    },
-  });
-};
-defineExpose({ customComponent });
+      [id]: value
+    }
+  })
+}
+defineExpose({ customComponent })
 </script>
