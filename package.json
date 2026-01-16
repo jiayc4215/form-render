@@ -5,10 +5,19 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "lint": "eslint . --ext .js,.mjs,.cjs,.vue",
+    "lint:fix": "eslint . --ext .js,.mjs,.cjs,.vue --fix",
     "preview": "vite preview",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs"
+    "docs:serve": "vitepress serve docs",
+    "prepare": "husky install",
+    "commit": "git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
   },
   "files": [
     "dist"
@@ -40,7 +49,17 @@
     "vue-router": "4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.3.1",
+    "@commitlint/config-conventional": "^20.3.1",
+    "@eslint/js": "^9.39.2",
     "@vitejs/plugin-vue": "^4.2.3",
+    "commitizen": "^4.3.1",
+    "cz-git": "^1.12.0",
+    "eslint": "^9.39.2",
+    "eslint-plugin-vue": "^10.7.0",
+    "globals": "^17.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^16.2.7",
     "sass": "^1.69.5",
     "vite": "^4.4.5",
     "vitepress": "1.0.0-rc.24"
