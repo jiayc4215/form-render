@@ -40,8 +40,8 @@
     "dev": "initial-scan docs && vitepress dev .docs --host",
     "build": "vite build",
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs",
+    "docs:build": "initial-scan docs && cross-env NODE_ENV=production && vitepress build .docs",
+    "docs:serve": "cross-env NODE_ENV=production vitepress serve .docs --host",
     "lint": "eslint . --ext .js,.mjs,.cjs,.vue",
     "lint:fix": "eslint . --ext .js,.mjs,.cjs,.vue --fix",
     "lint:prettier": "prettier --write \"**/*.{js,ts,mjs,cjs,json,tsx,css,less,scss,vue,html,md}\"",
@@ -55,6 +55,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
+    "cross-env": "^10.1.0",
+    "fs-extra": "^11.3.3",
     "lodash.clonedeep": "^4.5.0",
     "lodash.frompairs": "^4.0.1",
     "lodash.get": "^4.4.2",

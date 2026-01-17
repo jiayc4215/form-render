@@ -1,9 +1,9 @@
 ---
 map:
-  path: /assembly/form/
+  path: /form/basic/
 ---
 
-# Basic Usage
+# 基本使用
 
 ## 组件使用
 
