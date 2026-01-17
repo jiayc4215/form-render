@@ -37,7 +37,7 @@
     }
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "initial-scan docs && vitepress dev .docs --host",
     "build": "vite build",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -72,6 +72,9 @@
     "@commitlint/config-conventional": "^20.3.1",
     "@element-plus/icons-vue": "^2.3.2",
     "@eslint/js": "^9.39.2",
+    "@ruabick/md-demo-plugins": "^0.3.3",
+    "@ruabick/vite-plugin-gen-temp": "^0.3.3",
+    "@ruabick/vitepress-demo-block": "^0.3.3",
     "@vitejs/plugin-vue": "^6.0.3",
     "axios": "^1.13.2",
     "commitizen": "^4.3.1",
