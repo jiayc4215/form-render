@@ -1,44 +1,60 @@
 {
   "name": "el-form-renderer-vue3",
   "version": "1.0.1",
+  "author": {
+    "name": "Mr.Jia",
+    "email": "jiagongzi0625@gmail.com"
+  },
+  "description": "render form-item easily",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jiayc4215/form-render.git"
+  },
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint . --ext .js,.mjs,.cjs,.vue",
-    "lint:fix": "eslint . --ext .js,.mjs,.cjs,.vue --fix",
-    "lint:prettier": "prettier --write \"**/*.{js,ts,mjs,cjs,json,tsx,css,less,scss,vue,html,md}\"",
-    "preview": "vite preview",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs",
-    "prepare": "husky install",
-    "commit": "git-cz"
-  },
-  "lint-staged": {
-    "*.{js,mjs,cjs,vue}": "eslint --fix",
-    "*.{js,mjs,cjs,vue,json,css,less,scss,vue,html,md}": "prettier --write"
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-git"
-    }
-  },
-  "files": [
-    "dist"
-  ],
   "main": "./dist/el-form-renderer-vue3.umd.js",
   "module": "./dist/el-form-renderer-vue3.es.js",
+  "unpkg": "./dist/el-form-renderer-vue3.iife.js",
+  "jsdelivr": "./dist/el-form-renderer-vue3.iife.js",
+  "sideEffects": false,
+  "license": "MIT",
+  "keywords": [
+    "vue",
+    "element",
+    "render",
+    "form",
+    "component"
+  ],
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
   "exports": {
     ".": {
       "import": "./dist/el-form-renderer-vue3.es.js",
-      "require": "./dist/el-form-renderer-vue3.umd.js"
+      "require": "./dist/el-form-renderer-vue3.cjs.js",
+      "default": "./dist/el-form-renderer-vue3.umd.js"
     }
   },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs",
+    "lint": "eslint . --ext .js,.mjs,.cjs,.vue",
+    "lint:fix": "eslint . --ext .js,.mjs,.cjs,.vue --fix",
+    "lint:prettier": "prettier --write \"**/*.{js,ts,mjs,cjs,json,tsx,css,less,scss,vue,html,md}\"",
+    "prepare": "husky",
+    "commit": "git-cz",
+    "up": "taze major -r -w -I -l",
+    "release": "np"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.1.0",
-    "axios": "^1.5.1",
-    "element-plus": "^2.4.4",
     "lodash.clonedeep": "^4.5.0",
     "lodash.frompairs": "^4.0.1",
     "lodash.get": "^4.4.2",
@@ -49,26 +65,48 @@
     "lodash.kebabcase": "^4.1.1",
     "lodash.omit": "^4.5.0",
     "lodash.set": "^4.3.2",
-    "lodash.topairs": "^4.3.0",
-    "vue": "^3.3.4",
-    "vue-router": "4"
+    "lodash.topairs": "^4.3.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
+    "@element-plus/icons-vue": "^2.3.2",
     "@eslint/js": "^9.39.2",
-    "@vitejs/plugin-vue": "^4.2.3",
+    "@vitejs/plugin-vue": "^6.0.3",
+    "axios": "^1.13.2",
     "commitizen": "^4.3.1",
     "cz-git": "^1.12.0",
+    "element-plus": "^2.13.1",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^10.7.0",
     "globals": "^17.0.0",
-    "husky": "^8.0.3",
+    "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
+    "np": "^10.2.0",
     "prettier": "^3.8.0",
-    "sass": "^1.69.5",
-    "vite": "^4.4.5",
-    "vitepress": "1.0.0-rc.24"
+    "sass": "^1.97.2",
+    "taze": "^19.9.2",
+    "vite": "^7.3.1",
+    "vitepress": "1.6.4",
+    "vue": "^3.5.26",
+    "vue-router": "^4.6.4"
+  },
+  "peerDependencies": {
+    "element-plus": "^2.4.4"
+  },
+  "peerDependenciesMeta": {
+    "element-plus": {
+      "optional": true
+    }
+  },
+  "lint-staged": {
+    "*.{js,mjs,cjs,vue}": "eslint --fix",
+    "*.{js,mjs,cjs,vue,json,css,less,scss,vue,html,md}": "prettier --write"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
   }
 }
