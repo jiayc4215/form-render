@@ -56,15 +56,12 @@
 
     <router-link to="/testcom">演示如何二次封装</router-link> |
 
-    <router-link to="/watch">watch监听对象问题</router-link> |
-    <router-link to="/reastdata">reastdata</router-link> |
+    <router-link to="/watch">watch监听对象问题</router-link> | <router-link to="/reastdata">reastdata</router-link> |
 
     <router-link to="/basic">基础实现formRender</router-link> |
 
-    <router-link to="/useModel">useModel实现</router-link> |
-    <router-link to="/dialog">命令式dialog实现</router-link> |
-    <router-link to="/loadingBtn">loadingBtn</router-link> |
-    <router-link to="/testpage">testpage</router-link> |
+    <router-link to="/useModel">useModel实现</router-link> | <router-link to="/dialog">命令式dialog实现</router-link> |
+    <router-link to="/loadingBtn">loadingBtn</router-link> | <router-link to="/testpage">testpage</router-link> |
   </nav>
   <router-view></router-view>
 </template>

@@ -9,26 +9,26 @@ export const sidebar = {
         { text: "date-picker", link: "/en/form/date-picker" },
         { text: "deprecated", link: "/en/form/deprecated" },
         { text: "disabled", link: "/en/form/disabled" },
-        { text: "el", link: "/assembly/form/el" },
+        { text: "el", link: "/form/el" },
         {
           text: "get-component-by-id",
-          link: "/assembly/form/get-component-by-id"
+          link: "/form/get-component-by-id"
         },
-        { text: "get-form-value", link: "/assembly/form/get-form-value" },
-        { text: "hidden", link: "/assembly/form/hidden" },
-        { text: "next-tick", link: "/assembly/form/next-tick" },
-        { text: "on", link: "/assembly/form/on" },
-        { text: "radio-group", link: "/assembly/form/radio-group" },
-        { text: "readonly", link: "/assembly/form/readonly" },
-        { text: "remote", link: "/assembly/form/remote" },
-        { text: "rules-plus", link: "/assembly/form/rules-plus" },
-        { text: "rules", link: "/assembly/form/rules" },
-        { text: "set-options", link: "/assembly/form/set-options" },
-        { text: "slot-label", link: "/assembly/form/slot-label" },
-        { text: "slot", link: "/assembly/form/slot" },
-        { text: "update-form", link: "/assembly/form/update-form" },
-        { text: "v-model", link: "/assembly/form/v-model" },
-        { text: "value-format", link: "/assembly/form/value-format" }
+        { text: "get-form-value", link: "/form/get-form-value" },
+        { text: "hidden", link: "/form/hidden" },
+        { text: "next-tick", link: "/form/next-tick" },
+        { text: "on", link: "/form/on" },
+        { text: "radio-group", link: "/form/radio-group" },
+        { text: "readonly", link: "/form/readonly" },
+        { text: "remote", link: "/form/remote" },
+        { text: "rules-plus", link: "/form/rules-plus" },
+        { text: "rules", link: "/form/rules" },
+        { text: "set-options", link: "/form/set-options" },
+        { text: "slot-label", link: "/form/slot-label" },
+        { text: "slot", link: "/form/slot" },
+        { text: "update-form", link: "/form/update-form" },
+        { text: "v-model", link: "/form/v-model" },
+        { text: "value-format", link: "/form/value-format" }
       ]
     },
 
@@ -69,26 +69,26 @@ export const sidebar = {
         { text: "date-picker", link: "/form/date-picker" },
         { text: "deprecated", link: "/form/deprecated" },
         { text: "disabled", link: "/form/disabled" },
-        { text: "el", link: "/assembly/form/el" },
+        { text: "el", link: "/form/el" },
         {
           text: "get-component-by-id",
-          link: "/assembly/form/get-component-by-id"
+          link: "/form/get-component-by-id"
         },
-        { text: "get-form-value", link: "/assembly/form/get-form-value" },
-        { text: "hidden", link: "/assembly/form/hidden" },
-        { text: "next-tick", link: "/assembly/form/next-tick" },
-        { text: "on", link: "/assembly/form/on" },
-        { text: "radio-group", link: "/assembly/form/radio-group" },
-        { text: "readonly", link: "/assembly/form/readonly" },
-        { text: "remote", link: "/assembly/form/remote" },
-        { text: "rules-plus", link: "/assembly/form/rules-plus" },
-        { text: "rules", link: "/assembly/form/rules" },
-        { text: "set-options", link: "/assembly/form/set-options" },
-        { text: "slot-label", link: "/assembly/form/slot-label" },
-        { text: "slot", link: "/assembly/form/slot" },
-        { text: "update-form", link: "/assembly/form/update-form" },
-        { text: "v-model", link: "/assembly/form/v-model" },
-        { text: "value-format", link: "/assembly/form/value-format" }
+        { text: "get-form-value", link: "/form/get-form-value" },
+        { text: "hidden", link: "/form/hidden" },
+        { text: "next-tick", link: "/form/next-tick" },
+        { text: "on", link: "/form/on" },
+        { text: "radio-group", link: "/form/radio-group" },
+        { text: "readonly", link: "/form/readonly" },
+        { text: "remote", link: "/form/remote" },
+        { text: "rules-plus", link: "/form/rules-plus" },
+        { text: "rules", link: "/form/rules" },
+        { text: "set-options", link: "/form/set-options" },
+        { text: "slot-label", link: "/form/slot-label" },
+        { text: "slot", link: "/form/slot" },
+        { text: "update-form", link: "/form/update-form" },
+        { text: "v-model", link: "/form/v-model" },
+        { text: "value-format", link: "/form/value-format" }
       ]
     }
   ]
