@@ -3,7 +3,7 @@
 </template>
 <script setup>
 import { reactive } from "vue"
-import elFormRenderer from "../../components/femessage/el-form-renderer.vue"
+import elFormRenderer from "el-form-renderer-vue3"
 let rule = [
   { required: true, message: "using form rules", trigger: "change" },
   { min: 3, max: 5, message: "3 <= length <= 5", trigger: "change" }

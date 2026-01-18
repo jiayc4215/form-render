@@ -12,7 +12,7 @@
 <script setup>
 import { reactive, ref } from "vue"
 const formRender = ref()
-import elFormRenderer from "../../components/femessage/el-form-renderer.vue"
+import elFormRenderer from "el-form-renderer-vue3"
 let form = ref()
 const content = reactive([
   {

@@ -3,7 +3,7 @@
 </template>
 <script setup>
 import { reactive } from "vue"
-import elFormRenderer from "../../components/femessage/el-form-renderer.vue"
+import elFormRenderer from "el-form-renderer-vue3"
 const content = reactive([
   {
     id: "city",

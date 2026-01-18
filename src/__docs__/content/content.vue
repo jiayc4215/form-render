@@ -16,7 +16,7 @@
 
 <script setup>
 import { reactive, ref } from "vue"
-import elFormRenderer from "../../components/femessage/el-form-renderer.vue"
+import elFormRenderer from "el-form-renderer-vue3"
 let requestRemoteCount = ref(0)
 const form = ref()
 let id = ref(0)

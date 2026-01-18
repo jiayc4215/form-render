@@ -8,7 +8,7 @@
 </template>
 <script setup>
 import { reactive, ref, nextTick } from "vue"
-import elFormRenderer from "../../components/femessage/el-form-renderer.vue"
+import elFormRenderer from "el-form-renderer-vue3"
 let dialogVisible = ref(false)
 const dialog = ref()
 const formRender = ref()

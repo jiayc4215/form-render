@@ -9,7 +9,7 @@
 </template>
 <script setup>
 import { reactive, ref, watch } from "vue"
-import elFormRenderer from "../../components/femessage/el-form-renderer.vue"
+import elFormRenderer from "el-form-renderer-vue3"
 let disabledAll = ref(false)
 let disabledArea = ref(false)
 let form = ref()

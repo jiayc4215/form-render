@@ -3,7 +3,7 @@
 </template>
 <script setup>
 import { reactive, markRaw } from "vue"
-import elFormRenderer from "../../components/femessage/el-form-renderer.vue"
+import elFormRenderer from "el-form-renderer-vue3"
 
 import MyInput from "./MyInput.vue"
 const content = reactive([

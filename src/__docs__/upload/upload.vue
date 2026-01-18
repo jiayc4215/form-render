@@ -5,7 +5,7 @@
 </template>
 <script setup>
 import { reactive, markRaw, ref } from "vue"
-import elFormRenderer from "../../components/femessage/el-form-renderer.vue"
+import elFormRenderer from "el-form-renderer-vue3"
 
 import ImageUpload from "./ImageUpload.vue"
 
