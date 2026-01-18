@@ -1,10 +1,15 @@
-import elFormRenderer from "./components/femessage/el-form-renderer.vue" // 引入封装好的组件
-export { elFormRenderer } //实现按需引入*
+import Component from "./el-form-renderer.vue"
 
-const components = [elFormRenderer]
-const install = function (App) {
-  components.forEach(component => {
-    App.component(component.name, component)
-  })
+// 1. 定义插件安装逻辑
+const install = app => {
+  app.component(Component.name, Component)
 }
-export default { install } // 批量的引入*
+
+// 2. 为组件对象添加 install 属性，支持 app.use(Component)
+Component.install = install
+
+// 3. 导出组件本身，支持 import { ElFormRenderer } 局部引入
+export const ElFormRenderer = Component
+
+// 4. 默认导出，支持 import ElFormRenderer from '...'
+export default Component

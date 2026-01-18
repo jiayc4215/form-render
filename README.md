@@ -1,6 +1,6 @@
 ## 技术交流群 711368818
 
-<img src="./src/assets/qq.jpg"  width="200" />
+<img src="./public/qq.jpg"  width="200" />
 
 ## 遗留问题 :待解决
 
@@ -42,8 +42,8 @@ pnpm i el-form-renderer-vue3
 ```
 
 ```ts
-import elFormRenderer from "el-form-renderer-vue3";
-app.use(elFormRenderer);
+import elFormRenderer from "el-form-renderer-vue3"
+app.use(elFormRenderer)
 ```
 
 ```ts

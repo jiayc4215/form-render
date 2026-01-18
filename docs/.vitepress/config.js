@@ -53,7 +53,7 @@ export default defineConfig({
     plugins: [genTemp(), copyDocs()],
     resolve: {
       alias: {
-        "el-form-renderer-vue3": resolve(__dirname, "../../")
+        "el-form-renderer-vue3": resolve("./src/")
       }
     }
   },
