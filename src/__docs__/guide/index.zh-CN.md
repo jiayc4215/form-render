@@ -37,7 +37,7 @@ form-renderer 基于元素 element-plus，但不限于元素 element-plus 组件
 - [vue 2 与 vue3 获取模版引用 （ref）的区别](https://blog.csdn.net/qq_63358859/article/details/133532229?spm=1001.2014.3001.5501)
 - [vue2 与 vue3 v-model 的区别](https://blog.csdn.net/qq_63358859/article/details/133484380?spm=1001.2014.3001.5501)
 - [vue2 版本](https://blog.csdn.net/qq_63358859/article/details/130442636?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522169684271816800180612618%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&request_id=169684271816800180612618&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_ecpm_v1~rank_v31_ecpm-7-130442636-null-null.nonecase&utm_term=render&spm=1018.2226.3001.4450)
-- [中文文档](https://gitee.com/childe-jia/form-render/wikis/%E6%96%87%E6%A1%A3/%E4%BB%8B%E7%BB%8D)
+- [中文文档](https://form-renderv3.netlify.app/)
 - [element-plus table 的封装](https://gitee.com/childe-jia/table-vue3)
 
 ## Quick Start
@@ -187,7 +187,7 @@ const content = reactive([
   },
 ]);
 const resetForm = () => {
-  form.value.methods.resetFields();
+  form.value.resetFields();
 };
 const setValue = () => {
   FormData.name = "小明";
@@ -380,7 +380,7 @@ interface Content {
    * 监听表单项发出的事件
    * listen to any events emitted by component of form item
    * @param {any[]} args - what that event emits
-   * @param {function} updateForm - same as methods.updateForm
+   * @param {function} updateForm - same as updateForm
    */
   on?: {
     [eventName: string]: (args: any[], updateForm: function) => void

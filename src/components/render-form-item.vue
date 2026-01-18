@@ -51,7 +51,11 @@
       :loading="loading"
       :remote-method="data.remoteMethod || componentProps.remoteMethod || remoteMethod"
     >
-      <!-- 插槽处理  选项-->
+      <!-- 插槽处理  选项
+      label act as value has been deprecated, 
+      label is used only as display text, this action will be removed in 3.0.0,
+      consider switching to new API. 
+      -->
       <template v-for="(opt, index) in options">
         <el-option v-if="data.type === 'select'" :key="optionKey(opt) || index" v-bind="opt" />
         <el-checkbox-button
@@ -59,11 +63,17 @@
           :key="opt.value"
           v-bind="opt"
           :label="'value' in opt ? opt.value : opt.label"
+          :value="'value' in opt ? opt.value : opt.label"
         >
           {{ opt.label }}
         </el-checkbox-button>
         <template v-else-if="data.type === 'checkbox-group' && data.style !== 'button'">
-          <el-checkbox :key="opt.value" v-bind="opt" :label="'value' in opt ? opt.value : opt.label">
+          <el-checkbox
+            :key="opt.value"
+            v-bind="opt"
+            :label="'value' in opt ? opt.value : opt.label"
+            :value="'value' in opt ? opt.value : opt.label"
+          >
             {{ opt.label }}
           </el-checkbox>
         </template>
@@ -73,12 +83,17 @@
           :key="opt.label"
           v-bind="opt"
           :label="'value' in opt ? opt.value : opt.label"
+          :value="'value' in opt ? opt.value : opt.label"
           >{{ opt.label }}</el-radio-button
         >
         <template v-else-if="data.type === 'radio-group' && data.style !== 'button'">
-          <el-radio :key="opt.label" v-bind="opt" :label="'value' in opt ? opt.value : opt.label">{{
-            opt.label
-          }}</el-radio>
+          <el-radio
+            :key="opt.label"
+            v-bind="opt"
+            :label="'value' in opt ? opt.value : opt.label"
+            :value="'value' in opt ? opt.value : opt.label"
+            >{{ opt.label }}</el-radio
+          >
         </template>
       </template>
     </component>
