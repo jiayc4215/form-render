@@ -90,6 +90,24 @@ export const sidebar = {
         { text: "v-model", link: "/form/v-model" },
         { text: "value-format", link: "/form/value-format" }
       ]
+    },
+    {
+      text: "进阶",
+      items: [
+        { text: "form自定义组件", link: "/form/customForm" },
+        {
+          text: "form自定义组件设置自定义校验规则",
+          link: "/form/customFormRoules"
+        },
+        {
+          text: "form自定义组件--图片上传",
+          link: "/form/upload"
+        },
+        {
+          text: "form自定义组件--文件上传",
+          link: "/form/uploadFile"
+        }
+      ]
     }
   ]
 }

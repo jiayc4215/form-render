@@ -1,3 +1,8 @@
+---
+map:
+  path: /guide/
+---
+
 ## 技术交流群 711368818
 
 <img src="/qq.jpg"  width="200" />

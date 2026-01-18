@@ -2,10 +2,10 @@
   <el-form-renderer :content="content" />
 </template>
 <script setup>
-import { reactive, markRaw } from "vue";
-import elFormRenderer from "../components/femessage/el-form-renderer.vue";
+import { reactive, markRaw } from "vue"
+import elFormRenderer from "../../components/femessage/el-form-renderer.vue"
 
-import MyInput from "../your-component.vue";
+import MyInput from "./MyInput.vue"
 const content = reactive([
   {
     component: markRaw(MyInput),
@@ -15,7 +15,7 @@ const content = reactive([
     el: {
       placeholder: "请输入一个 title",
       type: "input", // submit button
-      title: "这是一个标题", // custom defined props
+      title: "这是一个标题" // custom defined props
     },
     // 可以通过 overrideRules: true 来覆盖自定义组件内置的校验规则
     overrideRules: true,
@@ -23,20 +23,20 @@ const content = reactive([
       {
         required: true,
         trigger: "blur",
-        message: "不能为空！",
-      },
+        message: "不能为空！"
+      }
     ],
     // 传入组件事件
     on: {
-      focus: ([event], updateForm) => {
-        console.log(event.target.value); // output: input value
+      focus: ([event]) => {
+        console.log(event.target.value) // output: input value
       },
-      customEvent: ([value, msg], updateForm) => {
-        console.log(value, msg); // output: 'message'
-      },
-    },
-  },
-]);
+      customEvent: ([value, msg]) => {
+        console.log(value, msg) // output: 'message'
+      }
+    }
+  }
+])
 </script>
 <style scoped>
 .box {
