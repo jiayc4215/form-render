@@ -13,6 +13,7 @@ export default {
     for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
       app.component(key, component)
     }
+    // eslint-disable-next-line
     app.component("demo", DemoBlock)
     // 注册 ElementPlus
     app.use(ElementPlus)
