@@ -5,7 +5,7 @@
       <el-button @click="data = {}">reset</el-button>
     </el-form-item>
   </el-form-renderer>
-  <div>{{ data }}</div>
+  <pre>{{ data }}</pre>
 </template>
 <script setup>
 import { reactive, ref } from "vue"

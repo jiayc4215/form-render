@@ -3,9 +3,9 @@
 </template>
 
 <script setup>
+import { watch, computed, useAttrs } from "vue"
 let emit = defineEmits(["customEvent", "update:modelValue"])
 
-import { watch, computed, useAttrs } from "vue"
 let props = defineProps({
   modelValue: String,
   title: String

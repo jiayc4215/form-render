@@ -7,6 +7,7 @@
 <script setup>
 import { reactive, ref } from "vue"
 import elFormRenderer from "el-form-renderer-vue3"
+import { ElMessage } from "element-plus"
 
 const form = ref()
 
@@ -28,6 +29,6 @@ const content = reactive([
 ])
 const getFormValue = () => {
   let v = form.value.getFormValue()
-  console.log(v)
+  ElMessage.info(JSON.stringify(v))
 }
 </script>

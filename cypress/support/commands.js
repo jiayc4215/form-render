@@ -23,3 +23,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+// TODO: 补充 ts 类型声明
+// @return Cypress.Chainable<JQuery<HTMLInputElement>>
+Cypress.Commands.add("$getFormItemInput", (label, el = "input") => cy.contains(".el-form-item", label).find(el))
+Cypress.Commands.add("$goto", demo =>
+  cy
+    .get(".VPSidebar")
+    .contains(".VPLink", RegExp("^" + demo + "$"))
+    .click()
+)
