@@ -8,7 +8,7 @@ describe("测试 update-form 示例", function () {
   })
   it("基础用例", function () {
     cy.$getFormItemInput("name").should("have.value", "")
-    cy.get(".el-button--default").click()
+    cy.contains("updateForm()").click()
     cy.$getFormItemInput("name").should("have.value", "alvin")
   })
 })

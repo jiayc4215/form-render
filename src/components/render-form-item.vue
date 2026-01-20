@@ -112,7 +112,6 @@ import _get from "lodash.get"
 // import CustomComponent from "../util/CustomComponent";
 import VNode from "../util/VNode"
 import axios from "axios"
-import { methodsSymbol, updateFormsSymbol, setOptionsSymbol } from "../util/keys"
 let customComponent = ref()
 
 let props = defineProps({
@@ -140,9 +139,7 @@ const loading = ref(false)
 let dataRef = ref(props.data)
 // 注入一个由祖先组件或整个应用 (通过 app.provide()) 提供的值。
 // 父组件提供 element ui的方法
-let methods = inject(methodsSymbol)
-//  父组件提供的 更新 options的方法
-let setOptions = inject(setOptionsSymbol)
+let elFormRenderer = inject("_elFormRenderer_")
 // 是否校验
 const isBlurTrigger =
   props.data.rules &&
@@ -169,7 +166,8 @@ const listeners = computed(() => {
   const id = data.id
   const on = data.on || {}
   const trim = data.trim !== undefined ? data.trim : true
-  let updateForm = inject(updateFormsSymbol)
+  let updateForm = elFormRenderer?.exposed?.updateForm
+
   return {
     ..._frompairs(_topairs(on).map(([eName, handler]) => [eName, (...args) => handler(args, updateForm)])),
     // 手动更新表单数据
@@ -224,6 +222,7 @@ const makingRequest = (remoteConfig, query) => {
     .then(resp => {
       // 如果 isOptionsCase 为 true，则将响应数据中的每个元素映射为包含 "label" 和 "value" 属性的对象，并将结果传递给 setOptions 函数（如果存在）。
       if (isOptionsCase) {
+        let setOptions = elFormRenderer?.exposed?.setOptions
         setOptions && setOptions(props.prop, resp)
       } else {
         // 如果 isOptionsCase 为 false，则将响应数据存储在 propsInner 中，属性名为 prop。
@@ -280,7 +279,7 @@ const triggerValidate = async id => {
     if (!props.data.rules || !props.data.rules.length) return
     if (isBlurTrigger) return
     await nextTick()
-    ;(await methods) && methods.validateField(id)
+    elFormRenderer.exposed.validateField(id)
   } catch (error) {
     console.log(error)
   }

@@ -30,15 +30,15 @@
 import "./util/ployfill"
 import RenderFormGroup from "./components/render-form-group.vue"
 import RenderFormItem from "./components/render-form-item.vue"
-import { reactive, computed, ref, watch, onMounted, nextTick, provide, toRaw } from "vue"
+import { reactive, computed, ref, watch, onMounted, nextTick, provide, toRaw, getCurrentInstance } from "vue"
 import transformContent from "./util/transform-content"
 import _set from "lodash.set"
 import _isequal from "lodash.isequal"
 import _clonedeep from "lodash.clonedeep"
 
-import { methodsSymbol, updateFormsSymbol, setOptionsSymbol } from "./util/keys"
 import { collect, mergeValue, transformOutputValue, transformInputValue, correctValue } from "./util/utils"
 let GROUP = "group"
+let instance = getCurrentInstance()
 /**
  * inputFormat 让整个输入机制复杂了很多。value 有以下输入路径:
  * 1. 传入的 form => inputFormat 处理
@@ -50,7 +50,7 @@ let value = reactive({}) // 表单数据对象
 let options = reactive({})
 let initValue = reactive({})
 let myelForm = ref()
-let methods = {}
+
 const customComponent = ref([])
 let emit = defineEmits(["update:FormData"])
 // 注入 element ui form 方法
@@ -62,21 +62,15 @@ let emit = defineEmits(["update:FormData"])
 onMounted(async () => {
   initValue = _clonedeep(value)
   await nextTick()
-  // 检查 myelForm 是否已经初始化
-  if (myelForm && myelForm.value) {
-    Object.keys(myelForm.value).forEach(item => {
-      // 检查属性是否存在于 methods 对象中
-      if (myelForm.value[item] && !(item in methods)) {
-        methods[item] = myelForm.value[item]
-      }
-    })
-  }
+
   /**
    * 有些组件会 created 阶段更新初始值为合法值，这会触发 validate。目前已知的情况有：
    * - el-select 开启 multiple 时，会更新初始值 undefined 为 []
    * @hack
    */
-  methods.clearValidate()
+
+  let form = myelForm.value
+  form.clearValidate()
 })
 
 let props = defineProps({
@@ -161,7 +155,7 @@ watch(value, newValue => {
     let data = Object.assign(newValue, transformOutputValue(newValue, innerContent))
     emit("update:FormData", data)
   } catch (error) {
-    console.log(error, "-----")
+    console.log(error)
   }
   // deep: true, // updateValue 是全量更新，所以不用
 })
@@ -198,8 +192,9 @@ let resetFields = async () => {
   Object.assign(value, _clonedeep(initValue))
   await nextTick()
 
+  let form = myelForm.value
   setTimeout(() => {
-    methods.clearValidate()
+    form.clearValidate()
   }, 0)
 }
 
@@ -260,9 +255,8 @@ const getComponentById = id => {
     return componentRef[`formItem-${id}`].customComponent
   }
 }
-provide(methodsSymbol, methods)
-provide(updateFormsSymbol, updateForm)
-provide(setOptionsSymbol, setOptions)
+
+provide("_elFormRenderer_", instance)
 defineExpose(
   new Proxy(
     {
@@ -271,7 +265,6 @@ defineExpose(
       getFormValue,
       updateForm,
       setOptions,
-      methods,
       getComponentById
     },
     {
