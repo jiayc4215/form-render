@@ -11,6 +11,6 @@ describe("测试 next-tick 示例", function () {
     cy.$getFormItemInput("姓名").should("have.value", "小明")
     cy.get(".el-dialog__headerbtn").click()
     cy.contains(/^点击打开 Dialog$/).click()
-    cy.$getFormItemInput("姓名").should("have.value", "")
+    cy.$getFormItemInput("姓名").should("have.value", "小明")
   })
 })

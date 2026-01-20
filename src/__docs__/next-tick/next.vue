@@ -22,15 +22,14 @@ const content = reactive([
     }
   }
 ])
-const handleOpen = async () => {
-  console.log(formRender.value)
+const handleOpen = () => {
+  // 都可以拿到
   formRender.value.updateForm({
     name: "小明"
   })
 }
 const openDialogWithData = async () => {
-  // Dialog 的内容是懒渲染的，即在第一次被打开之前，
-  //传入的默认 slot 不会被渲染到 DOM 上，所以需要使用 nextTick 等待 DOM 更新之后才能调用方法
+  // 都可以拿到
   dialogVisible.value = true
   await nextTick()
   formRender.value.updateForm({
