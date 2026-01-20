@@ -39,17 +39,17 @@ export const sidebar = {
     {
       text: "进阶",
       items: [
-        { text: "form自定义组件", link: "/assembly/advanced/customForm" },
+        { text: "guide-custom-component", link: "/assembly/advanced/customForm" },
         {
-          text: "form自定义组件设置自定义校验规则",
+          text: "guide-custom-rules-in-custom-component",
           link: "/assembly/advanced/customFormRoules"
         },
         {
-          text: "form自定义组件--图片上传",
+          text: "guide-custom-upload",
           link: "/assembly/advanced/upload"
         },
         {
-          text: "form自定义组件--文件上传",
+          text: "guide-custom-upload-file",
           link: "/assembly/advanced/uploadFile"
         }
       ]
@@ -94,17 +94,17 @@ export const sidebar = {
     {
       text: "进阶",
       items: [
-        { text: "form自定义组件", link: "/form/customForm" },
+        { text: "guide-custom-component", link: "/form/customForm" },
         {
-          text: "form自定义组件设置自定义校验规则",
+          text: "guide-custom-rules-in-custom-component",
           link: "/form/customFormRoules"
         },
         {
-          text: "form自定义组件--图片上传",
+          text: "guide-custom-upload",
           link: "/form/upload"
         },
         {
-          text: "form自定义组件--文件上传",
+          text: "guide-custom-upload-file",
           link: "/form/uploadFile"
         }
       ]
