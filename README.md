@@ -83,7 +83,7 @@ const content = reactive([
       placeholder: "test placeholder",
     },
     rules: [
-      { required: true, message: "miss name", trigger: "blur" },
+      { required: true, message: "require name", trigger: "blur" },
       { min: 3, max: 5, message: "length between 3 to 5", trigger: "blur" },
     ],
   },
@@ -106,7 +106,7 @@ const content = reactive([
       },
     ],
     el: { filterable: true, multiple: true, multipleLimit: 2 },
-    rules: [{ required: true, message: "miss area", trigger: "change" }],
+    rules: [{ required: true, message: "require area", trigger: "change" }],
   },
   {
     type: "date-picker",
@@ -116,7 +116,7 @@ const content = reactive([
       type: "daterange",
       valueFormat: "yyyy-MM-dd",
     },
-    rules: [{ required: true, message: "miss date", trigger: "change" }],
+    rules: [{ required: true, message: "require date", trigger: "change" }],
     inputFormat: (row) => {
       if (row.startDate && row.endDate) {
         return [row.startDate, row.endDate];
@@ -153,7 +153,7 @@ const content = reactive([
         label: "typeC",
       },
     ],
-    rules: [{ type: "array", required: true, message: "miss type", trigger: "change" }],
+    rules: [{ type: "array", required: true, message: "require type", trigger: "change" }],
   },
   {
     type: "radio-group",
@@ -169,7 +169,7 @@ const content = reactive([
         value: "B",
       },
     ],
-    rules: [{ required: true, message: "miss resource", trigger: "change" }],
+    rules: [{ required: true, message: "require resource", trigger: "change" }],
   },
   {
     type: "input",
@@ -178,7 +178,7 @@ const content = reactive([
     el: {
       type: "textarea",
     },
-    rules: [{ required: true, message: "miss desc", trigger: "blur" }],
+    rules: [{ required: true, message: "require desc", trigger: "blur" }],
   },
 ]);
 const resetForm = () => {

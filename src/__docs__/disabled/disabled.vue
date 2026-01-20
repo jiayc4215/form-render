@@ -24,7 +24,7 @@ const content = reactive([
       placeholder: "test placeholder"
     },
     rules: [
-      { required: true, message: "miss name", trigger: "blur" },
+      { required: true, message: "require name", trigger: "blur" },
       { min: 3, max: 5, message: "length between 3 to 5", trigger: "blur" }
     ]
   },
@@ -43,7 +43,7 @@ const content = reactive([
         value: "beijing"
       }
     ],
-    rules: [{ required: true, message: "miss area", trigger: "change" }]
+    rules: [{ required: true, message: "require area", trigger: "change" }]
   },
   {
     type: "switch",
@@ -71,7 +71,7 @@ const content = reactive([
       {
         type: "array",
         required: true,
-        message: "miss type",
+        message: "require type",
         trigger: "change"
       }
     ]
@@ -85,7 +85,7 @@ const content = reactive([
       disabled: true,
       type: "textarea"
     },
-    rules: [{ required: true, message: "miss desc", trigger: "blur" }]
+    rules: [{ required: true, message: "require desc", trigger: "blur" }]
   }
 ])
 watch(disabledArea, val => {
