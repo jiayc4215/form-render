@@ -24,7 +24,7 @@ const content = reactive([
         label: "resourceB"
       }
     ],
-    rules: [{ required: true, message: "require resource", trigger: "change" }]
+    rules: [{ required: true, message: "miss resource", trigger: "change" }]
   }
 ])
 const getFormValue = () => {

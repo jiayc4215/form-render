@@ -21,7 +21,7 @@ const content = reactive([
       placeholder: "test placeholder"
     },
     rules: [
-      { required: true, message: "require name", trigger: "blur" },
+      { required: true, message: "miss name", trigger: "blur" },
       { min: 3, max: 5, message: "length between 3 to 5", trigger: "blur" }
     ]
   },
@@ -48,7 +48,7 @@ const content = reactive([
         }
       }
     ],
-    rules: [{ required: true, message: "require area", trigger: "change" }]
+    rules: [{ required: true, message: "miss area", trigger: "change" }]
   },
   {
     type: "date-picker",
@@ -60,7 +60,7 @@ const content = reactive([
       teleported: false
     },
 
-    rules: [{ type: "date", required: true, message: "require date", trigger: "change" }]
+    rules: [{ type: "date", required: true, message: "miss date", trigger: "change" }]
   },
   {
     type: "switch",
@@ -90,7 +90,7 @@ const content = reactive([
       {
         type: "array",
         required: true,
-        message: "require type",
+        message: "miss type",
         trigger: "change"
       }
     ]
@@ -107,7 +107,7 @@ const content = reactive([
         label: "resourceB"
       }
     ],
-    rules: [{ required: true, message: "require resource", trigger: "change" }]
+    rules: [{ required: true, message: "miss resource", trigger: "change" }]
   },
   {
     type: "input",
@@ -116,7 +116,7 @@ const content = reactive([
     el: {
       type: "textarea"
     },
-    rules: [{ required: true, message: "require desc", trigger: "blur" }]
+    rules: [{ required: true, message: "miss desc", trigger: "blur" }]
   }
 ])
 const ruleForm = ref()
