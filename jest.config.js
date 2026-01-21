@@ -1,4 +1,5 @@
 export default {
+  testEnvironment: "jsdom", // 指定测试环境为 jsdom
   // 指定文件扩展名
   moduleFileExtensions: ["js", "json", "vue"],
   // 指定文件转换器
