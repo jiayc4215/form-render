@@ -31,10 +31,10 @@ export function collect(content, key) {
 export function transformOutputValue(value, content, { strict = false } = {}) {
   // 参数的值创建一个新的对象 newVal，如果 strict 为 true，则创建一个空对象，否则创建一个与输入 value 一样的对象的副本。
   const newVal = strict ? {} : { ...value }
-
+  const items = content.value || content
   Object.keys(value).forEach(id => {
     // 找出表单项
-    const item = content.value.find(item => item.id === id)
+    const item = items.find(item => item.id === id)
     if (!item) return
     // 除去多选
     if (item.type !== "group") {
@@ -111,9 +111,10 @@ export function correctValue(value, content) {
  */
 export function mergeValue(oldV, newV, content) {
   // 遍历 newV 对象的所有属性
+  const items = content.value || content
   Object.keys(newV).forEach(k => {
     // 对于每个属性 k，首先尝试在 content 数组中查找具有相同 id 值的项，如果找不到则使用一个空对象。
-    const item = content.value.find(item => item.id === k) || {}
+    const item = items.find(item => item.id === k) || {}
     // 如果不是 "group" 类型, 就直接将 newV 中的属性值覆盖到 oldV 中的对应属性上，实现合并。
     if (item.type !== "group") oldV[k] = newV[k]
     // 如果项的类型是 "group"，则递归调用这个函数 mergeValue，以进一步合并 oldV[k] 和 newV[k]，并传入该项的子项数组 item.items 作为 content 参数。
