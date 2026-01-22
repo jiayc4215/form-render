@@ -168,12 +168,22 @@ const listeners = computed(() => {
   const trim = data.trim !== undefined ? data.trim : true
   let updateForm = elFormRenderer?.exposed?.updateForm
 
+  const userListeners = _frompairs(
+    _topairs(on).map(([eName, handler]) => [eName, (...args) => handler(args, updateForm)])
+  )
+
   return {
-    ..._frompairs(_topairs(on).map(([eName, handler]) => [eName, (...args) => handler(args, updateForm)])),
+    ...userListeners,
     // 手动更新表单数据
-    "update:modelValue": value => {
+    "update:modelValue": (value, ...rest) => {
       if (typeof value === "string" && trim) value = value.trim()
       emit("updateValue", { id, value })
+
+      // 执行用户自定义的 update:modelValue
+      if (userListeners["update:modelValue"]) {
+        userListeners["update:modelValue"]([value, ...rest], updateForm)
+      }
+
       // FIXME: rules 的 trigger 只写了 blur，依然会在 change 的时候触发校验！
       triggerValidate(id)
     }

@@ -5,6 +5,7 @@ export const sidebar = {
       items: [
         { text: "base", link: "/en/form/basic" },
         { text: "checkbox-group", link: "/en/form/checkbox-group" },
+        { text: "component", link: "/en/form/component" },
         { text: "content", link: "/en/form/content" },
         { text: "date-picker", link: "/en/form/date-picker" },
         { text: "deprecated", link: "/en/form/deprecated" },
@@ -65,6 +66,7 @@ export const sidebar = {
       items: [
         { text: "base", link: "/form/basic" },
         { text: "checkbox-group", link: "/form/checkbox-group" },
+        { text: "component", link: "/form/component" },
         { text: "content", link: "/form/content" },
         { text: "date-picker", link: "/form/date-picker" },
         { text: "deprecated", link: "/form/deprecated" },

@@ -54,6 +54,7 @@
     "e2e": "cypress open",
     "test": "jest --verbose"
   },
+  "homepage": "https://github.com/jiayc4215/form-render",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -127,5 +128,14 @@
     "commitizen": {
       "path": "node_modules/cz-git"
     }
-  }
+  },
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
