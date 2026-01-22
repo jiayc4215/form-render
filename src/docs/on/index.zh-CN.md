@@ -5,7 +5,9 @@ map:
 
 # on
 
+监听组件发出的任何事件
+
 <demo src="./AboutView.vue"
 title="on"
-desc="监听组件发出的任何事件">
+desc="on 的使用" >
 </demo>

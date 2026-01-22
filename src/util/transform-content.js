@@ -40,5 +40,7 @@ export function extractRulesFromComponent(item) {
   // 使用全局注册的组件暂时无法处理(处理自定义组件内的rules)
   if (!component || typeof component === "string") return
   const { rules = [] } = component
+  console.log(component)
+
   item.rules = [...(item.rules || []), ...(typeof rules === "function" ? rules(item) : rules)]
 }

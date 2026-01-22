@@ -22,51 +22,13 @@ el-form-renderer 对 v-model 的要求是:
 - 有一个 props 为 modelValue
 - 对外触发 update:modelValue 事件
 
-下面是一个简单的例子
-
-```
-<template>
-  <el-input v-model="newValue" v-bind="$attrs"></el-input>
-</template>
-
-<script setup>
-let emit = defineEmits(["customEvent", "update:modelValue"]);
-import { watch, computed } from "vue";
-let props = defineProps({
-  modelValue: String,
-  title: String,
-});
-
-watch(
-  () => props.modelValue,
-  () => {
-    console.log("触发");
-    emit("customEvent", newValue.value);
-  }
-);
-// 计算属性求和
-const newValue = computed({
-  get: () => {
-    console.log("get");
-    return props.modelValue;
-  },
-  set: (value) => {
-    console.log("set");
-    return emit("update:modelValue", value);
-  },
-});
-</script>
-<script>
-```
+::: details 下面是一个简单的例子
+<<< ../../../src/docs/customForm/MyInput.vue
+:::
 
 则可以用 component 属性让 el-form-renderer 渲染此自定义组件
 
 ### 示例代码
-
-<demo src="./MyInput.vue" 
-  title="自定义组件实现" 
-  desc="遵循 v-model 标准的自定义组件实现">
-</demo>
 
 <demo src="./customForm.vue" 
   title="使用自定义组件" 
