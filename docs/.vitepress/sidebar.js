@@ -1,7 +1,7 @@
 export const sidebar = {
   "/en/": [
     {
-      text: "表单Form",
+      text: "Form",
       items: [
         { text: "base", link: "/en/form/basic" },
         { text: "checkbox-group", link: "/en/form/checkbox-group" },
@@ -10,48 +10,48 @@ export const sidebar = {
         { text: "date-picker", link: "/en/form/date-picker" },
         { text: "deprecated", link: "/en/form/deprecated" },
         { text: "disabled", link: "/en/form/disabled" },
-        { text: "el", link: "/form/el" },
+        { text: "el", link: "/en/form/el" },
         {
           text: "get-component-by-id",
-          link: "/form/get-component-by-id"
+          link: "/en/form/get-component-by-id"
         },
-        { text: "get-form-value", link: "/form/get-form-value" },
-        { text: "hidden", link: "/form/hidden" },
-        { text: "next-tick", link: "/form/next-tick" },
-        { text: "on", link: "/form/on" },
-        { text: "radio-group", link: "/form/radio-group" },
-        { text: "readonly", link: "/form/readonly" },
-        { text: "remote", link: "/form/remote" },
-        { text: "rules-plus", link: "/form/rules-plus" },
-        { text: "rules", link: "/form/rules" },
-        { text: "set-options", link: "/form/set-options" },
-        { text: "slot-label", link: "/form/slot-label" },
-        { text: "slot", link: "/form/slot" },
-        { text: "update-form", link: "/form/update-form" },
-        { text: "v-model", link: "/form/v-model" },
-        { text: "value-format", link: "/form/value-format" }
+        { text: "get-form-value", link: "/en/form/get-form-value" },
+        { text: "hidden", link: "/en/form/hidden" },
+        { text: "next-tick", link: "/en/form/next-tick" },
+        { text: "on", link: "/en/form/on" },
+        { text: "radio-group", link: "/en/form/radio-group" },
+        { text: "readonly", link: "/en/form/readonly" },
+        { text: "remote", link: "/en/form/remote" },
+        { text: "rules-plus", link: "/en/form/rules-plus" },
+        { text: "rules", link: "/en/form/rules" },
+        { text: "set-options", link: "/en/form/set-options" },
+        { text: "slot-label", link: "/en/form/slot-label" },
+        { text: "slot", link: "/en/form/slot" },
+        { text: "update-form", link: "/en/form/update-form" },
+        { text: "v-model", link: "/en/form/v-model" },
+        { text: "value-format", link: "/en/form/value-format" }
       ]
     },
 
     {
-      text: "表格table",
-      items: [{ text: "表格", link: "/assembly/table/table" }]
+      text: "Table",
+      items: [{ text: "Table", link: "/assembly/table/table" }]
     },
     {
-      text: "进阶",
+      text: "Advanced",
       items: [
-        { text: "guide-custom-component", link: "/assembly/advanced/customForm" },
+        { text: "guide-custom-component", link: "/en/form/customForm" },
         {
           text: "guide-custom-rules-in-custom-component",
-          link: "/assembly/advanced/customFormRoules"
+          link: "/en/form/customFormRoules"
         },
         {
           text: "guide-custom-upload",
-          link: "/assembly/advanced/upload"
+          link: "/en/form/upload"
         },
         {
           text: "guide-custom-upload-file",
-          link: "/assembly/advanced/uploadFile"
+          link: "/en/form/uploadFile"
         }
       ]
     }
