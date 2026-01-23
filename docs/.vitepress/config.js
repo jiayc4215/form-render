@@ -6,11 +6,11 @@ import { copyDocs } from "./theme/plugins/copy-docs"
 const socialLinks = [{ icon: "github", link: "https://gitee.com/childe-jia" }]
 import { defineConfig } from "vitepress"
 export default defineConfig({
+  base: "/",
   lang: "zh-CN",
   lastUpdated: true, //显示最后更新时间
   ignoreDeadLinks: true, //忽略死链
   themeConfig: {
-    base: "/jiayc4215/",
     logo: "/logo.png",
     sidebar
   },
