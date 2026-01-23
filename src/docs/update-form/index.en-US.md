@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/update-form/
+  path: /form/update-form/
 ---
 
 # update-form

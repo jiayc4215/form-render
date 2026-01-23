@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/v-model/
+  path: /form/v-model/
 ---
 
 # v-model

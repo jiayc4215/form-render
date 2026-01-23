@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/el/
+  path: /form/el/
 ---
 
 # el

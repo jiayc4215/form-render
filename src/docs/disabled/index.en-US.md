@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/disabled/
+  path: /form/disabled/
 ---
 
 # disabled

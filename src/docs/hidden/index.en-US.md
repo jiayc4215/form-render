@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/hidden/
+  path: /form/hidden/
 ---
 
 # hidden

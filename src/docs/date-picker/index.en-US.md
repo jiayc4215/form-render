@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/date-picker/
+  path: /form/date-picker/
 ---
 
 # date-picker

@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/slot-label/
+  path: /form/slot-label/
 ---
 
 # slot-label

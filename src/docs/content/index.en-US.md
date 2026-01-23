@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/content/
+  path: /form/content/
 ---
 
 # content

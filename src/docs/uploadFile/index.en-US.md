@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/uploadFile/
+  path: /form/uploadFile/
 ---
 
 # File Upload

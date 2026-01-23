@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/guide/
+  path: /guide/
 ---
 
 ## Technical Exchange Group 711368818

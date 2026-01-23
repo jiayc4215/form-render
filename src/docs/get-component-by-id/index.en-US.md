@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/get-component-by-id/
+  path: /form/get-component-by-id/
 ---
 
 # get-component-by-id

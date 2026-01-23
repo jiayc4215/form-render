@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/rules-plus/
+  path: /form/rules-plus/
 ---
 
 # rules-plus

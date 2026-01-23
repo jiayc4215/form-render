@@ -34,10 +34,6 @@ export const sidebar = {
     },
 
     {
-      text: "Table",
-      items: [{ text: "Table", link: "/assembly/table/table" }]
-    },
-    {
       text: "Advanced",
       items: [
         { text: "guide-custom-component", link: "/en/form/customForm" },

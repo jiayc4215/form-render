@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/rules/
+  path: /form/rules/
 ---
 
 # rules

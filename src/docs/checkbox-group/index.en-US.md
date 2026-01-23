@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/checkbox-group/
+  path: /form/checkbox-group/
 ---
 
 # checkbox-group

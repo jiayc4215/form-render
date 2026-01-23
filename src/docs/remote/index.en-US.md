@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/remote/
+  path: /form/remote/
 ---
 
 Fetch options for `el-select`, `checkbox-group` & `radio-group` remotely.

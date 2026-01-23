@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/set-options/
+  path: /form/set-options/
 ---
 
 # set-options

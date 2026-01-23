@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/value-format/
+  path: /form/value-format/
 ---
 
 # value-format

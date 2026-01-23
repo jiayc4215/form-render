@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/deprecated/
+  path: /form/deprecated/
 ---
 
 # deprecated

@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/get-form-value/
+  path: /form/get-form-value/
 ---
 
 # get-form-value

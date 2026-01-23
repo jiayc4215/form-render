@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/readonly/
+  path: /form/readonly/
 ---
 
 # readonly

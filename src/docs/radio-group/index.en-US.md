@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/radio-group/
+  path: /form/radio-group/
 ---
 
 # radio-group

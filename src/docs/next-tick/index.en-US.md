@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/next-tick/
+  path: /form/next-tick/
 ---
 
 # next-tick

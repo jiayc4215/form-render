@@ -1,6 +1,6 @@
 ---
 map:
-  path: /en/form/on/
+  path: /form/on/
 ---
 
 # on
