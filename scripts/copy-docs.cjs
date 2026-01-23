@@ -4,8 +4,12 @@
 const path = require("path")
 const fse = require("fs-extra")
 const sourceDir = path.join(__dirname, "../.docs/root")
-
 const destinationDir = path.join(__dirname, "../.docs")
+
+// Copy source docs for markdown imports (e.g., <<< imports in .md files)
+const srcDocsDir = path.join(__dirname, "../src/docs")
+const destSrcDocsDir = path.join(__dirname, "../.docs/src/docs")
+
 function copyDirectoryContents(source, destination) {
   fse.copySync(source, destination, {
     overwrite: true,
@@ -13,4 +17,9 @@ function copyDirectoryContents(source, destination) {
     recursive: true
   })
 }
+
+// Copy root docs
 copyDirectoryContents(sourceDir, destinationDir)
+
+// Copy src/docs to .docs/src/docs for relative imports
+copyDirectoryContents(srcDocsDir, destSrcDocsDir)
