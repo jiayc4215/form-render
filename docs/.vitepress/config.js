@@ -67,6 +67,7 @@ export default defineConfig({
     }
   },
   vite: {
+    base: "./",
     server: {
       port: 8090
     },
