@@ -62,6 +62,7 @@ export default defineConfig({
       label: "English",
       link: "/en/",
       themeConfig: {
+        nav: [{ text: "Guide", link: "/en/guide/" }],
         socialLinks: [...socialLinks]
       }
     }
