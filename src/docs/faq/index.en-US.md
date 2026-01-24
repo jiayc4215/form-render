@@ -429,7 +429,7 @@ Main differences:
 3. Use Composition API
 4. Removed the distinction between `$attrs` and `$listeners`
 
-See: [Difference between vue2 and vue3 v-model](https://blog.csdn.net/qq_63358859/article/details/133484380)
+See: [Difference between vue2 and vue3 v-model](https://v3-migration.vuejs.org/zh/breaking-changes/v-model.html)
 
 ## Other Issues
 

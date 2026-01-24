@@ -28,11 +28,11 @@ In our daily development, there are many pages with forms. Usually the form stru
 
 ## Links
 
-- [$attrs and $listeners (vue2&&vue3)](https://blog.csdn.net/qq_63358859/article/details/133699476?spm=1001.2014.3001.5501)
-- [vue2 and vue3 functional components](https://blog.csdn.net/qq_63358859/article/details/133635120?spm=1001.2014.3001.5501)
-- [Difference between vue 2 and vue3 template ref](https://blog.csdn.net/qq_63358859/article/details/133532229?spm=1001.2014.3001.5501)
-- [Difference between vue2 and vue3 v-model](https://blog.csdn.net/qq_63358859/article/details/133484380?spm=1001.2014.3001.5501)
-- [vue2 version](https://blog.csdn.net/qq_63358859/article/details/130442636?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522169684271816800180612618%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&request_id=169684271816800180612618&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_ecpm_v1~rank_v31_ecpm-7-130442636-null-null.nonecase&utm_term=render&spm=1018.2226.3001.4450)
+- [$attrs and $listeners (vue2&&vue3)](https://v3-migration.vuejs.org/zh/breaking-changes/listeners-removed.html)
+- [vue2 and vue3 functional components](https://v3-migration.vuejs.org/zh/breaking-changes/functional-components.html)
+- [Difference between vue 2 and vue3 template ref](https://cn.vuejs.org/guide/essentials/template-refs.html#template-refs)
+- [Difference between vue2 and vue3 v-model](https://v3-migration.vuejs.org/zh/breaking-changes/v-model.html)
+- [vue2 version](https://github.com/FEMessage/el-form-renderer)
 - [Chinese Documentation](https://jiayc4215.github.io/form-render)
 - [element-plus table wrapper](https://gitee.com/childe-jia/table-vue3)
 

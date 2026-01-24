@@ -429,7 +429,7 @@ const formData = reactive({
 3. 使用 Composition API
 4. 移除了 `$attrs` 和 `$listeners` 的区别
 
-详见：[vue2 与 vue3 v-model 的区别](https://blog.csdn.net/qq_63358859/article/details/133484380)
+详见：[vue2 与 vue3 v-model 的区别](https://v3-migration.vuejs.org/zh/breaking-changes/v-model.html)
 
 ## 其他问题
 
