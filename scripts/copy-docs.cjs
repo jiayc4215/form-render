@@ -3,10 +3,11 @@
  */
 const path = require("path")
 const fse = require("fs-extra")
+// 复制 root docs
 const sourceDir = path.join(__dirname, "../.docs/root")
 const destinationDir = path.join(__dirname, "../.docs")
 
-// Copy source docs for markdown imports (e.g., <<< imports in .md files)
+// 复制 src/docs 到 .docs/src/docs 用于处理相对路径导入
 const srcDocsDir = path.join(__dirname, "../src/docs")
 const destSrcDocsDir = path.join(__dirname, "../.docs/src/docs")
 
@@ -18,8 +19,8 @@ function copyDirectoryContents(source, destination) {
   })
 }
 
-// Copy root docs
+// 复制 root docs
 copyDirectoryContents(sourceDir, destinationDir)
 
-// Copy src/docs to .docs/src/docs for relative imports
+// 复制 src/docs 到 .docs/src/docs 用于处理相对路径导入
 copyDirectoryContents(srcDocsDir, destSrcDocsDir)

@@ -5,6 +5,7 @@ import DemoBlock from "@ruabick/vitepress-demo-block"
 import "element-plus/dist/index.css" // CSS 在这里导入不会报错
 import "@ruabick/vitepress-demo-block/dist/style.css"
 import "./styles/index.css"
+import "./styles/var.css"
 
 export default {
   extends: DefaultTheme, // 继承默认主题

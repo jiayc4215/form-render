@@ -106,6 +106,10 @@ export const sidebar = {
           link: "/form/uploadFile"
         }
       ]
+    },
+    {
+      text: "社区群",
+      link: "/contact-me/"
     }
   ]
 }

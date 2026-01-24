@@ -3,9 +3,10 @@ import { resolve } from "path"
 import { genTemp } from "@ruabick/vite-plugin-gen-temp"
 import { applyPlugins } from "@ruabick/md-demo-plugins"
 import { copyDocs } from "./theme/plugins/copy-docs"
-const socialLinks = [{ icon: "github", link: "https://gitee.com/childe-jia" }]
+const socialLinks = [{ icon: "github", link: "https://github.com/jiayc4215/form-render" }]
 import { defineConfig } from "vitepress"
 export default defineConfig({
+  // 部署路径 注意： 部署到github pages 时，需要将 base 设置为 仓库名
   base: "/form-render/",
   lang: "zh-CN",
   lastUpdated: true, //显示最后更新时间
@@ -35,7 +36,13 @@ export default defineConfig({
       label: "简体中文",
       //主题配置
       themeConfig: {
-        nav: [{ text: "指南", link: "/guide/" }],
+        nav: [
+          { text: "指南", link: "/guide/", activeMatch: "^/guide/" },
+          { text: "演示", link: "/form/basic/", activeMatch: "^/form/" },
+          { text: "API", link: "/api/", activeMatch: "^/api/" },
+          { text: "常见问题", link: "/faq/", activeMatch: "^/faq/" },
+          { text: "社区群", link: "/contact-me/", activeMatch: "^/contact-me/" }
+        ],
         // 社交链接
         socialLinks: [
           {
@@ -62,7 +69,12 @@ export default defineConfig({
       label: "English",
       link: "/en/",
       themeConfig: {
-        nav: [{ text: "Guide", link: "/en/guide/" }],
+        nav: [
+          { text: "Guide", link: "/en/guide/" },
+          { text: "Demo", link: "/en/form/basic/" },
+          { text: "API", link: "/en/api/" },
+          { text: "FAQ", link: "/en/faq/" }
+        ],
         socialLinks: [...socialLinks]
       }
     }
