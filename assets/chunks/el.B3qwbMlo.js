@@ -1,0 +1,1 @@
+import{_ as e}from"./index.C2wUdEpc.js";import{b as n,o,k as a,a7 as c}from"./framework.Ca1m3vMN.js";const i={__name:"el",setup(r){const t=c([{id:"document",type:"input",el:{type:"textarea"}}]);return(s,_)=>(o(),n(a(e),{content:t},null,8,["content"]))}};export{i as _};
