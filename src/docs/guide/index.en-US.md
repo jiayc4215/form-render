@@ -7,10 +7,6 @@ map:
 
 <img src="/qq.jpg"  width="200" />
 
-## Remaining Issues: To be solved
-
-select must initialize an empty array when multiple is true (in elementplus v-model, initializing with undefined will trigger validation if updated to empty array)
-
 ## Introduction
 
 ### WHAT

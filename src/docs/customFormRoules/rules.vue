@@ -6,13 +6,7 @@
 let emit = defineEmits(["update:modelValue"])
 
 import { computed, useAttrs } from "vue"
-// 校验规则
-const rules = [
-  {
-    required: true,
-    message: "自定义组件的提醒消息"
-  }
-]
+
 let props = defineProps({
   modelValue: String
 })
@@ -27,18 +21,14 @@ const newValue = computed({
     return emit("update:modelValue", value)
   }
 })
-defineExpose({
-  rules
-})
-</script>
-<script>
-export default {
-  // 校验规则
+defineOptions({
   rules: [
     {
-      required: true,
-      message: "自定义组件的提醒消息"
+      min: 3,
+      max: 5,
+      message: "length between 3 to 5",
+      trigger: "blur"
     }
   ]
-}
+})
 </script>

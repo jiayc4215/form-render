@@ -16,8 +16,8 @@ const content = reactive([
       placeholder: "请输入内容",
       title: "这是设置了自定义校验的组件"
     },
-    //  overrideRules: true 来覆盖自定义组件内置的校验规则
-    overrideRules: true,
+    overrideRules: true, //来覆盖自定义组件内置的校验规则
+
     rules: [
       {
         required: true,
