@@ -34,7 +34,7 @@ In our daily development, there are many pages with forms. Usually the form stru
 - [Difference between vue2 and vue3 v-model](https://blog.csdn.net/qq_63358859/article/details/133484380?spm=1001.2014.3001.5501)
 - [vue2 version](https://blog.csdn.net/qq_63358859/article/details/130442636?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522169684271816800180612618%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&request_id=169684271816800180612618&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_ecpm_v1~rank_v31_ecpm-7-130442636-null-null.nonecase&utm_term=render&spm=1018.2226.3001.4450)
 - [Chinese Documentation](https://jiayc4215.github.io/form-render)
-- [element-plus table wrapper](https://jiayc4215.github.io/form-render)
+- [element-plus table wrapper](https://gitee.com/childe-jia/table-vue3)
 
 ## Quick Start
 
