@@ -73,6 +73,5 @@ const content = reactive([
 
 ### 注意事项
 
-- 暂不支持全局注册的组件 (即使用 `Vue.component('your-component', YourComponent)` 注册的组件)。
 - 自定义组件内部的 `rules` 可以是一个数组，也可以是一个返回数组的函数（接收当前表单项配置作为参数）。
 - 可以通过 `overrideRules: true` 来完全覆盖自定义组件内置的校验规则。

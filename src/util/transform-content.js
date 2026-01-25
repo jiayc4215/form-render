@@ -1,4 +1,5 @@
 import _kebabcase from "lodash.kebabcase"
+import { resolveComponent } from "vue"
 export default function transformContent(content) {
   return content.map(({ ...item }) => {
     if (item.type === "group") {
@@ -35,10 +36,14 @@ function setItemId(item) {
 export function extractRulesFromComponent(item) {
   // 是否覆盖自定义组件内置的校验规则;(overrideRules:true不校验组件内规则)
   if (item.overrideRules) return
-  const { component } = item
+  let component = item.component
+  //  全局组件
+  if (typeof component === "string") {
+    component = resolveComponent(component)
+  }
 
-  // 使用全局注册的组件暂时无法处理(处理自定义组件内的rules)
-  if (!component || typeof component === "string") return
+  if (!component) return
+
   const { rules = [] } = component
 
   item.rules = [...(item.rules || []), ...(typeof rules === "function" ? rules(item) : rules)]

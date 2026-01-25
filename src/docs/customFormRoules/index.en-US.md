@@ -73,6 +73,5 @@ const content = reactive([
 
 ### Notes
 
-- Globally registered components (i.e. components registered using `Vue.component('your-component', YourComponent)`) are not currently supported.
 - The `rules` inside the custom component can be an array or a function that returns an array (receiving the current form item configuration as a parameter).
 - You can fully override the built-in validation rules of custom components through `overrideRules: true`.
