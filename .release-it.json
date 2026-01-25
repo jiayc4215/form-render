@@ -1,19 +1,18 @@
 {
   "$schema": "https://unpkg.com/release-it@17/schema/release-it.json",
-  "ci": false,
   "git": {
     "commitMessage": "chore: release v${version}"
   },
   "github": {
-    "release": true,
-    "releaseName": "v${version}",
-    "tokenRef": "_NO_TOKEN_USE_WEB_MODE_"
+    "release": true
   },
   "hooks": {
     "before:init": ["npm run lint", "npm test"],
     "after:bump": "npm run build",
-    "after:git:release": "echo 代码已推送到远程，准备创建 Release 页面...",
-    "after:release": "echo 恭喜！${name} v${version} 已成功发布到 ${repo.repository}！"
+    "before:git:release": "echo Releasing new version!",
+    "@release-it/conventional-changelog": {
+      "preset": "angular"
+    }
   },
   "npm": {
     "publish": false
