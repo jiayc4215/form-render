@@ -6,12 +6,16 @@
   "github": {
     "release": true,
     "web": true,
-    "skipChecks": true
+    "skipChecks": true,
+    "releaseName": "v${version}"
   },
   "hooks": {
     "before:init": ["npm run lint", "npm test"],
     "after:bump": "npm run build",
     "after:git:release": "echo 代码已推送到远程，准备创建 Release 页面...",
     "after:release": "echo 恭喜！${name} v${version} 已成功发布到 ${repo.repository}！"
+  },
+  "npm": {
+    "publish": false
   }
 }
