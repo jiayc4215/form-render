@@ -50,7 +50,7 @@
     "prepare": "husky",
     "commit": "git-cz",
     "up": "taze major -r -w -I -l",
-    "release": "pnpm build && np",
+    "release": "np",
     "e2e": "cypress open",
     "test": "jest --verbose"
   },
