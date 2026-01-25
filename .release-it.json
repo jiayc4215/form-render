@@ -4,15 +4,13 @@
     "commitMessage": "chore: release v${version}"
   },
   "github": {
-    "release": true
+    "release": true,
+    "web": true,
+    "autoGenerate": true
   },
   "hooks": {
     "before:init": ["npm run lint", "npm test"],
-    "after:bump": "npm run build",
-    "before:git:release": "echo Releasing new version!",
-    "@release-it/conventional-changelog": {
-      "preset": "angular"
-    }
+    "after:bump": "npm run build"
   },
   "npm": {
     "publish": false
