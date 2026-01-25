@@ -5,11 +5,6 @@
     "tagName": "v${version}",
     "requireCleanWorkingDir": true
   },
-  "github": {
-    "release": true,
-    "releaseName": "Release v${version}",
-    "autoGenerateChangelog": true
-  },
   "npm": {
     "publish": true
   }
