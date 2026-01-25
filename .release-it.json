@@ -1,9 +1,16 @@
 {
-  "$schema": "https://unpkg.com/release-it@19/schema/release-it.json",
+  "$schema": "https://unpkg.com/release-it@17/schema/release-it.json",
   "git": {
-    "commitMessage": "chore: release v${version}"
+    "commitMessage": "chore: release v${version}",
+    "tagName": "v${version}",
+    "requireCleanWorkingDir": true
   },
   "github": {
-    "release": true
+    "release": true,
+    "releaseName": "Release v${version}",
+    "autoGenerateChangelog": true
+  },
+  "npm": {
+    "publish": true
   }
 }
