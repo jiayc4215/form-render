@@ -5,10 +5,8 @@
   },
   "github": {
     "release": true,
-    "web": true,
-    "skipChecks": true,
-    "draft": true,
-    "releaseName": "v${version}"
+    "releaseName": "v${version}",
+    "tokenRef": "_NO_TOKEN_USE_WEB_MODE_"
   },
   "hooks": {
     "before:init": ["npm run lint", "npm test"],
