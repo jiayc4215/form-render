@@ -1,5 +1,5 @@
-import _get from "lodash.get"
-import _has from "lodash.has"
+import _get from "lodash-es/get"
+import _has from "lodash-es/has"
 
 /**
  * 处理 enableWhen

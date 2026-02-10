@@ -1,5 +1,5 @@
 import { reactive } from "vue"
-import _set from "lodash.set"
+import _set from "lodash-es/set"
 // 这一步模拟了组件初始化的 state
 const options = reactive({
   shell: [

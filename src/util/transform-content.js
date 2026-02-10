@@ -1,4 +1,4 @@
-import _kebabcase from "lodash.kebabcase"
+import _kebabcase from "lodash-es/kebabCase"
 import { resolveComponent } from "vue"
 export default function transformContent(content) {
   return content.map(({ ...item }) => {

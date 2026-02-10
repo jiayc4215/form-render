@@ -105,9 +105,9 @@ import { computed, reactive, inject, nextTick, ref, watch } from "vue"
 
 import getEnableWhenStatus from "../util/enable-when"
 
-import _topairs from "lodash.topairs"
-import _frompairs from "lodash.frompairs"
-import _get from "lodash.get"
+import _topairs from "lodash-es/toPairs"
+import _frompairs from "lodash-es/fromPairs"
+import _get from "lodash-es/get"
 // 改用 动态组件 方便获取 ref
 // import CustomComponent from "../util/CustomComponent";
 import VNode from "../util/VNode"

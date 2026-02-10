@@ -7,6 +7,11 @@ export default {
     "^.+\\.vue$": "@vue/vue3-jest", // 指向新安装的 Vue 3 转换器
     "^.+\\.js$": "babel-jest"
   },
+  moduleNameMapper: {
+    // 强制把代码里的 lodash-es 替换为普通的 lodash (CommonJS版)
+    "^lodash-es/(.*)$": "lodash/$1",
+    "^lodash-es$": "lodash"
+  },
   // 指定测试文件
   testMatch: ["**/__tests__/**/*.js?(x)", "**/?(*.)+(spec|test).js?(x)"]
 }

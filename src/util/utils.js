@@ -1,10 +1,10 @@
-import _isplainobject from "lodash.isplainobject"
+import _isplainobject from "lodash-es/isPlainObject"
 // var pairs = [
 //   ["a", 1],
 //   ["b", 2],
 //   ["c", 3],
 // ];==》{ 'a': 1, 'b': 2, 'c': 3 }
-import _frompairs from "lodash.frompairs"
+import _frompairs from "lodash-es/fromPairs"
 // collect 函数接受两个参数，content 和 key，其中 content 是一个包含嵌套数据的数组，key 是要收集的键的名称。（key：options| defult）
 export function collect(content, key) {
   return _frompairs(
