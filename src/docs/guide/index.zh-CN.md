@@ -5,7 +5,7 @@ map:
 
 ## 技术交流群 711368818
 
-<img src="/qq.jpg"  width="200" />
+<img src="https://raw.githubusercontent.com/jiayc4215/easy-elplus/main/images/qq.jpg"  width="200" />
 
 ## Introduction
 

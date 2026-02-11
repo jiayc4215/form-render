@@ -1,6 +1,6 @@
 ## 技术交流群 711368818
 
-<img src="./public/qq.jpg"  width="200" />
+<img src="https://raw.githubusercontent.com/jiayc4215/form-render/master/images/qq.jpg"  width="200"  />
 
 ## Introduction
 

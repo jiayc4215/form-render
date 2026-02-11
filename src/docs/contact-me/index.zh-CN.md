@@ -9,7 +9,7 @@ map:
 
 > 如QQ群二维码失效，请添加我的微信，我会拉您进群。
 
-<img src="/qq.jpg" width="300" style="margin-bottom: 30px">
+<img src="https://raw.githubusercontent.com/jiayc4215/form-render/master/images/qq.jpg" width="300" style="margin-bottom: 30px">
 
 > 注意：提问问题请携带最小复现案例
 
