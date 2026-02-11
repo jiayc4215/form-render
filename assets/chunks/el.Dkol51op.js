@@ -1,0 +1,1 @@
+import{_ as e}from"./index.CDE-odoI.js";import{o as n,b as o,k as a,a7 as c}from"./framework.6z5grZzj.js";const i={__name:"el",setup(r){const t=c([{id:"document",type:"input",el:{type:"textarea"}}]);return(s,_)=>(n(),o(a(e),{content:t},null,8,["content"]))}};export{i as _};
