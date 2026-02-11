@@ -28,7 +28,8 @@ export default defineConfig({
           vue: "Vue",
           "element-plus": "ElementPlus",
           "@element-plus/icons-vue": "ElementPlusIconsVue"
-        }
+        },
+        exports: "named" // 默认导出
       }
     }
   },
