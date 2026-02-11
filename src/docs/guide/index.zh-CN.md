@@ -34,7 +34,8 @@ form-renderer 基于元素 element-plus，但不限于元素 element-plus 组件
 - [vue2 与 vue3 v-model 的区别](https://v3-migration.vuejs.org/zh/breaking-changes/v-model.html)
 - [vue2 版本](https://github.com/FEMessage/el-form-renderer)
 - [中文文档](https://jiayc4215.github.io/form-render)
-- [element-plus table 的封装](https://gitee.com/childe-jia/table-vue3)
+- [ easy-elplus element-plus 扩展组件的封装](https://github.com/jiayc4215/easy-elplus)
+- [directives-expand element-plus 指令的封装](https://github.com/jiayc4215/directives-expand)
 
 ## Quick Start
 

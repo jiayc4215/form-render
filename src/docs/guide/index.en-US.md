@@ -34,7 +34,8 @@ In our daily development, there are many pages with forms. Usually the form stru
 - [Difference between vue2 and vue3 v-model](https://v3-migration.vuejs.org/zh/breaking-changes/v-model.html)
 - [vue2 version](https://github.com/FEMessage/el-form-renderer)
 - [Chinese Documentation](https://jiayc4215.github.io/form-render)
-- [element-plus table wrapper](https://gitee.com/childe-jia/table-vue3)
+- [ easy-elplus element-plus extended components](https://github.com/jiayc4215/easy-elplus)
+- [directives-expand element-plus directives](https://github.com/jiayc4215/directives-expand)
 
 ## Quick Start
 
