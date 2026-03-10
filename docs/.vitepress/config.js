@@ -5,6 +5,7 @@ import { applyPlugins } from "@ruabick/md-demo-plugins"
 import { copyDocs } from "./theme/plugins/copy-docs"
 const socialLinks = [{ icon: "github", link: "https://github.com/jiayc4215/form-render" }]
 import { defineConfig } from "vitepress"
+import llmstxt from "vitepress-plugin-llms"
 export default defineConfig({
   // 部署路径 注意： 部署到github pages 时，需要将 base 设置为 仓库名
   base: "/form-render/",
@@ -89,7 +90,7 @@ export default defineConfig({
     server: {
       port: 8090
     },
-    plugins: [genTemp(), copyDocs()],
+    plugins: [genTemp(), copyDocs(), llmstxt()],
     resolve: {
       alias: {
         "el-form-renderer-vue3": resolve("./src/")
